@@ -1,1 +1,137 @@
-<html><head><meta charset="UTF-8"><title>Мой сайт</title><style>body{font-family:Arial,sans-serif;background:#f0f2f5;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}.card{text-align:center;background:white;padding:40px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1)}h1{color:#333}p{color:#666}button{background:#007bff;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;font-size:16px}button:hover{background:#0056b3}</style></head><body><div class="card"><h1>Добро пожаловать, Полина!</h1><p>Это ваш новый стильный сайт на Python.</p><button onclick="alert('Ура! Всё работает!')">Нажми на меня</button></div></body></html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Игры Первых</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 0; display: flex; }
+        .sidebar { width: 260px; background: #1e2229; color: white; height: 100vh; position: fixed; padding: 20px; box-sizing: border-box; }
+        .sidebar h2 { color: #007bff; margin-bottom: 30px; font-size: 22px; }
+        .menu-btn { display: block; width: 100%; background: none; border: none; color: #a0aec0; text-align: left; padding: 12px 15px; font-size: 15px; cursor: pointer; border-radius: 6px; margin-bottom: 5px; }
+        .menu-btn:hover, .menu-btn.active { background: #2d3748; color: white; }
+        .main-content { margin-left: 260px; padding: 40px; width: 100%; box-sizing: border-box; }
+        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 30px; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .btn { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .btn:hover { background: #0056b3; }
+        .admin-only { display: none; background: #fff5f5; border: 1px dashed #f56565; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        ol, ul { padding-left: 20px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <!-- Боковая панель навигации (Выполнение требований конкурса) -->
+    <div class="sidebar">
+        <h2>Игры Первых</h2>
+        <button class="menu-btn active" onclick="openTab('about')">💡 Идея проекта</button>
+        <button class="menu-btn" onclick="openTab('mechanics')">🎮 Механика игры</button>
+        <button class="menu-btn" onclick="openTab('calendar')">📅 Календарь событий</button>
+        <button class="menu-btn" onclick="openTab('news')">📰 Новости</button>
+        <button class="menu-btn" onclick="openTab('feedback')">💬 Обратная связь</button>
+        
+        <!-- Переключение ролей пользователей (Пункт 8.1 Положения) -->
+        <div style="margin-top: 40px; border-top: 1px solid #4a5568; padding-top: 20px;">
+            <p style="font-size: 12px; color: #718096; margin-bottom: 10px;">Тест ролей (Пункт 8.1):</p>
+            <button class="btn" style="width: 100%; margin-bottom: 8px;" onclick="changeRole('Пользователь')">👤 Пользователь</button>
+            <button class="btn" style="width: 100%; background: #ed8936;" onclick="changeRole('Администратор')">🔑 Админ</button>
+        </div>
+    </div>
+
+    <!-- Основной контент сайта -->
+    <div class="main-content">
+        <header>
+            <h1>Всероссийский проект «Игры Первых»</h1>
+            <div style="background: #e2e8f0; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 14px;" id="current-role">Роль: Пользователь</div>
+        </header>
+
+        <!-- Раздел 1: Идея проекта -->
+        <div id="about" class="tab-content active">
+            <div class="card">
+                <h2>Концепция проекта</h2>
+                <p>«Игры Первых» — это масштабная экосистема, объединяющая спорт, геймификацию и ИИ-технологии для вовлечения молодежи в активный и здоровый образ жизни.</p>
+            </div>
+        </div>
+
+        <!-- Раздел 2: Механика игры -->
+        <div id="mechanics" class="tab-content">
+            <div class="card">
+                <h2>Пользовательский путь игрока (Onboarding)</h2>
+                <p>Каждый участник проходит интерактивный путь от новичка до лидера рейтинга:</p>
+                <ol>
+                    <li>Регистрация на платформе и выбор спортивного направления.</li>
+                    <li>Выполнение ежедневных интерактивных заданий.</li>
+                    <li>Загрузка видео-подтверждений выполнения упражнений.</li>
+                    <li>Получение игровых баллов и продвижение в общем лидерборде проекта.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Раздел 3: Календарь событий -->
+        <div id="calendar" class="tab-content">
+            <div class="card">
+                <h2>Предстоящие активности</h2>
+                <p><strong>🏃 Кибер-Забег Первых</strong> — Дата: 25.08.2026</p>
+                <p>Онлайн-марафон с автоматической фиксацией результатов через ИИ-трекер.</p>
+                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;">
+                <p><strong>🧠 ИИ-Хакатон в спорте</strong> — Дата: 10.09.2026</p>
+                <p>Разработка ИИ-помощников для автоматического судейства соревнований.</p>
+            </div>
+        </div>
+
+        <!-- Раздел 4: Новости -->
+        <div id="news" class="tab-content">
+            <div class="card">
+                <h2>Лента обновлений</h2>
+                <p><strong>Запуск ИИ-ассистента.</strong> Сегодня в демонстрационное приложение был добавлен умный тренер, оценивающий технику приседаний пользователя в реальном времени.</p>
+            </div>
+            
+            <!-- Скрытая панель администратора -->
+            <div class="admin-only" id="admin-news-panel">
+                <h3>⚙️ Панель админа: Добавить новость</h3>
+                <input type="text" placeholder="Заголовок новости" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #e2e8f0; border-radius: 4px;"><br>
+                <button class="btn" style="background: #28a745;" onclick="alert('Новость успешно добавлена в прототип!')">Опубликовать</button>
+            </div>
+        </div>
+
+        <!-- Раздел 5: Обратная связь -->
+        <div id="feedback" class="tab-content">
+            <div class="card">
+                <h2>Форма обратной связи</h2>
+                <form onsubmit="event.preventDefault(); alert('Ваш отзыв успешно отправлен в демонстрационную систему!');">
+                    <textarea style="width: 100%; height: 100px; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px;" placeholder="Введите ваше предложение для улучшения проекта..."></textarea><br><br>
+                    <button type="submit" class="btn">Отправить предложение</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Функция переключения вкладок
+        function openTab(tabId) {
+            var contents = document.querySelectorAll('.tab-content');
+            contents.forEach(function(c) { c.classList.remove('active'); });
+            
+            var buttons = document.querySelectorAll('.menu-btn');
+            buttons.forEach(function(b) { b.classList.remove('active'); });
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Функция симуляции ролей (Требование 8.1 регламента конкурса)
+        function changeRole(role) {
+            document.getElementById('current-role').innerText = 'Роль: ' + role;
+            var adminPanel = document.getElementById('admin-news-panel');
+            if(role === 'Администратор') {
+                adminPanel.style.display = 'block';
+                alert('Вы переключились на роль Администратора. Открыт доступ к скрытым панелям управления!');
+            } else {
+                adminPanel.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
+
