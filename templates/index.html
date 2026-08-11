@@ -1,27 +1,34 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Игры Первых — Всероссийский Конкурс</title>
+    <title>Игры Первых — цифровая платформа</title>
 
-    <!-- Шрифт Golos Text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
     <style>
         :root {
-            --pervye-red: #ff007f;
-            --pervye-dark: #432899;
-            --pervye-bg: #1a133d;
-            --card-bg: #251c54;
-            --border-color: #3b2f7c;
-            --text-main: #ffffff;
-            --text-muted: #a5b4fc;
-            --hover: #32266f;
-            --success: #22c55e;
+            --pink: #ff007f;
+            --purple: #432899;
+            --purple-light: #6545d8;
+            --bg: #120d2d;
+            --sidebar: #1d1644;
+            --card: #251c54;
+            --card-light: #2d2362;
+            --border: #40347c;
+            --text: #ffffff;
+            --muted: #a5b4fc;
+            --green: #35d07f;
+            --yellow: #facc15;
+            --danger: #fb7185;
         }
 
         * {
@@ -34,186 +41,236 @@
 
         body {
             margin: 0;
-            min-height: 100vh;
+            background:
+                radial-gradient(circle at 80% 10%, rgba(101, 69, 216, .18), transparent 30%),
+                var(--bg);
+            color: var(--text);
             font-family: "Golos Text", sans-serif;
-            background: var(--pervye-bg);
-            color: var(--text-main);
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
         }
 
         /* =========================
-           БОКОВОЕ МЕНЮ
+           SIDEBAR
         ========================= */
 
         .sidebar {
-            width: 290px;
-            height: 100vh;
             position: fixed;
             left: 0;
             top: 0;
-            z-index: 100;
-            padding: 40px 24px;
-            background: var(--card-bg);
-            border-right: 1px solid var(--border-color);
+            z-index: 1000;
+
+            width: 280px;
+            height: 100vh;
+
+            padding: 28px 20px;
+
+            background: rgba(29, 22, 68, .97);
+            border-right: 1px solid var(--border);
 
             display: flex;
             flex-direction: column;
+
+            overflow-y: auto;
         }
 
-        .logo {
-            margin: 0 0 40px;
-            font-size: 25px;
+        .brand {
+            padding: 8px 12px 30px;
+        }
+
+        .brand-title {
+            margin: 0;
+            font-size: 26px;
             font-weight: 800;
         }
 
-        .logo span {
-            color: var(--pervye-red);
+        .brand-title span {
+            color: var(--pink);
+        }
+
+        .brand-subtitle {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .menu-title {
+            margin: 10px 12px 8px;
+
+            color: #818cf8;
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .menu {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
 
-        .menu-link {
+        .menu-button {
             width: 100%;
+
             display: flex;
             align-items: center;
             gap: 12px;
 
-            padding: 14px 16px;
+            padding: 12px 14px;
 
             border: 1px solid transparent;
             border-radius: 12px;
 
             background: transparent;
-            color: var(--text-muted);
+            color: #b7b7d9;
 
-            font-family: inherit;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
 
             text-align: left;
-            cursor: pointer;
 
-            transition: 0.2s ease;
+            transition: .2s;
         }
 
-        .menu-link:hover {
-            background: var(--hover);
+        .menu-button:hover {
+            background: #302668;
             color: #fff;
         }
 
-        .menu-link.active {
-            background: var(--pervye-dark);
+        .menu-button.active {
+            background: var(--purple);
+            border-color: #6545d8;
             color: #fff;
-            border-color: #5c3bcc;
-            box-shadow: 0 4px 14px rgba(67, 40, 153, 0.4);
+
+            box-shadow: 0 5px 18px rgba(67, 40, 153, .35);
+        }
+
+        .menu-icon {
+            width: 22px;
+            text-align: center;
+            font-size: 17px;
         }
 
         /* =========================
-           РОЛИ
+           ROLE SWITCH
         ========================= */
 
-        .role-section {
+        .role-box {
             margin-top: auto;
-            padding: 18px;
 
-            background: #140e32;
-            border: 1px solid var(--border-color);
+            padding: 15px;
+
+            background: #100a27;
+            border: 1px solid var(--border);
             border-radius: 16px;
         }
 
-        .role-title {
-            margin: 0 0 12px;
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 700;
+        .role-box-title {
+            margin: 0 0 10px;
+
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 800;
+
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .btn-role {
-            height: 42px;
-            margin-bottom: 8px;
-            justify-content: center;
+        .role-button {
+            width: 100%;
+            height: 38px;
 
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            margin-top: 6px;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: var(--card);
             color: #cbd5e1;
+
+            font-size: 13px;
+            font-weight: 600;
         }
 
-        .btn-role:last-child {
-            margin-bottom: 0;
-        }
-
-        .btn-role:hover {
-            background: var(--hover);
-            color: white;
-        }
-
-        .btn-role.active {
-            background: var(--pervye-dark);
-            color: white;
-            border-color: #6366f1;
+        .role-button.active {
+            background: var(--purple);
+            border-color: #7c5ce7;
+            color: #fff;
         }
 
         /* =========================
-           ОСНОВНОЙ КОНТЕНТ
+           MAIN
         ========================= */
 
-        .main-content {
-            margin-left: 290px;
+        .main {
+            margin-left: 280px;
             min-height: 100vh;
-            padding: 50px 60px;
+            padding: 35px 45px 100px;
         }
 
-        header {
+        .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding-bottom: 24px;
-            margin-bottom: 45px;
+            padding-bottom: 22px;
+            margin-bottom: 30px;
 
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border);
         }
 
-        header h1 {
+        .page-title h1 {
             margin: 0;
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 800;
         }
 
-        .current-role-badge {
-            padding: 8px 18px;
+        .page-title p {
+            margin: 6px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .role-badge {
+            padding: 9px 16px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 30px;
 
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            color: #c4b5fd;
 
-            color: var(--text-muted);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
         }
 
         /* =========================
-           ВКЛАДКИ
+           PAGES
         ========================= */
 
-        .tab-content {
+        .page {
             display: none;
+            animation: pageIn .25s ease;
         }
 
-        .tab-content.active {
+        .page.active {
             display: block;
-            animation: fadeIn 0.25s ease;
         }
 
-        @keyframes fadeIn {
+        @keyframes pageIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(8px);
             }
 
             to {
@@ -223,376 +280,890 @@
         }
 
         /* =========================
-           КАРТОЧКИ
+           HERO
         ========================= */
 
-        .card {
-            margin-bottom: 25px;
-            padding: 40px;
+        .hero {
+            position: relative;
+            overflow: hidden;
 
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
+            padding: 45px;
 
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            background:
+                linear-gradient(135deg, rgba(67, 40, 153, .95), rgba(37, 28, 84, .96));
+
+            border: 1px solid #5d48a9;
+            border-radius: 24px;
+
+            box-shadow: 0 15px 45px rgba(0, 0, 0, .25);
         }
 
-        .card h2 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 24px;
+        .hero::after {
+            content: "";
+
+            position: absolute;
+            width: 280px;
+            height: 280px;
+
+            right: -90px;
+            top: -100px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 0, 127, .18);
+            filter: blur(3px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 750px;
+        }
+
+        .hero-label {
+            display: inline-flex;
+
+            padding: 7px 12px;
+
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 30px;
+
+            color: #ddd6fe;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .hero h2 {
+            margin: 20px 0 12px;
+
+            font-size: 42px;
+            line-height: 1.08;
             font-weight: 800;
         }
 
-        .card h3 {
-            margin-top: 0;
+        .hero h2 span {
+            color: #ff69b4;
         }
 
-        .card p,
-        .card li {
-            color: #cbd5e1;
-            line-height: 1.6;
+        .hero p {
+            max-width: 650px;
+
+            margin: 0;
+
+            color: #ddd6fe;
+            font-size: 16px;
+            line-height: 1.65;
         }
 
-        .card ol {
-            padding-left: 25px;
-        }
-
-        .card li {
-            margin-bottom: 12px;
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
         }
 
         /* =========================
-           СТАТИСТИКА
+           BUTTONS
+        ========================= */
+
+        .primary-button,
+        .secondary-button {
+            padding: 12px 20px;
+
+            border-radius: 11px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition: .2s;
+        }
+
+        .primary-button {
+            border: 1px solid #ff4ba7;
+            background: var(--pink);
+            color: white;
+            box-shadow: 0 5px 18px rgba(255, 0, 127, .25);
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+            background: #ff2997;
+        }
+
+        .secondary-button {
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, .06);
+            color: white;
+        }
+
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, .12);
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .section {
+            margin-top: 28px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .section-heading p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .card {
+            padding: 24px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, .12);
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+
+            display: grid;
+            place-items: center;
+
+            margin-bottom: 15px;
+
+            background: rgba(101, 69, 216, .25);
+            border-radius: 12px;
+
+            font-size: 21px;
+        }
+
+        .card h3 {
+            margin: 0 0 8px;
+            font-size: 17px;
+        }
+
+        .card p {
+            margin: 0;
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           STATS
         ========================= */
 
         .stats {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-top: 25px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
         }
 
-        .stat-card {
-            padding: 25px;
+        .stat {
+            padding: 20px;
+
             background: #201849;
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-        }
-
-        .stat-icon {
-            font-size: 28px;
-            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
         }
 
         .stat-number {
-            font-size: 28px;
+            font-size: 25px;
             font-weight: 800;
         }
 
         .stat-label {
             margin-top: 5px;
-            color: var(--text-muted);
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* =========================
+           USER JOURNEY
+        ========================= */
+
+        .journey {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .step {
+            position: relative;
+
+            padding: 20px 15px;
+
+            background: #201849;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+
+            text-align: center;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+
+            display: grid;
+            place-items: center;
+
+            margin: 0 auto 10px;
+
+            border-radius: 50%;
+
+            background: var(--purple);
+            color: #fff;
+
+            font-weight: 800;
+        }
+
+        .step strong {
+            display: block;
+            margin-bottom: 5px;
             font-size: 13px;
         }
 
-        /* =========================
-           КНОПКИ
-        ========================= */
-
-        .btn {
-            padding: 12px 24px;
-
-            background: var(--pervye-dark);
-            color: white;
-
-            border: 1px solid #5c3bcc;
-            border-radius: 10px;
-
-            font-family: inherit;
-            font-weight: 700;
-
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
-
-        .btn:hover {
-            background: var(--hover);
-            transform: translateY(-1px);
+        .step span {
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.4;
         }
 
         /* =========================
-           КАЛЕНДАРЬ
+           GAME MECHANICS
         ========================= */
 
-        .events {
-            display: grid;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .event {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-
+        .progress-box {
+            margin-top: 20px;
             padding: 20px;
 
-            background: #201849;
-            border: 1px solid var(--border-color);
+            background: #171035;
+            border: 1px solid var(--border);
             border-radius: 14px;
         }
 
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .progress {
+            height: 10px;
+
+            background: #0e0921;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 68%;
+            height: 100%;
+
+            background: linear-gradient(90deg, var(--pink), #8b5cf6);
+            border-radius: 20px;
+        }
+
+        /* =========================
+           CALENDAR
+        ========================= */
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .filter-button {
+            padding: 9px 14px;
+
+            border: 1px solid var(--border);
+            border-radius: 20px;
+
+            background: var(--card);
+            color: var(--muted);
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .filter-button.active {
+            background: var(--purple);
+            color: #fff;
+        }
+
+        .events {
+            display: grid;
+            gap: 12px;
+        }
+
+        .event {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            align-items: center;
+            gap: 20px;
+
+            padding: 18px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
         .event-date {
-            min-width: 70px;
             text-align: center;
         }
 
         .event-day {
-            font-size: 26px;
+            font-size: 25px;
             font-weight: 800;
         }
 
         .event-month {
-            color: var(--pervye-red);
-            font-size: 12px;
-            font-weight: 700;
+            color: var(--pink);
+            font-size: 10px;
+            font-weight: 800;
             text-transform: uppercase;
         }
 
-        .event-info h3 {
+        .event h3 {
             margin: 0 0 5px;
+            font-size: 15px;
         }
 
-        .event-info p {
+        .event p {
             margin: 0;
-        }
-
-        /* =========================
-           НОВОСТИ
-        ========================= */
-
-        .news-list {
-            display: grid;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .news-item {
-            padding: 20px;
-
-            background: #201849;
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-        }
-
-        .news-item h3 {
-            margin: 0 0 8px;
-        }
-
-        .news-item p {
-            margin: 0;
-        }
-
-        .news-date {
-            display: inline-block;
-            margin-bottom: 8px;
-            color: var(--text-muted);
+            color: #aeb5ce;
             font-size: 12px;
         }
 
-        /* =========================
-           АДМИНКА
-        ========================= */
+        .event-tag {
+            padding: 6px 10px;
 
-        .admin-panel {
-            display: none;
-            margin-top: 25px;
-            padding: 30px;
-
-            background: #3a152e;
-            border: 1px solid #6b1f54;
-            border-radius: 20px;
-        }
-
-        .admin-panel h3 {
-            color: var(--pervye-red);
-        }
-
-        /* =========================
-           ЧАТ
-        ========================= */
-
-        .ai-chat-widget {
-            position: fixed;
-            right: 30px;
-            bottom: 30px;
-
-            z-index: 200;
-
-            width: 340px;
-
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            background: rgba(53, 208, 127, .1);
+            border: 1px solid rgba(53, 208, 127, .3);
             border-radius: 20px;
 
-            overflow: hidden;
+            color: var(--green);
 
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-        }
-
-        .ai-chat-header {
-            padding: 18px;
-
-            background: var(--pervye-dark);
-            color: white;
-
+            font-size: 10px;
             font-weight: 700;
         }
 
-        .ai-chat-logs {
-            height: 220px;
-            overflow-y: auto;
+        /* =========================
+           NEWS
+        ========================= */
 
-            padding: 18px;
-
-            background: #140e32;
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
 
-        .chat-msg {
-            max-width: 82%;
-            margin-bottom: 12px;
-            padding: 10px 14px;
+        .news-card {
+            padding: 22px;
 
-            border-radius: 12px;
-
-            font-size: 13px;
-            line-height: 1.4;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
         }
 
-        .chat-msg.user {
-            margin-left: auto;
-
-            background: var(--pervye-dark);
-            border: 1px solid #5c3bcc;
-
-            color: white;
+        .news-meta {
+            color: var(--muted);
+            font-size: 10px;
         }
 
-        .chat-msg.ai {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-
-            color: #e2e8f0;
+        .news-card h3 {
+            margin: 10px 0;
+            font-size: 17px;
         }
 
-        .ai-chat-input-area {
-            display: flex;
-
-            border-top: 1px solid var(--border-color);
-            background: var(--card-bg);
-        }
-
-        .ai-chat-input {
-            flex: 1;
-
-            min-width: 0;
-
-            padding: 16px;
-
-            border: none;
-            outline: none;
-
-            background: transparent;
-            color: white;
-
-            font-family: inherit;
-        }
-
-        .ai-chat-input::placeholder {
-            color: #94a3b8;
-        }
-
-        .ai-chat-send {
-            padding: 0 20px;
-
-            background: var(--pervye-dark);
-            color: white;
-
-            border: none;
-            border-left: 1px solid var(--border-color);
-
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .ai-chat-send:hover {
-            background: var(--hover);
+        .news-card p {
+            margin: 0;
+            color: #cbd5e1;
+            font-size: 12px;
+            line-height: 1.6;
         }
 
         /* =========================
-           МОБИЛЬНАЯ ВЕРСИЯ
+           LIBRARY
         ========================= */
 
-        @media (max-width: 900px) {
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .material {
+            padding: 20px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .material-type {
+            display: inline-block;
+
+            padding: 5px 8px;
+
+            background: rgba(255, 0, 127, .1);
+            color: #ff79bb;
+
+            border-radius: 6px;
+
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .material h3 {
+            margin: 12px 0 7px;
+            font-size: 15px;
+        }
+
+        .material p {
+            margin: 0;
+            color: #aeb5ce;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           FEEDBACK
+        ========================= */
+
+        .form {
+            max-width: 700px;
+
+            padding: 25px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 7px;
+
+            color: #dbeafe;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .input,
+        .textarea,
+        .select {
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            outline: none;
+
+            background: #171035;
+            color: #fff;
+
+            font-size: 12px;
+        }
+
+        .textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .input:focus,
+        .textarea:focus,
+        .select:focus {
+            border-color: var(--purple-light);
+        }
+
+        .reviews {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+        .review {
+            padding: 18px;
+
+            background: #201849;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .review p {
+            margin: 0 0 10px;
+
+            color: #cbd5e1;
+
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .review-author {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        /* =========================
+           APP
+        ========================= */
+
+        .app-banner {
+            display: grid;
+            grid-template-columns: 1fr 260px;
+            gap: 25px;
+            align-items: center;
+
+            padding: 30px;
+
+            background:
+                linear-gradient(135deg, #432899, #251c54);
+
+            border: 1px solid #5c48a9;
+            border-radius: 20px;
+        }
+
+        .app-banner h2 {
+            margin: 0 0 10px;
+            font-size: 26px;
+        }
+
+        .app-banner p {
+            margin: 0;
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .store-buttons {
+            display: grid;
+            gap: 8px;
+        }
+
+        .store {
+            padding: 13px;
+
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 10px;
+
+            color: white;
+
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* =========================
+           CHANNELS / PARTNERS
+        ========================= */
+
+        .channel-grid,
+        .partner-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .channel,
+        .partner {
+            padding: 20px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .channel h3,
+        .partner h3 {
+            margin: 0 0 7px;
+            font-size: 15px;
+        }
+
+        .channel p,
+        .partner p {
+            margin: 0;
+            color: #aeb5ce;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           ADMIN
+        ========================= */
+
+        .admin-only {
+            display: none;
+        }
+
+        .admin-panel {
+            padding: 25px;
+
+            background:
+                linear-gradient(135deg, rgba(91, 33, 182, .35), rgba(67, 40, 153, .15));
+
+            border: 1px solid #684dc1;
+            border-radius: 18px;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+
+            margin-top: 20px;
+        }
+
+        .admin-stat {
+            padding: 18px;
+
+            background: rgba(10, 5, 30, .35);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 12px;
+        }
+
+        .admin-stat strong {
+            display: block;
+            font-size: 22px;
+        }
+
+        .admin-stat span {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 5000;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(5, 3, 18, .78);
+            backdrop-filter: blur(6px);
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-box {
+            width: min(550px, 100%);
+
+            padding: 28px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+
+            box-shadow: 0 20px 60px rgba(0,0,0,.4);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .close {
+            border: none;
+            background: transparent;
+            color: #fff;
+            font-size: 22px;
+        }
+
+        /* =========================
+           TOAST
+        ========================= */
+
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            z-index: 7000;
+
+            max-width: 330px;
+
+            padding: 14px 18px;
+
+            background: #21184b;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,.3);
+
+            color: white;
+            font-size: 12px;
+
+            transform: translateY(120px);
+            opacity: 0;
+
+            transition: .3s;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 1100px) {
+            .sidebar {
+                width: 230px;
+            }
+
+            .main {
+                margin-left: 230px;
+                padding: 25px;
+            }
+
+            .grid,
+            .library-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .journey {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
             .sidebar {
                 position: relative;
                 width: 100%;
                 height: auto;
-                padding: 20px;
+
+                border-right: none;
+                border-bottom: 1px solid var(--border);
             }
 
-            .logo {
-                margin-bottom: 20px;
+            .main {
+                margin-left: 0;
             }
 
-            .menu {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .role-section {
+            .role-box {
                 margin-top: 20px;
             }
 
-            .main-content {
-                margin-left: 0;
-                padding: 30px 20px 300px;
-            }
-
-            header {
-                align-items: flex-start;
-                gap: 15px;
-                flex-direction: column;
-            }
-
-            header h1 {
-                font-size: 25px;
-            }
-
             .stats {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .ai-chat-widget {
-                right: 15px;
-                bottom: 15px;
-                left: 15px;
-                width: auto;
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .app-banner {
+                grid-template-columns: 1fr;
             }
         }
 
-        @media (max-width: 500px) {
-            .menu {
+        @media (max-width: 600px) {
+            .main {
+                padding: 20px 15px 80px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                gap: 12px;
+                flex-direction: column;
+            }
+
+            .grid,
+            .news-grid,
+            .library-grid,
+            .channel-grid,
+            .partner-grid,
+            .reviews {
                 grid-template-columns: 1fr;
             }
 
-            .card {
-                padding: 25px;
+            .journey {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hero {
+                padding: 28px 22px;
+            }
+
+            .hero h2 {
+                font-size: 29px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
             }
 
             .event {
-                align-items: flex-start;
+                grid-template-columns: 60px 1fr;
+            }
+
+            .event .event-tag {
+                grid-column: 2;
+                width: fit-content;
+            }
+
+            .admin-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -600,68 +1171,120 @@
 
 <body>
 
-<!-- =========================
-     БОКОВОЕ МЕНЮ
-========================= -->
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
 <aside class="sidebar">
 
-    <h2 class="logo">
-        Игры <span>Первых</span>
-    </h2>
+    <div class="brand">
+        <h2 class="brand-title">
+            Игры <span>Первых</span>
+        </h2>
+
+        <div class="brand-subtitle">
+            Цифровая экосистема проекта
+        </div>
+    </div>
+
+    <div class="menu-title">
+        Навигация
+    </div>
 
     <nav class="menu">
 
-        <button
-            id="tab-about-btn"
-            class="menu-link active"
-            onclick="switchTab('about')">
-            💡 Идея проекта
+        <button class="menu-button active"
+                data-page="home"
+                onclick="showPage('home')">
+            <span class="menu-icon">🏠</span>
+            Главная
         </button>
 
-        <button
-            id="tab-mechanics-btn"
-            class="menu-link"
-            onclick="switchTab('mechanics')">
-            🎮 Механика игры
+        <button class="menu-button"
+                data-page="game"
+                onclick="showPage('game')">
+            <span class="menu-icon">🎮</span>
+            Как играть
         </button>
 
-        <button
-            id="tab-calendar-btn"
-            class="menu-link"
-            onclick="switchTab('calendar')">
-            📅 Календарь
+        <button class="menu-button"
+                data-page="events"
+                onclick="showPage('events')">
+            <span class="menu-icon">📅</span>
+            Мероприятия
         </button>
 
-        <button
-            id="tab-news-btn"
-            class="menu-link"
-            onclick="switchTab('news')">
-            📰 Новости
+        <button class="menu-button"
+                data-page="news"
+                onclick="showPage('news')">
+            <span class="menu-icon">📰</span>
+            Новости
+        </button>
+
+        <button class="menu-button"
+                data-page="library"
+                onclick="showPage('library')">
+            <span class="menu-icon">📚</span>
+            Библиотека
+        </button>
+
+        <button class="menu-button"
+                data-page="feedback"
+                onclick="showPage('feedback')">
+            <span class="menu-icon">💬</span>
+            Обратная связь
+        </button>
+
+        <button class="menu-button"
+                data-page="app"
+                onclick="showPage('app')">
+            <span class="menu-icon">📱</span>
+            Приложение
+        </button>
+
+        <button class="menu-button"
+                data-page="channels"
+                onclick="showPage('channels')">
+            <span class="menu-icon">📢</span>
+            Каналы проекта
+        </button>
+
+        <button class="menu-button"
+                data-page="partners"
+                onclick="showPage('partners')">
+            <span class="menu-icon">🤝</span>
+            Партнёрам
+        </button>
+
+        <button class="menu-button admin-only"
+                data-page="admin"
+                onclick="showPage('admin')">
+            <span class="menu-icon">⚙️</span>
+            Администрирование
         </button>
 
     </nav>
 
-    <!-- Роли -->
+    <!-- ROLE SWITCH -->
 
-    <div class="role-section">
+    <div class="role-box">
 
-        <p class="role-title">
-            Тестирование ролей:
+        <p class="role-box-title">
+            Демонстрация ролей
         </p>
 
         <button
-            id="role-user-btn"
-            class="menu-link btn-role active"
-            onclick="switchRole('Участник')">
-            👤 Участник
+            id="user-role"
+            class="role-button active"
+            onclick="switchRole('Пользователь')">
+            👤 Пользователь
         </button>
 
         <button
-            id="role-admin-btn"
-            class="menu-link btn-role"
-            onclick="switchRole('Модератор')">
-            🔑 Модератор
+            id="admin-role"
+            class="role-button"
+            onclick="switchRole('Администратор')">
+            🔐 Администратор
         </button>
 
     </div>
@@ -669,233 +1292,155 @@
 </aside>
 
 
-<!-- =========================
-     ОСНОВНОЙ КОНТЕНТ
-========================= -->
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
-<main class="main-content">
+<main class="main">
 
-    <header>
+    <header class="topbar">
 
-        <h1>
-            Всероссийский проект «Игры Первых»
-        </h1>
+        <div class="page-title">
+            <h1 id="page-title">
+                Игры Первых
+            </h1>
 
-        <div
-            class="current-role-badge"
-            id="role-badge">
-            Роль: Участник
+            <p id="page-description">
+                Двигайся. Играй. Развивайся.
+            </p>
+        </div>
+
+        <div class="role-badge"
+             id="role-badge">
+            👤 Роль: Пользователь
         </div>
 
     </header>
 
 
-    <!-- =========================
-         ИДЕЯ ПРОЕКТА
-    ========================= -->
+    <!-- =================================================
+         HOME
+    ================================================= -->
 
     <section
-        id="tab-about"
-        class="tab-content active">
+        id="page-home"
+        class="page active">
 
-        <div class="card">
+        <div class="hero">
 
-            <h2>
-                Концепция проекта
-            </h2>
+            <div class="hero-content">
 
-            <p>
-                «Игры Первых» — цифровая экосистема для физической
-                активности и геймификации, созданная для вовлечения
-                участников в спорт, командные активности и выполнение
-                различных заданий.
-            </p>
-
-            <p>
-                Участники выполняют задания, получают баллы,
-                соревнуются с другими игроками и развивают свои
-                спортивные навыки.
-            </p>
-
-        </div>
-
-
-        <div class="stats">
-
-            <div class="stat-card">
-                <div class="stat-icon">🏃</div>
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">
-                    Активность проекта
+                <div class="hero-label">
+                    Всероссийский проект
                 </div>
-            </div>
 
-            <div class="stat-card">
-                <div class="stat-icon">🏆</div>
-                <div class="stat-number">100+</div>
-                <div class="stat-label">
-                    Спортивных заданий
-                </div>
-            </div>
+                <h2>
+                    Игры <span>Первых</span>
+                </h2>
 
-            <div class="stat-card">
-                <div class="stat-icon">⭐</div>
-                <div class="stat-number">∞</div>
-                <div class="stat-label">
-                    Возможностей для развития
+                <p>
+                    Цифровая среда, в которой движение,
+                    командная работа и игровые задания
+                    превращаются в единый путь развития.
+                </p>
+
+                <div class="hero-actions">
+
+                    <button
+                        class="primary-button"
+                        onclick="showPage('game')">
+                        🎮 Начать знакомство
+                    </button>
+
+                    <button
+                        class="secondary-button"
+                        onclick="showPage('events')">
+                        📅 Смотреть события
+                    </button>
+
                 </div>
+
             </div>
 
         </div>
 
-    </section>
 
+        <div class="section">
 
-    <!-- =========================
-         МЕХАНИКА
-    ========================= -->
+            <div class="section-heading">
+                <div>
+                    <h2>Зачем нужны «Игры Первых»?</h2>
+                </div>
 
-    <section
-        id="tab-mechanics"
-        class="tab-content">
+                <p>
+                    Концепция продукта
+                </p>
+            </div>
 
-        <div class="card">
+            <div class="grid">
 
-            <h2>
-                🎮 Механика игры
-            </h2>
+                <div class="card">
+                    <div class="card-icon">🏃</div>
+                    <h3>Движение</h3>
+                    <p>
+                        Задания помогают превратить физическую
+                        активность в понятный игровой сценарий.
+                    </p>
+                </div>
 
-            <p>
-                Пользователь проходит несколько этапов,
-                выполняя спортивные задания и зарабатывая
-                игровые баллы.
-            </p>
+                <div class="card">
+                    <div class="card-icon">🤝</div>
+                    <h3>Команда</h3>
+                    <p>
+                        Участники могут проходить активности
+                        вместе и поддерживать друг друга.
+                    </p>
+                </div>
 
-            <ol>
+                <div class="card">
+                    <div class="card-icon">🏆</div>
+                    <h3>Развитие</h3>
+                    <p>
+                        Игровые цели позволяют видеть собственный
+                        прогресс и достигнутые результаты.
+                    </p>
+                </div>
 
-                <li>
-                    <strong>Авторизация:</strong>
-                    быстрый вход и создание спортивного профиля.
-                </li>
-
-                <li>
-                    <strong>Получение заданий:</strong>
-                    участник получает ежедневные квесты.
-                </li>
-
-                <li>
-                    <strong>Выполнение:</strong>
-                    пользователь выполняет спортивное задание.
-                </li>
-
-                <li>
-                    <strong>Верификация:</strong>
-                    результат может проверяться системой.
-                </li>
-
-                <li>
-                    <strong>Баллы:</strong>
-                    за выполнение участник получает движ-коины.
-                </li>
-
-                <li>
-                    <strong>Лидерборд:</strong>
-                    участник может сравнивать свои результаты
-                    с другими игроками.
-                </li>
-
-            </ol>
+            </div>
 
         </div>
 
-    </section>
 
+        <div class="section">
 
-    <!-- =========================
-         КАЛЕНДАРЬ
-    ========================= -->
+            <div class="stats">
 
-    <section
-        id="tab-calendar"
-        class="tab-content">
-
-        <div class="card">
-
-            <h2>
-                📅 Календарь мероприятий
-            </h2>
-
-            <p>
-                Здесь отображаются ближайшие марафоны,
-                спортивные активности и онлайн-мероприятия.
-            </p>
-
-
-            <div class="events">
-
-                <div class="event">
-
-                    <div class="event-date">
-                        <div class="event-day">15</div>
-                        <div class="event-month">Авг</div>
+                <div class="stat">
+                    <div class="stat-number">12+</div>
+                    <div class="stat-label">
+                        Форматов активности
                     </div>
-
-                    <div class="event-info">
-
-                        <h3>
-                            🏃 День движения
-                        </h3>
-
-                        <p>
-                            Индивидуальный спортивный челлендж.
-                        </p>
-
-                    </div>
-
                 </div>
 
-
-                <div class="event">
-
-                    <div class="event-date">
-                        <div class="event-day">20</div>
-                        <div class="event-month">Авг</div>
+                <div class="stat">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">
+                        Демонстрационных заданий
                     </div>
-
-                    <div class="event-info">
-
-                        <h3>
-                            💪 ОФП-челлендж
-                        </h3>
-
-                        <p>
-                            Выполни комплекс упражнений и получи баллы.
-                        </p>
-
-                    </div>
-
                 </div>
 
-
-                <div class="event">
-
-                    <div class="event-date">
-                        <div class="event-day">28</div>
-                        <div class="event-month">Авг</div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">
+                        Доступ к цифровой среде
                     </div>
+                </div>
 
-                    <div class="event-info">
-
-                        <h3>
-                            🏆 Финальный марафон
-                        </h3>
-
-                        <p>
-                            Большое соревнование участников проекта.
-                        </p>
-
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">
+                        Возможностей для развития
                     </div>
-
                 </div>
 
             </div>
@@ -905,78 +1450,138 @@
     </section>
 
 
-    <!-- =========================
-         НОВОСТИ
-    ========================= -->
+    <!-- =================================================
+         GAME
+    ================================================= -->
 
     <section
-        id="tab-news"
-        class="tab-content">
+        id="page-game"
+        class="page">
 
-        <div class="card">
+        <div class="section-heading">
+            <div>
+                <h2>🎮 Как устроена игра</h2>
+                <p>Путь пользователя от первого входа до результата</p>
+            </div>
+        </div>
 
-            <h2>
-                📰 Новости проекта
-            </h2>
+        <div class="journey">
 
-            <p>
-                Здесь будут публиковаться новости,
-                обновления и новые спортивные задания.
-            </p>
+            <div class="step">
+                <div class="step-number">1</div>
+                <strong>Профиль</strong>
+                <span>
+                    Знакомство с платформой
+                </span>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <strong>Выбор</strong>
+                <span>
+                    Выбор активности
+                </span>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <strong>Задание</strong>
+                <span>
+                    Выполнение игрового задания
+                </span>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <strong>Результат</strong>
+                <span>
+                    Получение игровых баллов
+                </span>
+            </div>
+
+            <div class="step">
+                <div class="step-number">5</div>
+                <strong>Развитие</strong>
+                <span>
+                    Новый уровень и новые цели
+                </span>
+            </div>
+
+        </div>
 
 
-            <div class="news-list">
+        <div class="section">
 
-                <div class="news-item">
+            <div class="card">
 
-                    <span class="news-date">
-                        11 августа 2026
-                    </span>
+                <h3>
+                    🧩 Игровые механики
+                </h3>
 
-                    <h3>
-                        🚀 Запуск новой версии проекта
-                    </h3>
+                <p>
+                    Демонстрационная модель показывает,
+                    как игровые задания могут объединяться
+                    в последовательный пользовательский путь.
+                </p>
 
-                    <p>
-                        Обновлён интерфейс платформы и добавлены
-                        новые интерактивные возможности.
-                    </p>
+                <div class="grid"
+                     style="margin-top:20px;">
+
+                    <div class="card"
+                         style="background:#201849;">
+
+                        <div class="card-icon">⚡</div>
+
+                        <h3>Челленджи</h3>
+
+                        <p>
+                            Короткие задания на движение,
+                            выносливость и командную активность.
+                        </p>
+
+                    </div>
+
+                    <div class="card"
+                         style="background:#201849;">
+
+                        <div class="card-icon">⭐</div>
+
+                        <h3>Баллы</h3>
+
+                        <p>
+                            За выполнение демонстрационного
+                            задания пользователь получает очки.
+                        </p>
+
+                    </div>
+
+                    <div class="card"
+                         style="background:#201849;">
+
+                        <div class="card-icon">🔥</div>
+
+                        <h3>Серия</h3>
+
+                        <p>
+                            Регулярное участие формирует
+                            непрерывную игровую серию.
+                        </p>
+
+                    </div>
 
                 </div>
 
 
-                <div class="news-item">
+                <div class="progress-box">
 
-                    <span class="news-date">
-                        8 августа 2026
-                    </span>
+                    <div class="progress-top">
+                        <span>Демонстрационный прогресс</span>
+                        <span>68%</span>
+                    </div>
 
-                    <h3>
-                        🎮 Новые спортивные задания
-                    </h3>
-
-                    <p>
-                        В проект добавлены новые задания
-                        на выносливость и силу.
-                    </p>
-
-                </div>
-
-
-                <div class="news-item">
-
-                    <span class="news-date">
-                        5 августа 2026
-                    </span>
-
-                    <h3>
-                        🏆 Обновление рейтинга
-                    </h3>
-
-                    <p>
-                        Теперь участники могут отслеживать
-                        свой прогресс и результаты.
-                    </p>
+                    <div class="progress">
+                        <div class="progress-fill"></div>
+                    </div>
 
                 </div>
 
@@ -984,28 +1589,825 @@
 
         </div>
 
+    </section>
 
-        <!-- Панель модератора -->
 
-        <div
-            class="admin-panel"
-            id="admin-panel-block">
+    <!-- =================================================
+         EVENTS
+    ================================================= -->
 
-            <h3>
-                ⚙️ Панель модератора
-            </h3>
+    <section
+        id="page-events"
+        class="page">
 
-            <p>
-                Вы вошли с административными правами доступа.
-                Здесь в будущем можно будет создавать,
-                редактировать и удалять новости проекта.
-            </p>
+        <div class="section-heading">
+
+            <div>
+                <h2>📅 Мероприятия</h2>
+                <p>
+                    Демонстрационный календарь активностей
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="filters">
 
             <button
-                class="btn"
-                onclick="addNews()">
-                Разместить новость
+                class="filter-button active"
+                onclick="filterEvents('all', this)">
+                Все
             </button>
+
+            <button
+                class="filter-button"
+                onclick="filterEvents('online', this)">
+                Онлайн
+            </button>
+
+            <button
+                class="filter-button"
+                onclick="filterEvents('sport', this)">
+                Спорт
+            </button>
+
+            <button
+                class="filter-button"
+                onclick="filterEvents('team', this)">
+                Командные
+            </button>
+
+        </div>
+
+
+        <div class="events">
+
+            <div class="event"
+                 data-type="sport">
+
+                <div class="event-date">
+                    <div class="event-day">15</div>
+                    <div class="event-month">Авг</div>
+                </div>
+
+                <div>
+                    <h3>🏃 День движения</h3>
+                    <p>
+                        Индивидуальный спортивный челлендж.
+                        Участники выполняют серию заданий.
+                    </p>
+                </div>
+
+                <div class="event-tag">
+                    Спорт
+                </div>
+
+            </div>
+
+
+            <div class="event"
+                 data-type="online">
+
+                <div class="event-date">
+                    <div class="event-day">20</div>
+                    <div class="event-month">Авг</div>
+                </div>
+
+                <div>
+                    <h3>💻 Онлайн-разминка</h3>
+                    <p>
+                        Демонстрационная онлайн-активность
+                        с инструктором.
+                    </p>
+                </div>
+
+                <div class="event-tag">
+                    Онлайн
+                </div>
+
+            </div>
+
+
+            <div class="event"
+                 data-type="team">
+
+                <div class="event-date">
+                    <div class="event-day">24</div>
+                    <div class="event-month">Авг</div>
+                </div>
+
+                <div>
+                    <h3>🤝 Командный маршрут</h3>
+                    <p>
+                        Командный игровой сценарий
+                        с последовательностью заданий.
+                    </p>
+                </div>
+
+                <div class="event-tag">
+                    Команда
+                </div>
+
+            </div>
+
+
+            <div class="event"
+                 data-type="sport">
+
+                <div class="event-date">
+                    <div class="event-day">30</div>
+                    <div class="event-month">Авг</div>
+                </div>
+
+                <div>
+                    <h3>🏆 Финальный челлендж</h3>
+                    <p>
+                        Большая демонстрационная активность
+                        проекта.
+                    </p>
+                </div>
+
+                <div class="event-tag">
+                    Спорт
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         NEWS
+    ================================================= -->
+
+    <section
+        id="page-news"
+        class="page">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>📰 Новости</h2>
+                <p>
+                    Демонстрационные публикации проекта
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="news-grid">
+
+            <article class="news-card">
+
+                <div class="news-meta">
+                    11 августа 2026 · Обновление
+                </div>
+
+                <h3>
+                    🚀 Новый интерфейс «Игр Первых»
+                </h3>
+
+                <p>
+                    В демонстрационной версии появился новый
+                    пользовательский путь и обновлённая система
+                    навигации.
+                </p>
+
+            </article>
+
+
+            <article class="news-card">
+
+                <div class="news-meta">
+                    8 августа 2026 · Задания
+                </div>
+
+                <h3>
+                    🎯 Новая серия игровых заданий
+                </h3>
+
+                <p>
+                    В библиотеку сценариев добавлены новые
+                    задания на индивидуальную и командную активность.
+                </p>
+
+            </article>
+
+
+            <article class="news-card">
+
+                <div class="news-meta">
+                    5 августа 2026 · События
+                </div>
+
+                <h3>
+                    📅 Обновлён календарь мероприятий
+                </h3>
+
+                <p>
+                    Теперь участник может фильтровать события
+                    по формату активности.
+                </p>
+
+            </article>
+
+
+            <article class="news-card">
+
+                <div class="news-meta">
+                    1 августа 2026 · Проект
+                </div>
+
+                <h3>
+                    ⭐ Старт демонстрационной экосистемы
+                </h3>
+
+                <p>
+                    Цифровой прототип объединяет игровые механики,
+                    мероприятия, материалы и обратную связь.
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         LIBRARY
+    ================================================= -->
+
+    <section
+        id="page-library"
+        class="page">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>📚 Библиотека</h2>
+                <p>
+                    Полезные демонстрационные материалы
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="library-grid">
+
+            <div class="material">
+                <span class="material-type">
+                    Статья
+                </span>
+
+                <h3>
+                    Как начать тренироваться
+                </h3>
+
+                <p>
+                    Базовые рекомендации для безопасного
+                    начала физической активности.
+                </p>
+            </div>
+
+
+            <div class="material">
+                <span class="material-type">
+                    Инструкция
+                </span>
+
+                <h3>
+                    Пользовательский путь
+                </h3>
+
+                <p>
+                    Краткая инструкция по основным возможностям
+                    демонстрационного прототипа.
+                </p>
+            </div>
+
+
+            <div class="material">
+                <span class="material-type">
+                    Видео
+                </span>
+
+                <h3>
+                    Разминка перед активностью
+                </h3>
+
+                <p>
+                    Демонстрационный сценарий короткой разминки.
+                </p>
+            </div>
+
+
+            <div class="material">
+                <span class="material-type">
+                    Методика
+                </span>
+
+                <h3>
+                    Командные активности
+                </h3>
+
+                <p>
+                    Идеи для игровых сценариев, которые можно
+                    проходить вместе.
+                </p>
+            </div>
+
+
+            <div class="material">
+                <span class="material-type">
+                    Чек-лист
+                </span>
+
+                <h3>
+                    Подготовка к челленджу
+                </h3>
+
+                <p>
+                    Небольшой список действий перед началом
+                    активности.
+                </p>
+            </div>
+
+
+            <div class="material">
+                <span class="material-type">
+                    Материал
+                </span>
+
+                <h3>
+                    Цифровая безопасность
+                </h3>
+
+                <p>
+                    Демонстрационные рекомендации
+                    по ответственному использованию цифровых сервисов.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         FEEDBACK
+    ================================================= -->
+
+    <section
+        id="page-feedback"
+        class="page">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>💬 Обратная связь</h2>
+                <p>
+                    Предложения помогают развивать продукт
+                </p>
+            </div>
+
+        </div>
+
+
+        <form
+            class="form"
+            onsubmit="submitFeedback(event)">
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Тип обращения
+                </label>
+
+                <select class="select" id="feedback-type">
+
+                    <option>
+                        Предложение
+                    </option>
+
+                    <option>
+                        Отзыв
+                    </option>
+
+                    <option>
+                        Сообщение об ошибке
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Ваше сообщение
+                </label>
+
+                <textarea
+                    id="feedback-text"
+                    class="textarea"
+                    placeholder="Напишите предложение или отзыв..."
+                    required></textarea>
+
+            </div>
+
+
+            <button
+                class="primary-button"
+                type="submit">
+                Отправить предложение
+            </button>
+
+        </form>
+
+
+        <div class="section">
+
+            <div class="section-heading">
+
+                <h2>
+                    Отзывы участников
+                </h2>
+
+            </div>
+
+
+            <div class="reviews">
+
+                <div class="review">
+
+                    <p>
+                        «Понравилось, что задания можно проходить
+                        как самостоятельно, так и вместе с командой».
+                    </p>
+
+                    <div class="review-author">
+                        Демонстрационный пользователь
+                    </div>
+
+                </div>
+
+
+                <div class="review">
+
+                    <p>
+                        «Календарь помогает быстро понять,
+                        какие активности доступны дальше».
+                    </p>
+
+                    <div class="review-author">
+                        Демонстрационный пользователь
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         APP
+    ================================================= -->
+
+    <section
+        id="page-app"
+        class="page">
+
+        <div class="app-banner">
+
+            <div>
+
+                <h2>
+                    📱 Мобильное приложение
+                </h2>
+
+                <p>
+                    В мобильной версии пользователь получает
+                    доступ к игровым заданиям, прогрессу,
+                    событиям и материалам проекта.
+                    Кнопки ниже являются демонстрационными.
+                </p>
+
+            </div>
+
+
+            <div class="store-buttons">
+
+                <button
+                    class="store"
+                    onclick="demoAction('Открытие магазина приложений')">
+                     App Store — демо
+                </button>
+
+                <button
+                    class="store"
+                    onclick="demoAction('Открытие магазина приложений')">
+                    ▶ Google Play — демо
+                </button>
+
+                <button
+                    class="store"
+                    onclick="demoAction('Открытие страницы приложения')">
+                    ◉ Страница приложения
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         CHANNELS
+    ================================================= -->
+
+    <section
+        id="page-channels"
+        class="page">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>📢 Официальные каналы</h2>
+                <p>
+                    Информационные ресурсы проекта
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="channel-grid">
+
+            <div class="channel">
+
+                <h3>🌐 Движение Первых</h3>
+
+                <p>
+                    Официальный информационный ресурс
+                    Движения Первых.
+                </p>
+
+                <button
+                    class="secondary-button"
+                    style="margin-top:15px;"
+                    onclick="demoAction('Переход на официальный ресурс')">
+                    Открыть
+                </button>
+
+            </div>
+
+
+            <div class="channel">
+
+                <h3>VK</h3>
+
+                <p>
+                    Официальное сообщество
+                    «Движение Первых».
+                </p>
+
+                <button
+                    class="secondary-button"
+                    style="margin-top:15px;"
+                    onclick="demoAction('Переход в VK')">
+                    Открыть
+                </button>
+
+            </div>
+
+
+            <div class="channel">
+
+                <h3>Telegram</h3>
+
+                <p>
+                    Официальный канал
+                    «Движение Первых».
+                </p>
+
+                <button
+                    class="secondary-button"
+                    style="margin-top:15px;"
+                    onclick="demoAction('Переход в Telegram')">
+                    Открыть
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PARTNERS
+    ================================================= -->
+
+    <section
+        id="page-partners"
+        class="page">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>🤝 Партнёрам</h2>
+                <p>
+                    Демонстрационный сценарий взаимодействия
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="partner-grid">
+
+            <div class="partner">
+
+                <h3>🏢 Организациям</h3>
+
+                <p>
+                    Возможность поддерживать спортивные,
+                    образовательные и командные активности.
+                </p>
+
+            </div>
+
+
+            <div class="partner">
+
+                <h3>🎓 Образовательным организациям</h3>
+
+                <p>
+                    Демонстрационные сценарии для вовлечения
+                    участников в цифровые активности.
+                </p>
+
+            </div>
+
+
+            <div class="partner">
+
+                <h3>💡 Технологическим партнёрам</h3>
+
+                <p>
+                    Возможность предложить цифровые инструменты
+                    и идеи для развития проекта.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="section">
+
+            <div class="form">
+
+                <h3>
+                    Стать партнёром
+                </h3>
+
+                <p style="color:#aeb5ce;font-size:12px;line-height:1.6;">
+                    В демонстрационной версии контактные данные
+                    не отправляются на сервер.
+                </p>
+
+                <button
+                    class="primary-button"
+                    onclick="demoAction('Заявка партнёра создана в демонстрационном режиме')">
+                    Оставить заявку
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         ADMIN
+    ================================================= -->
+
+    <section
+        id="page-admin"
+        class="page">
+
+        <div class="admin-panel">
+
+            <h2>
+                ⚙️ Панель администратора
+            </h2>
+
+            <p style="color:#cbd5e1;font-size:13px;">
+                Демонстрационная административная часть.
+                Здесь показано отличие пользовательского
+                и административного сценариев.
+            </p>
+
+
+            <div class="admin-grid">
+
+                <div class="admin-stat">
+                    <strong>24</strong>
+                    <span>
+                        Новых предложения
+                    </span>
+                </div>
+
+                <div class="admin-stat">
+                    <strong>12</strong>
+                    <span>
+                        Мероприятий
+                    </span>
+                </div>
+
+                <div class="admin-stat">
+                    <strong>8</strong>
+                    <span>
+                        Материалов на проверке
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="section">
+
+                <div class="grid">
+
+                    <button
+                        class="card"
+                        style="text-align:left;color:white;"
+                        onclick="adminAction('Создание новости')">
+
+                        <div class="card-icon">📰</div>
+
+                        <h3>
+                            Создать новость
+                        </h3>
+
+                        <p>
+                            Демонстрация управления контентом.
+                        </p>
+
+                    </button>
+
+
+                    <button
+                        class="card"
+                        style="text-align:left;color:white;"
+                        onclick="adminAction('Создание мероприятия')">
+
+                        <div class="card-icon">📅</div>
+
+                        <h3>
+                            Добавить мероприятие
+                        </h3>
+
+                        <p>
+                            Демонстрация управления календарём.
+                        </p>
+
+                    </button>
+
+
+                    <button
+                        class="card"
+                        style="text-align:left;color:white;"
+                        onclick="adminAction('Проверка материалов')">
+
+                        <div class="card-icon">✅</div>
+
+                        <h3>
+                            Проверить материалы
+                        </h3>
+
+                        <p>
+                            Демонстрация административной проверки.
+                        </p>
+
+                    </button>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -1014,41 +2416,48 @@
 </main>
 
 
-<!-- =========================
-     ИИ-ТРЕНЕР
-========================= -->
+<!-- =====================================================
+     MODAL
+===================================================== -->
 
-<div class="ai-chat-widget">
-
-    <div class="ai-chat-header">
-        🤖 ИИ-Тренер Движения
-    </div>
+<div
+    id="modal"
+    class="modal"
+    onclick="closeModal(event)">
 
     <div
-        class="ai-chat-logs"
-        id="chat-logs">
+        class="modal-box"
+        onclick="event.stopPropagation()">
 
-        <div class="chat-msg ai">
-            Привет, Первый! 👋
-            Напиши мне «бег», «ОФП» или «приседания»,
-            и я предложу тренировку.
+        <div class="modal-header">
+
+            <h2 id="modal-title">
+                Демонстрация
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+                ×
+            </button>
+
         </div>
 
-    </div>
-
-    <div class="ai-chat-input-area">
-
-        <input
-            type="text"
-            id="chat-input"
-            class="ai-chat-input"
-            placeholder="Задайте вопрос..."
-            autocomplete="off">
+        <p
+            id="modal-text"
+            style="
+                color:#cbd5e1;
+                font-size:13px;
+                line-height:1.6;
+                margin-top:15px;
+            ">
+        </p>
 
         <button
-            class="ai-chat-send"
-            onclick="sendMessage()">
-            ➤
+            class="primary-button"
+            style="margin-top:10px;"
+            onclick="closeModal()">
+            Понятно
         </button>
 
     </div>
@@ -1056,287 +2465,447 @@
 </div>
 
 
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div
+    id="toast"
+    class="toast">
+</div>
+
+
 <script>
 
-    /* =====================================
-       ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ
-    ===================================== */
+    /* ===============================================
+       ДАННЫЕ СТРАНИЦ
+    =============================================== */
 
-    function switchTab(tabName) {
+    const pageInfo = {
 
-        // Получаем все разделы
-        const tabs = document.querySelectorAll(".tab-content");
+        home: {
+            title: "Игры Первых",
+            description: "Двигайся. Играй. Развивайся."
+        },
 
-        // Скрываем все разделы
-        tabs.forEach(function(tab) {
-            tab.classList.remove("active");
-        });
+        game: {
+            title: "Как играть",
+            description: "Пользовательский путь и игровые механики"
+        },
+
+        events: {
+            title: "Мероприятия",
+            description: "Календарь активностей проекта"
+        },
+
+        news: {
+            title: "Новости",
+            description: "Обновления и события"
+        },
+
+        library: {
+            title: "Библиотека",
+            description: "Полезные материалы проекта"
+        },
+
+        feedback: {
+            title: "Обратная связь",
+            description: "Отзывы, предложения и сообщения"
+        },
+
+        app: {
+            title: "Приложение",
+            description: "Мобильная версия проекта"
+        },
+
+        channels: {
+            title: "Каналы проекта",
+            description: "Официальные информационные ресурсы"
+        },
+
+        partners: {
+            title: "Партнёрам",
+            description: "Взаимодействие и сотрудничество"
+        },
+
+        admin: {
+            title: "Администрирование",
+            description: "Демонстрационная панель управления"
+        }
+
+    };
 
 
-        // Получаем все кнопки меню
-        const buttons = document.querySelectorAll(
-            ".sidebar .menu-link:not(.btn-role)"
-        );
+    /* ===============================================
+       ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ
+    =============================================== */
 
-        // Убираем активное состояние
-        buttons.forEach(function(button) {
-            button.classList.remove("active");
-        });
+    function showPage(pageName) {
 
+        // Все страницы
+        document
+            .querySelectorAll(".page")
+            .forEach(function(page) {
 
-        // Находим нужный раздел
-        const targetTab = document.getElementById(
-            "tab-" + tabName
-        );
+                page.classList.remove("active");
 
-
-        // Находим нужную кнопку
-        const targetButton = document.getElementById(
-            "tab-" + tabName + "-btn"
-        );
+            });
 
 
-        // Показываем раздел
-        if (targetTab) {
-            targetTab.classList.add("active");
+        // Все кнопки
+        document
+            .querySelectorAll(".menu-button")
+            .forEach(function(button) {
+
+                button.classList.remove("active");
+
+            });
+
+
+        // Нужная страница
+        const page =
+            document.getElementById("page-" + pageName);
+
+
+        // Нужная кнопка
+        const button =
+            document.querySelector(
+                '[data-page="' + pageName + '"]'
+            );
+
+
+        if (page) {
+            page.classList.add("active");
         }
 
 
-        // Подсвечиваем кнопку
-        if (targetButton) {
-            targetButton.classList.add("active");
+        if (button) {
+            button.classList.add("active");
         }
+
+
+        // Заголовок
+        if (pageInfo[pageName]) {
+
+            document.getElementById("page-title")
+                .textContent = pageInfo[pageName].title;
+
+            document.getElementById("page-description")
+                .textContent = pageInfo[pageName].description;
+
+        }
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
 
     }
 
 
-    /* =====================================
-       ПЕРЕКЛЮЧЕНИЕ РОЛЕЙ
-    ===================================== */
+    /* ===============================================
+       РОЛИ
+    =============================================== */
 
     function switchRole(role) {
 
-        const badge = document.getElementById("role-badge");
-
         const userButton =
-            document.getElementById("role-user-btn");
+            document.getElementById("user-role");
 
         const adminButton =
-            document.getElementById("role-admin-btn");
+            document.getElementById("admin-role");
 
-        const adminPanel =
-            document.getElementById("admin-panel-block");
+        const badge =
+            document.getElementById("role-badge");
+
+        const adminMenuButtons =
+            document.querySelectorAll(".admin-only");
 
 
-        // Меняем надпись
-        badge.textContent = "Роль: " + role;
-
-
-        // Сбрасываем активные кнопки
         userButton.classList.remove("active");
         adminButton.classList.remove("active");
 
 
-        // Если участник
-        if (role === "Участник") {
+        if (role === "Пользователь") {
 
             userButton.classList.add("active");
 
-            if (adminPanel) {
-                adminPanel.style.display = "none";
+            badge.textContent =
+                "👤 Роль: Пользователь";
+
+
+            adminMenuButtons.forEach(function(button) {
+                button.style.display = "none";
+            });
+
+
+            // Если админская страница открыта,
+            // возвращаем пользователя на главную
+            if (
+                document
+                    .getElementById("page-admin")
+                    .classList
+                    .contains("active")
+            ) {
+
+                showPage("home");
+
             }
+
+            showToast(
+                "Включён пользовательский режим"
+            );
 
         }
 
 
-        // Если модератор
-        if (role === "Модератор") {
+        if (role === "Администратор") {
 
             adminButton.classList.add("active");
 
-            if (adminPanel) {
-                adminPanel.style.display = "block";
-            }
+            badge.textContent =
+                "🔐 Роль: Администратор";
+
+
+            adminMenuButtons.forEach(function(button) {
+                button.style.display = "flex";
+            });
+
+
+            showToast(
+                "Включён режим администратора"
+            );
 
         }
 
     }
 
 
-    /* =====================================
-       ДОБАВЛЕНИЕ НОВОСТИ
-    ===================================== */
+    /* ===============================================
+       ФИЛЬТР МЕРОПРИЯТИЙ
+    =============================================== */
 
-    function addNews() {
+    function filterEvents(type, clickedButton) {
 
-        alert(
-            "Макет новости сохранён! " +
-            "В реальной версии здесь можно подключить базу данных."
+        document
+            .querySelectorAll(".filter-button")
+            .forEach(function(button) {
+
+                button.classList.remove("active");
+
+            });
+
+
+        clickedButton.classList.add("active");
+
+
+        document
+            .querySelectorAll(".event")
+            .forEach(function(event) {
+
+                const eventType =
+                    event.getAttribute("data-type");
+
+
+                if (
+                    type === "all" ||
+                    eventType === type
+                ) {
+
+                    event.style.display = "grid";
+
+                } else {
+
+                    event.style.display = "none";
+
+                }
+
+            });
+
+    }
+
+
+    /* ===============================================
+       FEEDBACK
+    =============================================== */
+
+    function submitFeedback(event) {
+
+        event.preventDefault();
+
+
+        const text =
+            document
+                .getElementById("feedback-text")
+                .value
+                .trim();
+
+
+        if (!text) {
+
+            showToast(
+                "Введите текст сообщения"
+            );
+
+            return;
+
+        }
+
+
+        document
+            .getElementById("feedback-text")
+            .value = "";
+
+
+        showToast(
+            "Спасибо! Сообщение сохранено в демонстрационном режиме."
         );
 
     }
 
 
-    /* =====================================
-       ИИ-ТРЕНЕР
-    ===================================== */
+    /* ===============================================
+       ДЕМО-КНОПКИ
+    =============================================== */
 
-    function sendMessage() {
+    function demoAction(message) {
 
-        const input =
-            document.getElementById("chat-input");
+        showModal(
+            "Демонстрационный режим",
+            message +
+            ". В конкурсном прототипе действие показано без подключения внешнего сервера."
+        );
 
-        const logs =
-            document.getElementById("chat-logs");
-
-
-        // Получаем текст
-        const message =
-            input.value.trim();
+    }
 
 
-        // Если поле пустое
-        if (message === "") {
+    /* ===============================================
+       АДМИНСКИЕ ДЕЙСТВИЯ
+    =============================================== */
+
+    function adminAction(action) {
+
+        showModal(
+            "Панель администратора",
+            action +
+            " — демонстрационный сценарий выполнен."
+        );
+
+    }
+
+
+    /* ===============================================
+       MODAL
+    =============================================== */
+
+    function showModal(title, text) {
+
+        document
+            .getElementById("modal-title")
+            .textContent = title;
+
+
+        document
+            .getElementById("modal-text")
+            .textContent = text;
+
+
+        document
+            .getElementById("modal")
+            .classList
+            .add("open");
+
+    }
+
+
+    function closeModal(event) {
+
+        if (
+            event &&
+            event.target !==
+            document.getElementById("modal")
+        ) {
+
             return;
+
         }
 
 
-        // Создаём сообщение пользователя
-        const userMessage =
-            document.createElement("div");
-
-        userMessage.className =
-            "chat-msg user";
-
-        userMessage.textContent =
-            message;
-
-
-        logs.appendChild(userMessage);
-
-
-        // Очищаем поле
-        input.value = "";
-
-
-        // Получаем ответ
-        const answer =
-            getTrainerAnswer(message);
-
-
-        // Создаём сообщение ИИ
-        const aiMessage =
-            document.createElement("div");
-
-        aiMessage.className =
-            "chat-msg ai";
-
-        aiMessage.textContent =
-            answer;
-
-
-        logs.appendChild(aiMessage);
-
-
-        // Прокручиваем чат вниз
-        logs.scrollTop =
-            logs.scrollHeight;
+        document
+            .getElementById("modal")
+            .classList
+            .remove("open");
 
     }
 
 
-    /* =====================================
-       ОТВЕТЫ ИИ
-    ===================================== */
+    /* ===============================================
+       TOAST
+    =============================================== */
 
-    function getTrainerAnswer(message) {
-
-        const text =
-            message.toLowerCase();
+    let toastTimer;
 
 
-        if (
-            text.includes("привет") ||
-            text.includes("здравств")
-        ) {
+    function showToast(message) {
 
-            return "Привет, Первый! 👋 Я твой ИИ-Тренер. Могу предложить программы для бега, ОФП и упражнений.";
-
-        }
+        const toast =
+            document.getElementById("toast");
 
 
-        if (
-            text.includes("бег") ||
-            text.includes("бежать")
-        ) {
+        toast.textContent = message;
 
-            return "🏃 Программа для бега: 5 минут разминки, затем 15–20 минут лёгкого бега. После тренировки сделай спокойную заминку.";
-
-        }
+        toast.classList.add("show");
 
 
-        if (
-            text.includes("офп") ||
-            text.includes("трениров")
-        ) {
-
-            return "💪 ОФП: 3 подхода — 10 приседаний, 8 отжиманий и 20 секунд планки. Отдых между подходами — около минуты.";
-
-        }
+        clearTimeout(toastTimer);
 
 
-        if (
-            text.includes("присед")
-        ) {
+        toastTimer =
+            setTimeout(function() {
 
-            return "🦵 Попробуй 3 подхода по 10–15 приседаний. Следи, чтобы спина оставалась ровной, а колени двигались в направлении носков.";
+                toast.classList.remove("show");
 
-        }
-
-
-        if (
-            text.includes("планк") ||
-            text.includes("планку")
-        ) {
-
-            return "🔥 Планка: начни с 20–30 секунд, сделай 3 подхода. Держи корпус ровно и не прогибай поясницу.";
-
-        }
-
-
-        return "🤖 Я пока понимаю команды «бег», «ОФП», «приседания» и «планка». Попробуй одну из них!";
+            }, 3000);
 
     }
 
 
-    /* =====================================
-       ENTER В ЧАТЕ
-    ===================================== */
+    /* ===============================================
+       ESC — ЗАКРЫТИЕ MODAL
+    =============================================== */
 
-    document
-        .getElementById("chat-input")
-        .addEventListener("keydown", function(event) {
+    document.addEventListener(
+        "keydown",
+        function(event) {
 
-            if (event.key === "Enter") {
-                sendMessage();
+            if (event.key === "Escape") {
+
+                closeModal();
+
             }
 
-        });
+        }
+    );
 
 
-    /* =====================================
-       НАЧАЛЬНАЯ НАСТРОЙКА
-    ===================================== */
+    /* ===============================================
+       START
+    =============================================== */
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
 
-        switchTab("about");
+            showPage("home");
 
-        switchRole("Участник");
+            switchRole("Пользователь");
 
-    });
+        }
+    );
 
 </script>
 
 </body>
 </html>
+```
