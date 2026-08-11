@@ -2,21 +2,19 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Игры Первых — Демонстрационный прототип</title>
+    <title>Игры Первых — Прототип</title>
     <style>
-        /* Переменные для быстрой смены цветов (Фирменный стиль Движения) */
         :root {
-            --primary: #ff4a00; /* Яркий красный Движения Первых */
+            --primary: #ff4a00; 
             --primary-hover: #cc3b00;
-            --sidebar-bg: #111827; /* Глубокий темный */
-            --bg: #f8fafc; /* Светло-серый премиальный фон */
+            --sidebar-bg: #111827; 
+            --bg: #f8fafc; 
             --card-bg: #ffffff;
-            --text-main: #0f172a; /* Графитовый для контента */
+            --text-main: #0f172a; 
             --text-muted: #64748b;
             --radius-main: 16px;
             --radius-sm: 8px;
         }
-
         body { 
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
             background: var(--bg); 
@@ -25,8 +23,6 @@
             display: flex;
             min-height: 100vh;
         }
-
-        /* Боковое меню в современном стиле */
         .sidebar { 
             width: 280px; 
             background: var(--sidebar-bg); 
@@ -39,7 +35,6 @@
             flex-direction: column;
             box-shadow: 4px 0 20px rgba(0,0,0,0.1);
         }
-
         .sidebar h2 { 
             color: white; 
             margin-top: 0;
@@ -48,15 +43,8 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-        
-        .sidebar h2 span {
-            color: var(--primary);
-        }
-
+        .sidebar h2 span { color: var(--primary); }
         .menu-btn { 
             display: flex;
             align-items: center;
@@ -74,19 +62,12 @@
             margin-bottom: 8px; 
             transition: all 0.2s ease;
         }
-
-        .menu-btn:hover { 
-            background: rgba(255,255,255,0.05); 
-            color: white; 
-        }
-
+        .menu-btn:hover { background: rgba(255,255,255,0.05); color: white; }
         .menu-btn.active { 
             background: var(--primary); 
             color: white; 
             box-shadow: 0 4px 12px rgba(255, 74, 0, 0.3);
         }
-
-        /* Переключатель ролей (Требование конкурса) */
         .role-section {
             margin-top: auto;
             background: rgba(255,255,255,0.03);
@@ -94,157 +75,23 @@
             border-radius: var(--radius-main);
             border: 1px solid rgba(255,255,255,0.08);
         }
-
-        .role-section p {
-            font-size: 12px; 
-            color: #64748b; 
-            margin: 0 0 12px 0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Главная область */
-        .main-content { 
-            margin-left: 280px; 
-            padding: 40px 50px; 
-            width: 100%; 
-            box-sizing: border-box; 
-        }
-
-        header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 1px solid #e2e8f0; 
-            padding-bottom: 25px; 
-            margin-bottom: 40px; 
-        }
-
-        header h1 {
-            font-size: 28px;
-            font-weight: 800;
-            margin: 0;
-            color: #0f172a;
-        }
-
-        .current-role-badge {
-            background: #e2e8f0; 
-            color: #334155;
-            padding: 8px 18px; 
-            border-radius: 30px; 
-            font-weight: 600; 
-            font-size: 13px;
-            border: 1px solid #cbd5e1;
-        }
-
-        /* Оформление карточек разделов */
-        .card { 
-            background: var(--card-bg); 
-            padding: 35px; 
-            border-radius: var(--radius-main); 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 4px 16px rgba(0,0,0,0.02); 
-            margin-bottom: 30px; 
-            border: 1px solid #f1f5f9;
-        }
-
-        .card h2 {
-            font-size: 22px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .card h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        .card p {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #334155;
-        }
-
-        /* Красивое блочное расположение (Grid) */
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 25px;
-        }
-
-        .grid-card {
-            background: #f8fafc;
-            padding: 25px;
-            border-radius: var(--radius-main);
-            border: 1px solid #e2e8f0;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .grid-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.04);
-            border-color: #cbd5e1;
-        }
-
-        .grid-card h3 {
-            margin-top: 0;
-            font-size: 18px;
-            color: #0f172a;
-        }
-
-        /* Кнопки */
-        .btn { 
-            background: var(--primary); 
-            color: white; 
-            border: none; 
-            padding: 12px 24px; 
-            border-radius: var(--radius-sm); 
-            cursor: pointer; 
-            font-size: 14px; 
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
+        .role-section p { font-size: 12px; color: #64748b; margin: 0 0 12px 0; text-transform: uppercase; }
+        .main-content { margin-left: 280px; padding: 40px 50px; width: 100%; box-sizing: border-box; }
+        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 25px; margin-bottom: 40px; }
+        header h1 { font-size: 28px; font-weight: 800; margin: 0; color: #0f172a; }
+        .current-role-badge { background: #e2e8f0; color: #334155; padding: 8px 18px; border-radius: 30px; font-weight: 600; font-size: 13px; border: 1px solid #cbd5e1; }
+        .card { background: var(--card-bg); padding: 35px; border-radius: var(--radius-main); box-shadow: 0 4px 16px rgba(0,0,0,0.02); margin-bottom: 30px; border: 1px solid #f1f5f9; }
+        .card h2 { font-size: 22px; margin-top: 0; margin-bottom: 20px; position: relative; padding-bottom: 10px; }
+        .card h2::after { content: ''; position: absolute; bottom: 0; left: 0; width: 50px; height: 3px; background: var(--primary); border-radius: 2px; }
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 25px; }
+        .grid-card { background: #f8fafc; padding: 25px; border-radius: var(--radius-main); border: 1px solid #e2e8f0; transition: transform 0.2s; }
+        .grid-card:hover { transform: translateY(-4px); border-color: #cbd5e1; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: var(--radius-sm); cursor: pointer; font-size: 14px; font-weight: 600; }
         .btn:hover { background: var(--primary-hover); }
-
-        .btn-outline {
-            background: none;
-            border: 1px solid #cbd5e1;
-            color: #475569;
-        }
-        .btn-outline:hover {
-            background: #f1f5f9;
-        }
-
-        /* Вкладки */
-        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content { display: none; }
         .tab-content.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Специфические элементы */
-        .admin-only { 
-            display: none; 
-            background: #fff5f5; 
-            border: 1px dashed #feb2b2; 
-            padding: 25px; 
-            border-radius: var(--radius-main); 
-            margin-top: 30px; 
-        }
-
-        ol { padding-left: 20px; }
-        ol li { margin-bottom: 12px; font-size: 15px; color: #334155; line-height: 1.5; }
+        .admin-only { display: none; background: #fff5f5; border: 1px dashed #feb2b2; padding: 25px; border-radius: var(--radius-main); margin-top: 30px; }
+        ol li { margin-bottom: 12px; font-size: 15px; color: #334155; }
     </style>
 </head>
 <body>
@@ -252,11 +99,11 @@
     <!-- Меню слева -->
     <div class="sidebar">
         <h2>Игры <span>Первых</span></h2>
-        <button class="menu-btn active" onclick="openTab('about')">💡 Идея проекта</button>
-        <button class="menu-btn" onclick="openTab('mechanics')">🎮 Механика игры</button>
-        <button class="menu-btn" onclick="openTab('calendar')">📅 Календарь событий</button>
-        <button class="menu-btn" onclick="openTab('news')">📰 Новости</button>
-        <button class="menu-btn" onclick="openTab('feedback')">💬 Обратная связь</button>
+        <button id="btn-about" class="menu-btn active" onclick="openTab('about', 'btn-about')">💡 Идея проекта</button>
+        <button id="btn-mechanics" class="menu-btn" onclick="openTab('mechanics', 'btn-mechanics')">🎮 Механика игры</button>
+        <button id="btn-calendar" class="menu-btn" onclick="openTab('calendar', 'btn-calendar')">📅 Календарь событий</button>
+        <button id="btn-news" class="menu-btn" onclick="openTab('news', 'btn-news')">📰 Новости</button>
+        <button id="btn-feedback" class="menu-btn" onclick="openTab('feedback', 'btn-feedback')">💬 Обратная связь</button>
         
         <!-- Роли участников -->
         <div class="role-section">
@@ -266,14 +113,14 @@
         </div>
     </div>
 
-    <!-- Область просмотра -->
+    <!-- Контент -->
     <div class="main-content">
         <header>
             <h1>Всероссийский проект «Игры Первых»</h1>
-            <div class="current-role-badge" id="current-role">Роль: Пользователь</div>
+            <div class="current-role-badge" id="current-role">Роль: Участник</div>
         </header>
 
-        <!-- Раздел 1 -->
+        <!-- Разделы -->
         <div id="about" class="tab-content active">
             <div class="card">
                 <h2>Концепция проекта</h2>
@@ -282,7 +129,6 @@
             </div>
         </div>
 
-        <!-- Раздел 2 -->
         <div id="mechanics" class="tab-content">
             <div class="card">
                 <h2>Пользовательский путь (Onboarding)</h2>
@@ -296,11 +142,50 @@
             </div>
         </div>
 
-        <!-- Раздел 3 (Красивое сеточное расположение) -->
         <div id="calendar" class="tab-content">
             <div class="card">
                 <h2>Предстоящие активности</h2>
-                <p>Календарь демонстрационных мероприятий проекта с базовой информацией:</p>
-                
                 <div class="grid-layout">
                     <div class="grid-card">
+                        <h3>🏃 Кибер-Забег Первых</h3>
+                        <p style="font-size: 14px; color: var(--text-muted);"><strong>Дата:</strong> 25.08.2026</p>
+                        <p style="font-size: 14px;">Онлайн-марафон, где результаты шагов и дистанции проверяются встроенным ИИ-трекером.</p>
+                    </div>
+                    <div class="grid-card">
+                        <h3>🧠 ИИ-Хакатон в спорте</h3>
+                        <p style="font-size: 14px; color: var(--text-muted);"><strong>Дата:</strong> 10.09.2026</p>
+                        <p style="font-size: 14px;">Командная разработка нейросетевых помощников для судейства массового спорта.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="news" class="tab-content">
+            <div class="card">
+                <h2>Лента обновлений</h2>
+                <div class="grid-layout">
+                    <div class="grid-card">
+                        <span style="font-size: 12px; background: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 4px; font-weight: 600;">ОБНОВЛЕНИЕ ИИ</span>
+                        <h3 style="margin-top: 10px;">Запуск нейро-тренера</h3>
+                        <p style="font-size: 14px; color: #334155;">В демонстрационное приложение добавлен умный модуль, оценивающий точность выполнения приседаний по 14 точкам тела в реальном времени.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-only" id="admin-news-panel">
+                <h3 style="margin-top: 0; color: #c53030;">⚙️ Панель управления (Роль: Администратор)</h3>
+                <input type="text" placeholder="Введите заголовок публикации..." style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: var(--radius-sm);"><br>
+                <button class="btn" style="background: #28a745;" onclick="alert('Успешно опубликовано в демо-версии!')">Разместить на сайте</button>
+            </div>
+        </div>
+
+        <div id="feedback" class="tab-content">
+            <div class="card">
+                <h2>Обратная связь и предложения</h2>
+                <form onsubmit="event.preventDefault(); alert('Ваш отзыв успешно зафиксирован!');">
+                    <textarea style="width: 100%; height: 120px; padding: 15px; border: 1px solid #cbd5e1; border-radius: var(--radius-sm);" placeholder="Напишите вашу идею или найденный баг..."></textarea><br><br>
+                    <button type="submit" class="btn">Отправить модераторам</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
