@@ -3,22 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <title>Игры Первых — Всероссийский Конкурс</title>
-    <!-- [CSS стили] -->
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        :root { --pervye-red: #e62e2d; --pervye-dark: #1e293b; --pervye-bg: #ffffff; --card-bg: #f8fafc; --border-color: #e2e8f0; --text-main: #0f172a; --text-muted: #64748b; }
+        :root {
+            --pervye-red: #e62e2d;       
+            --pervye-dark: #1e293b;      
+            --pervye-bg: #ffffff;        
+            --card-bg: #f8fafc;          
+            --border-color: #e2e8f0;     
+            --text-main: #0f172a;        
+            --text-muted: #64748b;
+        }
         body { font-family: 'Golos Text', sans-serif; background-color: var(--pervye-bg); color: var(--text-main); margin: 0; display: flex; min-height: 100vh; }
-        /* ... стилиsidebar, menu-link, main-content и т.д. ... */
+        .sidebar { width: 290px; background: var(--card-bg); border-right: 1px solid var(--border-color); height: 100vh; position: fixed; padding: 40px 24px; box-sizing: border-box; display: flex; flex-direction: column; }
+        .sidebar h2 { color: var(--pervye-dark); margin-top: 0; margin-bottom: 40px; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+        .sidebar h2 span { color: var(--pervye-red); font-weight: 900; }
+        .menu-link { display: flex; align-items: center; gap: 12px; color: var(--text-muted); text-decoration: none; padding: 14px 16px; font-size: 15px; font-weight: 600; border-radius: 12px; margin-bottom: 6px; border: none; background: none; width: 100%; text-align: left; cursor: pointer; }
+        .menu-link:hover { background: #f1f5f9; color: var(--pervye-dark); }
+        .menu-link.active { background: var(--pervye-red); color: white; box-shadow: 0 4px 14px rgba(230, 46, 45, 0.25); }
+        .role-section { margin-top: auto; background: var(--pervye-bg); padding: 16px; border-radius: 14px; border: 1px solid var(--border-color); }
+        .role-section p { font-size: 11px; color: var(--text-muted); margin: 0 0 12px 0; text-transform: uppercase; font-weight: 700; }
+        .main-content { margin-left: 290px; padding: 50px 60px; width: 100%; box-sizing: border-box; }
+        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 24px; margin-bottom: 45px; }
+        header h1 { font-size: 32px; font-weight: 800; margin: 0; color: var(--pervye-dark); }
+        .current-role-badge { background: var(--card-bg); color: var(--pervye-dark); padding: 8px 18px; border-radius: 30px; font-weight: 700; font-size: 13px; border: 1px solid var(--border-color); }
+        .card { background: var(--pervye-bg); padding: 40px; border-radius: 20px; margin-bottom: 30px; border: 1px solid var(--border-color); }
+        .card h2 { font-size: 24px; font-weight: 800; margin-top: 0; margin-bottom: 24px; color: var(--pervye-dark); }
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 30px; }
+        .grid-card { background: var(--card-bg); padding: 28px; border-radius: 16px; border: 1px solid var(--border-color); }
+        .btn { background: var(--pervye-dark); color: white; border: none; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 700; text-decoration: none; display: inline-block; }
+        .btn:hover { background: var(--pervye-red); }
+        .btn-role { display: block; width: 100%; text-align: center; box-sizing: border-box; background: var(--card-bg); color: var(--pervye-dark); border: 1px solid var(--border-color); margin-bottom: 8px; }
+        .btn-role.active { background: var(--pervye-dark); color: white; }
+        .admin-panel { display: none; background: #fff8f8; border: 1px solid #fee2e2; padding: 35px; border-radius: 20px; margin-top: 35px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .ai-chat-widget { position: fixed; bottom: 30px; right: 30px; width: 340px; background: white; border-radius: 20px; box-shadow: 0 12px 32px rgba(15,23,42,0.12); border: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; }
+        .ai-chat-header { background: var(--pervye-dark); color: white; padding: 18px; font-weight: 700; font-size: 14px; }
+        .ai-chat-logs { height: 220px; overflow-y: auto; padding: 18px; font-size: 13px; background: #f8fafc; }
+        .chat-msg { margin-bottom: 12px; padding: 10px 14px; border-radius: 12px; max-width: 80%; }
+        .chat-msg.user { background: var(--pervye-dark); color: white; margin-left: auto; }
+        .chat-msg.ai { background: white; color: var(--text-main); border: 1px solid var(--border-color); }
+        .ai-chat-input-area { display: flex; border-top: 1px solid var(--border-color); }
+        .ai-chat-input { flex: 1; border: none; padding: 16px; font-size: 13px; outline: none; font-family: inherit; }
+        .ai-chat-send { background: var(--pervye-red); color: white; border: none; padding: 0 20px; cursor: pointer; font-weight: 700; }
     </style>
 </head>
 <body>
+
     <div class="sidebar">
-        <h2>Игры Первых</h2> <!-- Цифра 1 убрана -->
-        <a href="/?role={{ role }}" class="menu-link {% if active_tab == 'about' %}active{% endif %}">💡 Идея проекта</a>
-        <!-- Остальные ссылки с активными классами -->
+        <h2><span>1</span> Игры Первых</h2>
+        <button id="tab-about-btn" class="menu-link active" onclick="switchTab('about')">💡 Идея проекта</button>
+        <button id="tab-mechanics-btn" class="menu-link" onclick="switchTab('mechanics')">🎮 Механика игры</button>
+        <button id="tab-calendar-btn" class="menu-link" onclick="switchTab('calendar')">📅 Календарь событий</button>
+        <button id="tab-news-btn" class="menu-link" onclick="switchTab('news')">📰 Новости</button>
+        <button id="tab-feedback-btn" class="menu-link" onclick="switchTab('feedback')">💬 Обратная связь</button>
+        
+        <div class="role-section">
+            <p>Тестирование ролей (Пункт 8.1):</p>
+            <button id="role-user-btn" class="menu-link btn-role active" onclick="switchRole('Участник')">👤 Участник</button>
+            <button id="role-admin-btn" class="menu-link btn-role" onclick="switchRole('Администратор')">🔑 Модератор</button>
+        </div>
     </div>
-    <!-- ... контент страницы ... -->
-    <script>
-        // JS для чата
-    </script>
-</body>
-</html>
+
+    <div class="main-content">
+        <header>
+            <h1>Всероссийский проект «Игры Первых»</h1>
+            <div class="current-role-badge" id="role-badge">Роль: Участник</div>
+        </header>
+
+        <div id="tab-about" class="tab-content active">
+            <div class="card">
+                <h2>Концепция проекта</h2>
+                <p>«Игры Первых» — это масштабная и технологичная цифровая экосистема, разработанная для интеграции физической активности, соревновательной геймификации и искусственного интеллекта в повседневную жизнь детей и молодежи.</p>
+            </div>
+        </div>
+
+        <div id="tab-mechanics" class="tab-content">
+            <div class="card">
+                <h2>Пользовательский путь (Onboarding)</h2>
+                <p>Процесс вовлечения нового участника в экосистему «Игр Первых» состоит из 4 последовательных шагов:</p>
+                <ol>
+                    <li><strong>Авторизация:</strong> Регистрация в системе и выбор персонального спортивного вызова на сезон.</li>
+                    <li><strong>Выполнение заданий:</strong> Получение ежедневных интерактивных комплексов по ОФП, спортивной гимнастике или легкой атлетике.</li>
+                    <li><strong>Контроль ИИ:</strong> Загрузка короткого видеоролика с выполнением упражнения для моментальной проверки техники нейросетью.</li>
+                    <li><strong>Лидерборд:</strong> Получение игровых баллов, открытие цифровых наград и продвижение команды в общем рейтинге.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div id="tab-calendar" class="tab-content">
+            <div class="card">
+                <h2>Календарь демонстрационных мероприятий</h2>
+                <div class="grid-layout">
+                    <div class="grid-card">
+                        <h3>🏃 Кибер-Забег Первых</h3>
+                        <p style="font-size: 14px; color: var(--text-muted);"><strong>Дата проведения:</strong> 25.08.2026</p>
+                        <p style="font-size: 14px; color: #334155;">Интерактивный онлайн-марафон. Результаты пройденной дистанции автоматически верифицируются через ИИ-трекер.</p>
+                    </div>
+                    <div class="grid-card">
+                        <h3>🧠 ИИ-Хакатон в массовом спорте</h3>
+                        <p style="font-size: 14px; color: var(--text-muted);"><strong>Дата проведения:</strong> 10.09.2026</p>
+                        <p style="font-size: 14px; color: #334155;">Всероссийский конкурс по созданию нейросетевых моделей для автоматического компьютерного судейства упражнений.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-news" class="tab-content">
+            <div class="card">
+                <h2>Лента официальных новостей</h2>
+                <div class="grid-layout">
+                    <div class="grid-card" style="border-left: 4px solid var(--pervye-red);">
+                        <span style="font-size: 11px; background: #fee2e2; color: var(--pervye-red); padding: 4px 10px; border-radius: 6px; font-weight: 700;">ТЕХНОЛОГИИ</span>
+                        <h3 style="margin-top: 12px; margin-bottom: 10px;">Интеграция ИИ-наставника</h3>
+                        <p style="font-size: 14px; color: #334155;">В архитектуру прототипа успешно внедрен умный спортивный чат-бот, способный генерировать персональные программы тренировок на основе анализа текстовых запросов.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-panel" id="admin-panel-block">
+                <h3 style="margin-top: 0; color: var(--pervye-red); font-weight: 800;">⚙️ Панель модератора (Пункт 8.1)</h3>
+                <input type="text" placeholder="Заголовок публикации..." style="width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: 1px solid var(--border-color); font-family: inherit;"><br>
