@@ -26,11 +26,21 @@
         .grid-card { background: #f8fafc; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; }
         .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; text-decoration: none; display: inline-block; font-size: 14px; }
         .admin-panel { background: #fff5f5; border: 1px dashed #feb2b2; padding: 25px; border-radius: 16px; margin-top: 30px; }
+        
+        /* Виджет ИИ-чата */
+        .ai-chat-widget { position: fixed; bottom: 20px; right: 20px; width: 320px; background: white; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; display: flex; flex-direction: column; overflow: hidden; }
+        .ai-chat-header { background: var(--primary); color: white; padding: 15px; font-weight: bold; font-size: 14px; }
+        .ai-chat-logs { height: 200px; overflow-y: auto; padding: 15px; font-size: 13px; background: #f8fafc; }
+        .chat-msg { margin-bottom: 10px; padding: 8px 12px; border-radius: 8px; max-width: 85%; }
+        .chat-msg.user { background: #e2e8f0; margin-left: auto; color: #0f172a; }
+        .chat-msg.ai { background: #ffeaee; color: #b91c1c; }
+        .ai-chat-input-area { display: flex; border-top: 1px solid #e2e8f0; }
+        .ai-chat-input { flex: 1; border: none; padding: 12px; font-size: 13px; outline: none; }
+        .ai-chat-send { background: var(--primary); color: white; border: none; padding: 0 15px; cursor: pointer; font-size: 13px; }
     </style>
 </head>
 <body>
 
-    <!-- Меню слева (Переход по страницам Python) -->
     <div class="sidebar">
         <h2>Игры <span>Первых</span></h2>
         <a href="/?role={{ role }}" class="menu-link {% if active_tab == 'about' %}active{% endif %}">💡 Идея проекта</a>
@@ -39,7 +49,6 @@
         <a href="/news?role={{ role }}" class="menu-link {% if active_tab == 'news' %}active{% endif %}">📰 Новости</a>
         <a href="/feedback?role={{ role }}" class="menu-link {% if active_tab == 'feedback' %}active{% endif %}">💬 Обратная связь</a>
         
-        <!-- Переключение ролей через перезагрузку ссылки -->
         <div style="margin-top: auto; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 16px;">
             <p style="font-size: 12px; color: #64748b; margin: 0 0 12px 0;">ТЕСТ РОЛЕЙ:</p>
             <a href="?role=Участник" class="btn" style="width: 80%; text-align: center; margin-bottom: 8px; background: #334155;">👤 Участник</a>
@@ -47,14 +56,12 @@
         </div>
     </div>
 
-    <!-- Основной блок -->
     <div class="main-content">
         <header>
             <h1>Всероссийский проект «Игры Первых»</h1>
             <div class="current-role-badge">Роль: {{ role }}</div>
         </header>
 
-        <!-- Раздел: Идея -->
         {% if active_tab == 'about' %}
         <div class="card">
             <h2>Концепция проекта</h2>
@@ -62,7 +69,6 @@
         </div>
         {% endif %}
 
-        <!-- Раздел: Механика -->
         {% if active_tab == 'mechanics' %}
         <div class="card">
             <h2>Пользовательский путь</h2>
@@ -75,7 +81,6 @@
         </div>
         {% endif %}
 
-        <!-- Раздел: Календарь -->
         {% if active_tab == 'calendar' %}
         <div class="card">
             <h2>Предстоящие активности</h2>
@@ -94,7 +99,6 @@
         </div>
         {% endif %}
 
-        <!-- Раздел: Новости -->
         {% if active_tab == 'news' %}
         <div class="card">
             <h2>Лента обновлений</h2>
@@ -104,7 +108,6 @@
             </div>
         </div>
         
-        <!-- Панель админа показывается ТОЛЬКО если роль Администратор -->
         {% if role == 'Администратор' %}
         <div class="admin-panel">
             <h3 style="margin-top: 0; color: #c53030;">⚙️ Панель модератора</h3>
@@ -114,7 +117,6 @@
         {% endif %}
         {% endif %}
 
-        <!-- Раздел: Обратная связь -->
         {% if active_tab == 'feedback' %}
         <div class="card">
             <h2>Обратная связь</h2>
@@ -126,5 +128,50 @@
         {% endif %}
     </div>
 
+    <!-- Виджет ИИ-чат-бота -->
+    <div class="ai-chat-widget">
+        <div class="ai-chat-header">🤖 Чат с ИИ-Тренером Первых</div>
+        <div class="ai-chat-logs" id="chat-logs">
+            <div class="chat-msg ai">🤖 ИИ-Тренер: Привет! Напиши мне слово 'привет', 'бег' или 'приседания', чтобы начать!</div>
+        </div>
+        <div class="ai-chat-input-area">
+            <input type="text" id="chat-input" class="ai-chat-input" placeholder="Задайте вопрос тренеру...">
+            <button class="ai-chat-send" onclick="sendMessage()">Отправить</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var input = document.getElementById('chat-input');
+            var message = input.value.trim();
+            if (!message) return;
+
+            var logs = document.getElementById('chat-logs');
+            
+            // Добавляем сообщение пользователя на экран
+            var userDiv = document.createElement('div');
+            userDiv.className = 'chat-msg user';
+            userDiv.innerText = message;
+            logs.appendChild(userDiv);
+            
+            input.value = '';
+            logs.scrollTop = logs.scrollHeight;
+
+            // Отправляем запрос на наш бэкенд во Flask
+            fetch('/ai-chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message })
+            })
+            .then(res => res.json())
+            .then(data => {
+                var aiDiv = document.createElement('div');
+                aiDiv.className = 'chat-msg ai';
+                aiDiv.innerText = data.reply;
+                logs.appendChild(aiDiv);
+                logs.scrollTop = logs.scrollHeight;
+            });
+        }
+    </script>
 </body>
 </html>
