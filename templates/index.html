@@ -2,154 +2,1341 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Игры Первых — Всероссийский Конкурс</title>
-    <link href="https://googleapis.com" rel="stylesheet">
+
+    <!-- Шрифт Golos Text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* Сохраняем вашу текущую цветовую палитру без изменений */
-        :root { 
-            --pervye-red: #ff007f;       
-            --pervye-dark: #432899;      
-            --pervye-bg: #1a133d;        
-            --card-bg: #251c54;          
-            --border-color: #3b2f7c;     
-            --text-main: #ffffff;        
-            --text-muted: #a5b4fc;       
+        :root {
+            --pervye-red: #ff007f;
+            --pervye-dark: #432899;
+            --pervye-bg: #1a133d;
+            --card-bg: #251c54;
+            --border-color: #3b2f7c;
+            --text-main: #ffffff;
+            --text-muted: #a5b4fc;
+            --hover: #32266f;
+            --success: #22c55e;
         }
-        
-        body { font-family: 'Golos Text', sans-serif; background-color: var(--pervye-bg); color: var(--text-main); margin: 0; display: flex; min-height: 100vh; }
-        
-        /* Боковое меню */
-        .sidebar { width: 290px; background: var(--card-bg); border-right: 1px solid var(--border-color); height: 100vh; position: fixed; padding: 40px 24px; box-sizing: border-box; display: flex; flex-direction: column; }
-        .sidebar h2 { color: var(--text-main); margin-top: 0; margin-bottom: 40px; font-size: 24px; font-weight: 800; }
-        
-        /* Кнопки меню — добавлены стили для сброса стандартного вида button */
-        .menu-link { display: flex; align-items: center; gap: 12px; color: var(--text-muted); text-decoration: none; padding: 14px 16px; font-size: 15px; font-weight: 600; border-radius: 12px; margin-bottom: 6px; box-sizing: border-box; width: 100%; text-align: left; cursor: pointer; transition: all 0.2s; border: none; background: none; font-family: inherit; }
-        .menu-link:hover { background: #32266f; color: white; }
-        .menu-link.active { background: var(--pervye-dark) !important; color: white !important; box-shadow: 0 4px 14px rgba(67, 40, 153, 0.4); border: 1px solid #5c3bcc; }
-        
-        /* Тестирование ролей */
-        .role-section { margin-top: auto; background: #140e32; padding: 18px; border-radius: 16px; border: 1px solid var(--border-color); }
-        .role-section p { color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0 0 12px 0; letter-spacing: 0.5px; }
-        
-        .btn-role { background: var(--card-bg); color: #cbd5e1; border: 1px solid var(--border-color); margin-bottom: 8px; font-weight: 600; display: block; text-align: center; text-decoration: none; line-height: 40px; height: 40px; padding: 0; border-radius: 12px; font-family: inherit; font-size: 15px; }
-        .btn-role:hover { background: #32266f; color: white; }
-        .btn-role.active { background: var(--pervye-dark) !important; color: #ffffff !important; border-color: #6366f1 !important; }
-        
-        /* Главный контент */
-        .main-content { margin-left: 290px; padding: 50px 60px; width: 100%; box-sizing: border-box; }
-        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 24px; margin-bottom: 45px; }
-        header h1 { font-size: 32px; font-weight: 800; margin: 0; color: var(--text-main); }
-        .current-role-badge { background: var(--card-bg); color: #a5b4fc; padding: 8px 18px; border-radius: 30px; font-weight: 700; font-size: 13px; border: 1px solid var(--border-color); }
-        
-        /* Карточки */
-        .card { background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-        .card h2 { font-size: 24px; font-weight: 800; margin-top: 0; color: var(--text-main); }
-        .card p, .card ol li { color: #cbd5e1; line-height: 1.6; }
-        .card ol li { margin-bottom: 10px; }
-        
-        .btn { background: var(--pervye-dark); color: white; border: 1px solid #5c3bcc; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 700; }
-        .btn:hover { background: #32266f; }
-        
-        /* Админка */
-        .admin-panel { display: none; background: #3a152e; border: 1px solid #6b1f54; padding: 35px; border-radius: 20px; margin-top: 35px; }
-        
-        /* Вкладки */
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* ИИ-чат-бот */
-        .ai-chat-widget { position: fixed; bottom: 30px; right: 30px; width: 340px; background: var(--card-bg); border-radius: 20px; box-shadow: 0 12px 32px rgba(0,0,0,0.4); border: 1px solid var(--border-color); overflow: hidden; }
-        .ai-chat-header { background: var(--pervye-dark); color: white; padding: 18px; font-weight: 700; border-bottom: 1px solid var(--border-color); }
-        .ai-chat-logs { height: 220px; overflow-y: auto; padding: 18px; font-size: 13px; background: #140e32; }
-        .chat-msg { margin-bottom: 12px; padding: 10px 14px; border-radius: 12px; max-width: 80%; line-height: 1.4; }
-        .chat-msg.user { background: var(--pervye-dark); color: white; margin-left: auto; border: 1px solid #5c3bcc; }
-        .chat-msg.ai { background: var(--card-bg); color: #e2e8f0; border: 1px solid var(--border-color); }
-        .ai-chat-input-area { display: flex; border-top: 1px solid var(--border-color); background: var(--card-bg); }
-        .ai-chat-input { flex: 1; border: none; padding: 16px; outline: none; background: transparent; color: white; font-family: inherit; }
-        .ai-chat-send { background: var(--pervye-dark); color: white; border: none; padding: 0 20px; cursor: pointer; font-weight: 700; border-left: 1px solid var(--border-color); }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Golos Text", sans-serif;
+            background: var(--pervye-bg);
+            color: var(--text-main);
+        }
+
+        /* =========================
+           БОКОВОЕ МЕНЮ
+        ========================= */
+
+        .sidebar {
+            width: 290px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            padding: 40px 24px;
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            margin: 0 0 40px;
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: var(--pervye-red);
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .menu-link {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 14px 16px;
+
+            border: 1px solid transparent;
+            border-radius: 12px;
+
+            background: transparent;
+            color: var(--text-muted);
+
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+
+            text-align: left;
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .menu-link:hover {
+            background: var(--hover);
+            color: #fff;
+        }
+
+        .menu-link.active {
+            background: var(--pervye-dark);
+            color: #fff;
+            border-color: #5c3bcc;
+            box-shadow: 0 4px 14px rgba(67, 40, 153, 0.4);
+        }
+
+        /* =========================
+           РОЛИ
+        ========================= */
+
+        .role-section {
+            margin-top: auto;
+            padding: 18px;
+
+            background: #140e32;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+        }
+
+        .role-title {
+            margin: 0 0 12px;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-role {
+            height: 42px;
+            margin-bottom: 8px;
+            justify-content: center;
+
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: #cbd5e1;
+        }
+
+        .btn-role:last-child {
+            margin-bottom: 0;
+        }
+
+        .btn-role:hover {
+            background: var(--hover);
+            color: white;
+        }
+
+        .btn-role.active {
+            background: var(--pervye-dark);
+            color: white;
+            border-color: #6366f1;
+        }
+
+        /* =========================
+           ОСНОВНОЙ КОНТЕНТ
+        ========================= */
+
+        .main-content {
+            margin-left: 290px;
+            min-height: 100vh;
+            padding: 50px 60px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding-bottom: 24px;
+            margin-bottom: 45px;
+
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 800;
+        }
+
+        .current-role-badge {
+            padding: 8px 18px;
+            border-radius: 30px;
+
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           ВКЛАДКИ
+        ========================= */
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+           КАРТОЧКИ
+        ========================= */
+
+        .card {
+            margin-bottom: 25px;
+            padding: 40px;
+
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .card p,
+        .card li {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .card ol {
+            padding-left: 25px;
+        }
+
+        .card li {
+            margin-bottom: 12px;
+        }
+
+        /* =========================
+           СТАТИСТИКА
+        ========================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 25px;
+        }
+
+        .stat-card {
+            padding: 25px;
+            background: #201849;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+        }
+
+        .stat-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            margin-top: 5px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* =========================
+           КНОПКИ
+        ========================= */
+
+        .btn {
+            padding: 12px 24px;
+
+            background: var(--pervye-dark);
+            color: white;
+
+            border: 1px solid #5c3bcc;
+            border-radius: 10px;
+
+            font-family: inherit;
+            font-weight: 700;
+
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .btn:hover {
+            background: var(--hover);
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           КАЛЕНДАРЬ
+        ========================= */
+
+        .events {
+            display: grid;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .event {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            padding: 20px;
+
+            background: #201849;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+        }
+
+        .event-date {
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .event-day {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .event-month {
+            color: var(--pervye-red);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .event-info h3 {
+            margin: 0 0 5px;
+        }
+
+        .event-info p {
+            margin: 0;
+        }
+
+        /* =========================
+           НОВОСТИ
+        ========================= */
+
+        .news-list {
+            display: grid;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .news-item {
+            padding: 20px;
+
+            background: #201849;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+        }
+
+        .news-item h3 {
+            margin: 0 0 8px;
+        }
+
+        .news-item p {
+            margin: 0;
+        }
+
+        .news-date {
+            display: inline-block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* =========================
+           АДМИНКА
+        ========================= */
+
+        .admin-panel {
+            display: none;
+            margin-top: 25px;
+            padding: 30px;
+
+            background: #3a152e;
+            border: 1px solid #6b1f54;
+            border-radius: 20px;
+        }
+
+        .admin-panel h3 {
+            color: var(--pervye-red);
+        }
+
+        /* =========================
+           ЧАТ
+        ========================= */
+
+        .ai-chat-widget {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+
+            z-index: 200;
+
+            width: 340px;
+
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .ai-chat-header {
+            padding: 18px;
+
+            background: var(--pervye-dark);
+            color: white;
+
+            font-weight: 700;
+        }
+
+        .ai-chat-logs {
+            height: 220px;
+            overflow-y: auto;
+
+            padding: 18px;
+
+            background: #140e32;
+        }
+
+        .chat-msg {
+            max-width: 82%;
+            margin-bottom: 12px;
+            padding: 10px 14px;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .chat-msg.user {
+            margin-left: auto;
+
+            background: var(--pervye-dark);
+            border: 1px solid #5c3bcc;
+
+            color: white;
+        }
+
+        .chat-msg.ai {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+
+            color: #e2e8f0;
+        }
+
+        .ai-chat-input-area {
+            display: flex;
+
+            border-top: 1px solid var(--border-color);
+            background: var(--card-bg);
+        }
+
+        .ai-chat-input {
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 16px;
+
+            border: none;
+            outline: none;
+
+            background: transparent;
+            color: white;
+
+            font-family: inherit;
+        }
+
+        .ai-chat-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .ai-chat-send {
+            padding: 0 20px;
+
+            background: var(--pervye-dark);
+            color: white;
+
+            border: none;
+            border-left: 1px solid var(--border-color);
+
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .ai-chat-send:hover {
+            background: var(--hover);
+        }
+
+        /* =========================
+           МОБИЛЬНАЯ ВЕРСИЯ
+        ========================= */
+
+        @media (max-width: 900px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 20px;
+            }
+
+            .logo {
+                margin-bottom: 20px;
+            }
+
+            .menu {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .role-section {
+                margin-top: 20px;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 30px 20px 300px;
+            }
+
+            header {
+                align-items: flex-start;
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            header h1 {
+                font-size: 25px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-chat-widget {
+                right: 15px;
+                bottom: 15px;
+                left: 15px;
+                width: auto;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .menu {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .event {
+                align-items: flex-start;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="sidebar">
-        <h2>Игры Первых</h2>
-        <!-- Заменили теги 'a' на надежные 'button' с точным совпадением ID -->
-        <button id="tab-about-btn" class="menu-link active" onclick="switchTab('about')">💡 Идея проекта</button>
-        <button id="tab-mechanics-btn" class="menu-link" onclick="switchTab('mechanics')">🎮 Механика игры</button>
-        <button id="tab-calendar-btn" class="menu-link" onclick="switchTab('calendar')">📅 Календарь</button>
-        <button id="tab-news-btn" class="menu-link" onclick="switchTab('news')">📰 Новости</button>
-        
-        <div class="role-section">
-            <p>Тестирование ролей:</p>
-            <button id="role-user-btn" class="menu-link btn-role active" onclick="switchRole('Участник')">👤 Участник</button>
-            <button id="role-admin-btn" class="menu-link btn-role" onclick="switchRole('Администратор')">🔑 Модератор</button>
-        </div>
+
+<!-- =========================
+     БОКОВОЕ МЕНЮ
+========================= -->
+
+<aside class="sidebar">
+
+    <h2 class="logo">
+        Игры <span>Первых</span>
+    </h2>
+
+    <nav class="menu">
+
+        <button
+            id="tab-about-btn"
+            class="menu-link active"
+            onclick="switchTab('about')">
+            💡 Идея проекта
+        </button>
+
+        <button
+            id="tab-mechanics-btn"
+            class="menu-link"
+            onclick="switchTab('mechanics')">
+            🎮 Механика игры
+        </button>
+
+        <button
+            id="tab-calendar-btn"
+            class="menu-link"
+            onclick="switchTab('calendar')">
+            📅 Календарь
+        </button>
+
+        <button
+            id="tab-news-btn"
+            class="menu-link"
+            onclick="switchTab('news')">
+            📰 Новости
+        </button>
+
+    </nav>
+
+    <!-- Роли -->
+
+    <div class="role-section">
+
+        <p class="role-title">
+            Тестирование ролей:
+        </p>
+
+        <button
+            id="role-user-btn"
+            class="menu-link btn-role active"
+            onclick="switchRole('Участник')">
+            👤 Участник
+        </button>
+
+        <button
+            id="role-admin-btn"
+            class="menu-link btn-role"
+            onclick="switchRole('Модератор')">
+            🔑 Модератор
+        </button>
+
     </div>
-    
-    <div class="main-content">
-        <header>
-            <h1>Всероссийский проект «Игры Первых»</h1>
-            <div class="current-role-badge" id="role-badge">Роль: Участник</div>
-        </header>
-        
-        <div id="tab-about" class="tab-content active">
-            <div class="card">
-                <h2>Концепция проекта</h2>
-                <p>«Игры Первых» — цифровая экосистема для физической активности и геймификации, созданная по официальным материалам Всероссийского Конкурса.</p>
-            </div>
+
+</aside>
+
+
+<!-- =========================
+     ОСНОВНОЙ КОНТЕНТ
+========================= -->
+
+<main class="main-content">
+
+    <header>
+
+        <h1>
+            Всероссийский проект «Игры Первых»
+        </h1>
+
+        <div
+            class="current-role-badge"
+            id="role-badge">
+            Роль: Участник
         </div>
-        
-        <div id="tab-mechanics" class="tab-content">
-            <div class="card">
-                <h2>Пользовательский путь (Onboarding)</h2>
-                <ol>
-                    <li><strong>Авторизация:</strong> Быстрый вход и создание спортивного профиля.</li>
-                    <li><strong>Выполнение заданий:</strong> Получение ежедневных квестов на выносливость и силу.</li>
-                    <li><strong>Контроль ИИ:</strong> Автоматическая верификация движений через камеру смартфона.</li>
-                    <li><strong>Лидерборд:</strong> Обмен заработанных движ-коинов на призы и мерч.</li>
-                </ol>
-            </div>
+
+    </header>
+
+
+    <!-- =========================
+         ИДЕЯ ПРОЕКТА
+    ========================= -->
+
+    <section
+        id="tab-about"
+        class="tab-content active">
+
+        <div class="card">
+
+            <h2>
+                Концепция проекта
+            </h2>
+
+            <p>
+                «Игры Первых» — цифровая экосистема для физической
+                активности и геймификации, созданная для вовлечения
+                участников в спорт, командные активности и выполнение
+                различных заданий.
+            </p>
+
+            <p>
+                Участники выполняют задания, получают баллы,
+                соревнуются с другими игроками и развивают свои
+                спортивные навыки.
+            </p>
+
         </div>
-        
-        <div id="tab-calendar" class="tab-content">
-            <div class="card">
-                <h2>📅 Календарь мероприятий</h2>
-                <p>Следите за расписанием марафонов и онлайн-активностей в реальном времени.</p>
+
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon">🏃</div>
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">
+                    Активность проекта
+                </div>
             </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-number">100+</div>
+                <div class="stat-label">
+                    Спортивных заданий
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number">∞</div>
+                <div class="stat-label">
+                    Возможностей для развития
+                </div>
+            </div>
+
         </div>
-        
-        <div id="tab-news" class="tab-content">
-            <div class="card">
-                <h2>📰 Новости проекта</h2>
-                <p>Все свежие обновления ИИ-модулей и новые квесты публикуются здесь.</p>
-            </div>
-            <div class="admin-panel" id="admin-panel-block">
-                <h3 style="color: var(--pervye-red);">⚙️ Панель модератора (Пункт 8.1)</h3>
-                <p style="color: #cbd5e1; font-size: 14px;">Вы вошли с административными правами доступа.</p>
-                <button class="btn" onclick="alert('Макет новости сохранен!')">Разместить новость</button>
-            </div>
+
+    </section>
+
+
+    <!-- =========================
+         МЕХАНИКА
+    ========================= -->
+
+    <section
+        id="tab-mechanics"
+        class="tab-content">
+
+        <div class="card">
+
+            <h2>
+                🎮 Механика игры
+            </h2>
+
+            <p>
+                Пользователь проходит несколько этапов,
+                выполняя спортивные задания и зарабатывая
+                игровые баллы.
+            </p>
+
+            <ol>
+
+                <li>
+                    <strong>Авторизация:</strong>
+                    быстрый вход и создание спортивного профиля.
+                </li>
+
+                <li>
+                    <strong>Получение заданий:</strong>
+                    участник получает ежедневные квесты.
+                </li>
+
+                <li>
+                    <strong>Выполнение:</strong>
+                    пользователь выполняет спортивное задание.
+                </li>
+
+                <li>
+                    <strong>Верификация:</strong>
+                    результат может проверяться системой.
+                </li>
+
+                <li>
+                    <strong>Баллы:</strong>
+                    за выполнение участник получает движ-коины.
+                </li>
+
+                <li>
+                    <strong>Лидерборд:</strong>
+                    участник может сравнивать свои результаты
+                    с другими игроками.
+                </li>
+
+            </ol>
+
         </div>
+
+    </section>
+
+
+    <!-- =========================
+         КАЛЕНДАРЬ
+    ========================= -->
+
+    <section
+        id="tab-calendar"
+        class="tab-content">
+
+        <div class="card">
+
+            <h2>
+                📅 Календарь мероприятий
+            </h2>
+
+            <p>
+                Здесь отображаются ближайшие марафоны,
+                спортивные активности и онлайн-мероприятия.
+            </p>
+
+
+            <div class="events">
+
+                <div class="event">
+
+                    <div class="event-date">
+                        <div class="event-day">15</div>
+                        <div class="event-month">Авг</div>
+                    </div>
+
+                    <div class="event-info">
+
+                        <h3>
+                            🏃 День движения
+                        </h3>
+
+                        <p>
+                            Индивидуальный спортивный челлендж.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="event">
+
+                    <div class="event-date">
+                        <div class="event-day">20</div>
+                        <div class="event-month">Авг</div>
+                    </div>
+
+                    <div class="event-info">
+
+                        <h3>
+                            💪 ОФП-челлендж
+                        </h3>
+
+                        <p>
+                            Выполни комплекс упражнений и получи баллы.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="event">
+
+                    <div class="event-date">
+                        <div class="event-day">28</div>
+                        <div class="event-month">Авг</div>
+                    </div>
+
+                    <div class="event-info">
+
+                        <h3>
+                            🏆 Финальный марафон
+                        </h3>
+
+                        <p>
+                            Большое соревнование участников проекта.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         НОВОСТИ
+    ========================= -->
+
+    <section
+        id="tab-news"
+        class="tab-content">
+
+        <div class="card">
+
+            <h2>
+                📰 Новости проекта
+            </h2>
+
+            <p>
+                Здесь будут публиковаться новости,
+                обновления и новые спортивные задания.
+            </p>
+
+
+            <div class="news-list">
+
+                <div class="news-item">
+
+                    <span class="news-date">
+                        11 августа 2026
+                    </span>
+
+                    <h3>
+                        🚀 Запуск новой версии проекта
+                    </h3>
+
+                    <p>
+                        Обновлён интерфейс платформы и добавлены
+                        новые интерактивные возможности.
+                    </p>
+
+                </div>
+
+
+                <div class="news-item">
+
+                    <span class="news-date">
+                        8 августа 2026
+                    </span>
+
+                    <h3>
+                        🎮 Новые спортивные задания
+                    </h3>
+
+                    <p>
+                        В проект добавлены новые задания
+                        на выносливость и силу.
+                    </p>
+
+                </div>
+
+
+                <div class="news-item">
+
+                    <span class="news-date">
+                        5 августа 2026
+                    </span>
+
+                    <h3>
+                        🏆 Обновление рейтинга
+                    </h3>
+
+                    <p>
+                        Теперь участники могут отслеживать
+                        свой прогресс и результаты.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Панель модератора -->
+
+        <div
+            class="admin-panel"
+            id="admin-panel-block">
+
+            <h3>
+                ⚙️ Панель модератора
+            </h3>
+
+            <p>
+                Вы вошли с административными правами доступа.
+                Здесь в будущем можно будет создавать,
+                редактировать и удалять новости проекта.
+            </p>
+
+            <button
+                class="btn"
+                onclick="addNews()">
+                Разместить новость
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================
+     ИИ-ТРЕНЕР
+========================= -->
+
+<div class="ai-chat-widget">
+
+    <div class="ai-chat-header">
+        🤖 ИИ-Тренер Движения
     </div>
-    
-    <div class="ai-chat-widget">
-        <div class="ai-chat-header">🤖 ИИ-Тренер Движения</div>
-        <div class="ai-chat-logs" id="chat-logs">
-            <div class="chat-msg ai">Привет, Первый! Напиши мне "бег" или "ОФП" для спортивной программы.</div>
+
+    <div
+        class="ai-chat-logs"
+        id="chat-logs">
+
+        <div class="chat-msg ai">
+            Привет, Первый! 👋
+            Напиши мне «бег», «ОФП» или «приседания»,
+            и я предложу тренировку.
         </div>
-        <div class="ai-chat-input-area">
-            <input type="text" id="chat-input" class="ai-chat-input" placeholder="Задайте вопрос...">
-            <button class="ai-chat-send" onclick="sendMessage()">➤</button>
-        </div>
+
     </div>
-    
-    <script>
-        // Безупречный скрипт: убран лишний аргумент 'e', а суффикс '-btn' совпадает с HTML
-        function switchTab(tabName) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.sidebar .menu-link:not(.btn-role)').forEach(el => el.classList.remove('active'));
-            
-        var targetTab = document.getElementById('tab-' + tabName);
-        var targetBtn = document.getElementById('tab-' + tabName + '-btn');
-            
-        if (targetTab) targetTab.classList.add('active');
-            if (targetBtn) targetBtn.classList.add('active');}function switchRole(roleName) {document.getElementById('role-badge').innerText = 'Роль: ' + roleName;document.querySelectorAll('.btn-role').forEach(el => el.classList.remove('active'));var adminBlock = document.getElementById('admin-panel-block');if (roleName === 'Администратор') {document.getElementById('role-admin-btn').classList.add('active');if (adminBlock) adminBlock.style.display = 'block';alert('Режим тестирования: Включена роль Администратора.');} else {document.getElementById('role-user-btn').classList.add('active');if (adminBlock) adminBlock.style.display = 'none';}}function sendMessage() {var input = document.getElementById('chat-input');var msg = input.value.trim();if (!msg) return;var logs = document.getElementById('chat-logs');var userDiv = document.createElement('div');userDiv.className = 'chat-msg user';userDiv.innerText = msg;logs.appendChild(userDiv);input.value = '';logs.scrollTop = logs.scrollHeight;fetch('/ai-chat', {method: 'POST',headers: { 'Content-Type': 'application/json' },body: JSON.stringify({ message: msg })}).then(res => res.json()).then(data => {var aiDiv = document.createElement('div');aiDiv.className = 'chat-msg ai';aiDiv.innerText = data.reply;logs.appendChild(aiDiv);logs.scrollTop = logs.scrollHeight;});}
+
+    <div class="ai-chat-input-area">
+
+        <input
+            type="text"
+            id="chat-input"
+            class="ai-chat-input"
+            placeholder="Задайте вопрос..."
+            autocomplete="off">
+
+        <button
+            class="ai-chat-send"
+            onclick="sendMessage()">
+            ➤
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =====================================
+       ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ
+    ===================================== */
+
+    function switchTab(tabName) {
+
+        // Получаем все разделы
+        const tabs = document.querySelectorAll(".tab-content");
+
+        // Скрываем все разделы
+        tabs.forEach(function(tab) {
+            tab.classList.remove("active");
+        });
+
+
+        // Получаем все кнопки меню
+        const buttons = document.querySelectorAll(
+            ".sidebar .menu-link:not(.btn-role)"
+        );
+
+        // Убираем активное состояние
+        buttons.forEach(function(button) {
+            button.classList.remove("active");
+        });
+
+
+        // Находим нужный раздел
+        const targetTab = document.getElementById(
+            "tab-" + tabName
+        );
+
+
+        // Находим нужную кнопку
+        const targetButton = document.getElementById(
+            "tab-" + tabName + "-btn"
+        );
+
+
+        // Показываем раздел
+        if (targetTab) {
+            targetTab.classList.add("active");
+        }
+
+
+        // Подсвечиваем кнопку
+        if (targetButton) {
+            targetButton.classList.add("active");
+        }
+
+    }
+
+
+    /* =====================================
+       ПЕРЕКЛЮЧЕНИЕ РОЛЕЙ
+    ===================================== */
+
+    function switchRole(role) {
+
+        const badge = document.getElementById("role-badge");
+
+        const userButton =
+            document.getElementById("role-user-btn");
+
+        const adminButton =
+            document.getElementById("role-admin-btn");
+
+        const adminPanel =
+            document.getElementById("admin-panel-block");
+
+
+        // Меняем надпись
+        badge.textContent = "Роль: " + role;
+
+
+        // Сбрасываем активные кнопки
+        userButton.classList.remove("active");
+        adminButton.classList.remove("active");
+
+
+        // Если участник
+        if (role === "Участник") {
+
+            userButton.classList.add("active");
+
+            if (adminPanel) {
+                adminPanel.style.display = "none";
+            }
+
+        }
+
+
+        // Если модератор
+        if (role === "Модератор") {
+
+            adminButton.classList.add("active");
+
+            if (adminPanel) {
+                adminPanel.style.display = "block";
+            }
+
+        }
+
+    }
+
+
+    /* =====================================
+       ДОБАВЛЕНИЕ НОВОСТИ
+    ===================================== */
+
+    function addNews() {
+
+        alert(
+            "Макет новости сохранён! " +
+            "В реальной версии здесь можно подключить базу данных."
+        );
+
+    }
+
+
+    /* =====================================
+       ИИ-ТРЕНЕР
+    ===================================== */
+
+    function sendMessage() {
+
+        const input =
+            document.getElementById("chat-input");
+
+        const logs =
+            document.getElementById("chat-logs");
+
+
+        // Получаем текст
+        const message =
+            input.value.trim();
+
+
+        // Если поле пустое
+        if (message === "") {
+            return;
+        }
+
+
+        // Создаём сообщение пользователя
+        const userMessage =
+            document.createElement("div");
+
+        userMessage.className =
+            "chat-msg user";
+
+        userMessage.textContent =
+            message;
+
+
+        logs.appendChild(userMessage);
+
+
+        // Очищаем поле
+        input.value = "";
+
+
+        // Получаем ответ
+        const answer =
+            getTrainerAnswer(message);
+
+
+        // Создаём сообщение ИИ
+        const aiMessage =
+            document.createElement("div");
+
+        aiMessage.className =
+            "chat-msg ai";
+
+        aiMessage.textContent =
+            answer;
+
+
+        logs.appendChild(aiMessage);
+
+
+        // Прокручиваем чат вниз
+        logs.scrollTop =
+            logs.scrollHeight;
+
+    }
+
+
+    /* =====================================
+       ОТВЕТЫ ИИ
+    ===================================== */
+
+    function getTrainerAnswer(message) {
+
+        const text =
+            message.toLowerCase();
+
+
+        if (
+            text.includes("привет") ||
+            text.includes("здравств")
+        ) {
+
+            return "Привет, Первый! 👋 Я твой ИИ-Тренер. Могу предложить программы для бега, ОФП и упражнений.";
+
+        }
+
+
+        if (
+            text.includes("бег") ||
+            text.includes("бежать")
+        ) {
+
+            return "🏃 Программа для бега: 5 минут разминки, затем 15–20 минут лёгкого бега. После тренировки сделай спокойную заминку.";
+
+        }
+
+
+        if (
+            text.includes("офп") ||
+            text.includes("трениров")
+        ) {
+
+            return "💪 ОФП: 3 подхода — 10 приседаний, 8 отжиманий и 20 секунд планки. Отдых между подходами — около минуты.";
+
+        }
+
+
+        if (
+            text.includes("присед")
+        ) {
+
+            return "🦵 Попробуй 3 подхода по 10–15 приседаний. Следи, чтобы спина оставалась ровной, а колени двигались в направлении носков.";
+
+        }
+
+
+        if (
+            text.includes("планк") ||
+            text.includes("планку")
+        ) {
+
+            return "🔥 Планка: начни с 20–30 секунд, сделай 3 подхода. Держи корпус ровно и не прогибай поясницу.";
+
+        }
+
+
+        return "🤖 Я пока понимаю команды «бег», «ОФП», «приседания» и «планка». Попробуй одну из них!";
+
+    }
+
+
+    /* =====================================
+       ENTER В ЧАТЕ
+    ===================================== */
+
+    document
+        .getElementById("chat-input")
+        .addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+
+        });
+
+
+    /* =====================================
+       НАЧАЛЬНАЯ НАСТРОЙКА
+    ===================================== */
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+        switchTab("about");
+
+        switchRole("Участник");
+
+    });
+
+</script>
+
+</body>
+</html>
