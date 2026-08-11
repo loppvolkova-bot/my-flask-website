@@ -2,136 +2,305 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Игры Первых</title>
+    <title>Игры Первых — Демонстрационный прототип</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 0; display: flex; }
-        .sidebar { width: 260px; background: #1e2229; color: white; height: 100vh; position: fixed; padding: 20px; box-sizing: border-box; }
-        .sidebar h2 { color: #007bff; margin-bottom: 30px; font-size: 22px; }
-        .menu-btn { display: block; width: 100%; background: none; border: none; color: #a0aec0; text-align: left; padding: 12px 15px; font-size: 15px; cursor: pointer; border-radius: 6px; margin-bottom: 5px; }
-        .menu-btn:hover, .menu-btn.active { background: #2d3748; color: white; }
-        .main-content { margin-left: 260px; padding: 40px; width: 100%; box-sizing: border-box; }
-        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 30px; }
-        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
-        .tab-content { display: none; }
+        /* Переменные для быстрой смены цветов (Фирменный стиль Движения) */
+        :root {
+            --primary: #ff4a00; /* Яркий красный Движения Первых */
+            --primary-hover: #cc3b00;
+            --sidebar-bg: #111827; /* Глубокий темный */
+            --bg: #f8fafc; /* Светло-серый премиальный фон */
+            --card-bg: #ffffff;
+            --text-main: #0f172a; /* Графитовый для контента */
+            --text-muted: #64748b;
+            --radius-main: 16px;
+            --radius-sm: 8px;
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            background: var(--bg); 
+            color: var(--text-main);
+            margin: 0; 
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Боковое меню в современном стиле */
+        .sidebar { 
+            width: 280px; 
+            background: var(--sidebar-bg); 
+            color: white; 
+            height: 100vh; 
+            position: fixed; 
+            padding: 30px 20px; 
+            box-sizing: border-box; 
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+        }
+
+        .sidebar h2 { 
+            color: white; 
+            margin-top: 0;
+            margin-bottom: 35px; 
+            font-size: 24px; 
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sidebar h2 span {
+            color: var(--primary);
+        }
+
+        .menu-btn { 
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%; 
+            background: none; 
+            border: none; 
+            color: #94a3b8; 
+            text-align: left; 
+            padding: 14px 18px; 
+            font-size: 15px; 
+            font-weight: 500;
+            cursor: pointer; 
+            border-radius: var(--radius-sm); 
+            margin-bottom: 8px; 
+            transition: all 0.2s ease;
+        }
+
+        .menu-btn:hover { 
+            background: rgba(255,255,255,0.05); 
+            color: white; 
+        }
+
+        .menu-btn.active { 
+            background: var(--primary); 
+            color: white; 
+            box-shadow: 0 4px 12px rgba(255, 74, 0, 0.3);
+        }
+
+        /* Переключатель ролей (Требование конкурса) */
+        .role-section {
+            margin-top: auto;
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: var(--radius-main);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .role-section p {
+            font-size: 12px; 
+            color: #64748b; 
+            margin: 0 0 12px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Главная область */
+        .main-content { 
+            margin-left: 280px; 
+            padding: 40px 50px; 
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+
+        header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #e2e8f0; 
+            padding-bottom: 25px; 
+            margin-bottom: 40px; 
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0;
+            color: #0f172a;
+        }
+
+        .current-role-badge {
+            background: #e2e8f0; 
+            color: #334155;
+            padding: 8px 18px; 
+            border-radius: 30px; 
+            font-weight: 600; 
+            font-size: 13px;
+            border: 1px solid #cbd5e1;
+        }
+
+        /* Оформление карточек разделов */
+        .card { 
+            background: var(--card-bg); 
+            padding: 35px; 
+            border-radius: var(--radius-main); 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 4px 16px rgba(0,0,0,0.02); 
+            margin-bottom: 30px; 
+            border: 1px solid #f1f5f9;
+        }
+
+        .card h2 {
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .card h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .card p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        /* Красивое блочное расположение (Grid) */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .grid-card {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: var(--radius-main);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .grid-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+            border-color: #cbd5e1;
+        }
+
+        .grid-card h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #0f172a;
+        }
+
+        /* Кнопки */
+        .btn { 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            padding: 12px 24px; 
+            border-radius: var(--radius-sm); 
+            cursor: pointer; 
+            font-size: 14px; 
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background: var(--primary-hover); }
+
+        .btn-outline {
+            background: none;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+        }
+        .btn-outline:hover {
+            background: #f1f5f9;
+        }
+
+        /* Вкладки */
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
         .tab-content.active { display: block; }
-        .btn { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; }
-        .btn:hover { background: #0056b3; }
-        .admin-only { display: none; background: #fff5f5; border: 1px dashed #f56565; padding: 20px; border-radius: 8px; margin-top: 20px; }
-        ol, ul { padding-left: 20px; line-height: 1.6; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Специфические элементы */
+        .admin-only { 
+            display: none; 
+            background: #fff5f5; 
+            border: 1px dashed #feb2b2; 
+            padding: 25px; 
+            border-radius: var(--radius-main); 
+            margin-top: 30px; 
+        }
+
+        ol { padding-left: 20px; }
+        ol li { margin-bottom: 12px; font-size: 15px; color: #334155; line-height: 1.5; }
     </style>
 </head>
 <body>
 
-    <!-- Боковая панель навигации (Выполнение требований конкурса) -->
+    <!-- Меню слева -->
     <div class="sidebar">
-        <h2>Игры Первых</h2>
+        <h2>Игры <span>Первых</span></h2>
         <button class="menu-btn active" onclick="openTab('about')">💡 Идея проекта</button>
         <button class="menu-btn" onclick="openTab('mechanics')">🎮 Механика игры</button>
         <button class="menu-btn" onclick="openTab('calendar')">📅 Календарь событий</button>
         <button class="menu-btn" onclick="openTab('news')">📰 Новости</button>
         <button class="menu-btn" onclick="openTab('feedback')">💬 Обратная связь</button>
         
-        <!-- Переключение ролей пользователей (Пункт 8.1 Положения) -->
-        <div style="margin-top: 40px; border-top: 1px solid #4a5568; padding-top: 20px;">
-            <p style="font-size: 12px; color: #718096; margin-bottom: 10px;">Тест ролей (Пункт 8.1):</p>
-            <button class="btn" style="width: 100%; margin-bottom: 8px;" onclick="changeRole('Пользователь')">👤 Пользователь</button>
-            <button class="btn" style="width: 100%; background: #ed8936;" onclick="changeRole('Администратор')">🔑 Админ</button>
+        <!-- Роли участников -->
+        <div class="role-section">
+            <p>Тест ролей (Пункт 8.1):</p>
+            <button class="btn" style="width: 100%; margin-bottom: 8px; background: #334155;" onclick="changeRole('Пользователь')">👤 Участник</button>
+            <button class="btn" style="width: 100%; background: #475569;" onclick="changeRole('Администратор')">🔑 Модератор</button>
         </div>
     </div>
 
-    <!-- Основной контент сайта -->
+    <!-- Область просмотра -->
     <div class="main-content">
         <header>
             <h1>Всероссийский проект «Игры Первых»</h1>
-            <div style="background: #e2e8f0; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 14px;" id="current-role">Роль: Пользователь</div>
+            <div class="current-role-badge" id="current-role">Роль: Пользователь</div>
         </header>
 
-        <!-- Раздел 1: Идея проекта -->
+        <!-- Раздел 1 -->
         <div id="about" class="tab-content active">
             <div class="card">
                 <h2>Концепция проекта</h2>
-                <p>«Игры Первых» — это масштабная экосистема, объединяющая спорт, геймификацию и ИИ-технологии для вовлечения молодежи в активный и здоровый образ жизни.</p>
+                <p>«Игры Первых» — это масштабная цифровая экосистема, объединяющая физическую активность, соревновательную геймификацию и современные ИИ-технологии для вовлечения детей и молодежи в здоровый образ жизни.</p>
+                <p>Прототип создан специально для Всероссийского конкурса по прикладному применению искусственного интеллекта.</p>
             </div>
         </div>
 
-        <!-- Раздел 2: Механика игры -->
+        <!-- Раздел 2 -->
         <div id="mechanics" class="tab-content">
             <div class="card">
-                <h2>Пользовательский путь игрока (Onboarding)</h2>
-                <p>Каждый участник проходит интерактивный путь от новичка до лидера рейтинга:</p>
+                <h2>Пользовательский путь (Onboarding)</h2>
+                <p>Интерактивный сценарий взаимодействия участника с платформой проекта:</p>
                 <ol>
-                    <li>Регистрация на платформе и выбор спортивного направления.</li>
-                    <li>Выполнение ежедневных интерактивных заданий.</li>
-                    <li>Загрузка видео-подтверждений выполнения упражнений.</li>
-                    <li>Получение игровых баллов и продвижение в общем лидерборде проекта.</li>
+                    <li><strong>Регистрация:</strong> Авторизация на цифровой платформе и выбор спортивного вызова.</li>
+                    <li><strong>Интерактив:</strong> Получение ежедневных заданий по ОФП, бегу или гимнастике.</li>
+                    <li><strong>Контроль ИИ:</strong> Загрузка короткого видео выполнения упражнения для автоматического анализа техники нейросетью.</li>
+                    <li><strong>Прогресс:</strong> Начисление баллов, получение достижений и продвижение в рейтинге Первых.</li>
                 </ol>
             </div>
         </div>
 
-        <!-- Раздел 3: Календарь событий -->
+        <!-- Раздел 3 (Красивое сеточное расположение) -->
         <div id="calendar" class="tab-content">
             <div class="card">
                 <h2>Предстоящие активности</h2>
-                <p><strong>🏃 Кибер-Забег Первых</strong> — Дата: 25.08.2026</p>
-                <p>Онлайн-марафон с автоматической фиксацией результатов через ИИ-трекер.</p>
-                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;">
-                <p><strong>🧠 ИИ-Хакатон в спорте</strong> — Дата: 10.09.2026</p>
-                <p>Разработка ИИ-помощников для автоматического судейства соревнований.</p>
-            </div>
-        </div>
-
-        <!-- Раздел 4: Новости -->
-        <div id="news" class="tab-content">
-            <div class="card">
-                <h2>Лента обновлений</h2>
-                <p><strong>Запуск ИИ-ассистента.</strong> Сегодня в демонстрационное приложение был добавлен умный тренер, оценивающий технику приседаний пользователя в реальном времени.</p>
-            </div>
-            
-            <!-- Скрытая панель администратора -->
-            <div class="admin-only" id="admin-news-panel">
-                <h3>⚙️ Панель админа: Добавить новость</h3>
-                <input type="text" placeholder="Заголовок новости" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #e2e8f0; border-radius: 4px;"><br>
-                <button class="btn" style="background: #28a745;" onclick="alert('Новость успешно добавлена в прототип!')">Опубликовать</button>
-            </div>
-        </div>
-
-        <!-- Раздел 5: Обратная связь -->
-        <div id="feedback" class="tab-content">
-            <div class="card">
-                <h2>Форма обратной связи</h2>
-                <form onsubmit="event.preventDefault(); alert('Ваш отзыв успешно отправлен в демонстрационную систему!');">
-                    <textarea style="width: 100%; height: 100px; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px;" placeholder="Введите ваше предложение для улучшения проекта..."></textarea><br><br>
-                    <button type="submit" class="btn">Отправить предложение</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Функция переключения вкладок
-        function openTab(tabId) {
-            var contents = document.querySelectorAll('.tab-content');
-            contents.forEach(function(c) { c.classList.remove('active'); });
-            
-            var buttons = document.querySelectorAll('.menu-btn');
-            buttons.forEach(function(b) { b.classList.remove('active'); });
-            
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-
-        // Функция симуляции ролей (Требование 8.1 регламента конкурса)
-        function changeRole(role) {
-            document.getElementById('current-role').innerText = 'Роль: ' + role;
-            var adminPanel = document.getElementById('admin-news-panel');
-            if(role === 'Администратор') {
-                adminPanel.style.display = 'block';
-                alert('Вы переключились на роль Администратора. Открыт доступ к скрытым панелям управления!');
-            } else {
-                adminPanel.style.display = 'none';
-            }
-        }
-    </script>
-</body>
-</html>
-
+                <p>Календарь демонстрационных мероприятий проекта с базовой информацией:</p>
+                
+                <div class="grid-layout">
+                    <div class="grid-card">
