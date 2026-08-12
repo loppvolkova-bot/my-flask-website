@@ -23,16 +23,11 @@
 
             --green: #35d39a;
             --yellow: #ffc857;
-            --blue: #5ca8ff;
-        }
+            --blue: #5ca8ff;}
 
-        * {
-            box-sizing: border-box;
-        }
+        * {box-sizing: border-box;}
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html {scroll-behavior: smooth;}
 
         body {
             margin: 0;
@@ -75,11 +70,6 @@
         a {
             color: inherit;
         }
-
-        /* =========================
-           SIDEBAR
-        ========================= */
-
         .sidebar {
             position: fixed;
             left: 0;
@@ -453,31 +443,211 @@
             border: 1px solid rgba(255,255,255,0.15);
         }
 
-        .hero-decoration {
-            position: absolute;
+        .hero-visual {
+    position: absolute;
+    right: 45px;
+    top: 50%;
+    transform: translateY(-50%);
 
-            width: 280px;
-            height: 280px;
+    width: 380px;
+    height: 440px;
 
-            right: 50px;
-            top: 60px;
+    z-index: 2;
+}
 
-            border-radius: 50%;
+        .hero-phone {
+    position: absolute;
+    right: 55px;
+    top: 10px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255, 0, 127, 0.75),
-                    rgba(108, 78, 230, 0.7)
-                );
+    width: 220px;
+    height: 400px;
 
-            filter: blur(1px);
+    padding: 9px;
 
-            opacity: 0.35;
+    border-radius: 35px;
 
-            box-shadow:
-                0 0 100px rgba(255, 0, 127, 0.25);
-        }
+    background: #080613;
+
+    border: 4px solid #4b4075;
+
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.55),
+        0 0 70px rgba(108, 78, 230, 0.35);
+
+    transform: rotate(5deg);
+}
+
+        .hero-phone-screen {
+    width: 100%;
+    height: 100%;
+
+    padding: 20px;
+
+    border-radius: 27px;
+
+    background:
+        radial-gradient(
+            circle at 80% 10%,
+            rgba(255, 0, 127, 0.35),
+            transparent 30%
+        ),
+        linear-gradient(
+            160deg,
+            #41289a,
+            #15102f
+        );
+
+    overflow: hidden;
+}
+
+        .phone-notch {
+    width: 65px;
+    height: 15px;
+
+    margin: 0 auto 25px;
+
+    border-radius: 20px;
+
+    background: #080613;
+}
+
+        .app-mini-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: white;
+}
+
+        .balance {
+    margin-top: 25px;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    background: rgba(255,255,255,0.10);
+
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+        .balance span {
+    color: #c8c0e8;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+        .balance strong {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 28px;
+}
+
+        .task {
+    margin-top: 15px;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    background: white;
+
+    color: #21194a;
+}
+
+        .task small {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #6c4ee6;
+
+    font-size: 8px;
+    font-weight: 900;
+}
+
+        .task b {
+    display: block;
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+        .task button {
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 9px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #ff007f;
+
+    color: white;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+        .floating {
+    position: absolute;
+
+    z-index: 5;
+
+    padding: 11px 15px;
+
+    border-radius: 14px;
+
+    background: rgba(33, 25, 74, 0.92);
+
+    border: 1px solid #55468f;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,0.30);
+
+    backdrop-filter: blur(10px);
+
+    color: white;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+        .reward-1 {
+    left: 0;
+    top: 80px;
+
+    animation: floating 4s ease-in-out infinite;
+}
+
+        .reward-2 {
+    right: 0;
+    top: 230px;
+
+    animation: floating 5s ease-in-out infinite reverse;
+}
+
+        .achievement {
+    left: 10px;
+    bottom: 45px;
+
+    animation: floating 4.5s ease-in-out infinite;
+}
+
+@keyframes floating {
+
+    0%, 100% {
+        transform: translateY(0) rotate(-2deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(2deg);
+    }
+}
 
         /* =========================
            CARDS
@@ -1452,7 +1622,57 @@
 
             </div>
 
-            <div class="hero-decoration"></div>
+            <div class="hero-visual">
+
+    <div class="floating reward reward-1">
+        🪙 +250
+    </div>
+
+    <div class="floating reward reward-2">
+        💎 +50
+    </div>
+
+    <div class="floating achievement">
+        🏆 Новое достижение
+    </div>
+
+    <div class="hero-phone">
+
+        <div class="hero-phone-screen">
+
+            <div class="phone-notch"></div>
+
+            <div class="app-mini-title">
+                💜 Игра Первых
+            </div>
+
+            <div class="balance">
+
+                <span>ДВИЖКОИНЫ</span>
+
+                <strong>1 250</strong>
+
+            </div>
+
+            <div class="task">
+
+                <small>⚡ НОВОЕ ЗАДАНИЕ</small>
+
+                <b>
+                    Открыть новую сферу
+                </b>
+
+                <button>
+                    Начать →
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
         </div>
 
@@ -1507,7 +1727,7 @@
                     Выполняй игровые задания, участвуй
                     в событиях и получай движкоины и кристалы,
                     которые можно использовать
-                    в игровых механиках проекта и дял получения реальный призов.
+                    в игровых механиках проекта и для получения реальный призов.
                 </p>
 
             </div>
