@@ -2195,66 +2195,237 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
         ========================= */
 
         .channel {
-            display: flex;
+    position: relative;
+    overflow: hidden;
 
-            align-items: center;
-            gap: 16px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
 
-            padding: 20px;
+    padding: 22px;
 
-            border-radius: 17px;
+    min-height: 92px;
 
-            background: var(--card);
+    border-radius: 20px;
 
-            border: 1px solid var(--border);
-        }
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(108, 78, 230, 0.18),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(42, 32, 89, 0.98),
+            rgba(27, 21, 58, 0.98)
+        );
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.14);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+        .channel::before {
+    content: "";
+
+    position: absolute;
+
+    width: 170px;
+    height: 170px;
+
+    right: -80px;
+    top: -80px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 0, 127, 0.20),
+            transparent 70%
+        );
+
+    pointer-events: none;
+
+    transition: 0.5s ease;
+}
+        .channel:hover {
+    transform: translateY(-6px);
+
+    border-color: #8068e8;
+
+    box-shadow:
+        0 20px 45px rgba(67,40,153,0.28),
+        0 0 30px rgba(108,78,230,0.12);
+}
+
+.channel:hover::before {
+    transform: scale(1.5);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,0,127,0.32),
+            transparent 70%
+        );
+}
 
         .channel-icon {
-            width: 50px;
-            height: 50px;
+    position: relative;
+    z-index: 2;
 
-            flex-shrink: 0;
+    width: 56px;
+    height: 56px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    flex-shrink: 0;
 
-            border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            background: #0077ff;
+    border-radius: 17px;
 
-            font-weight: 900;
-            font-size: 20px;
-        }
+    background:
+        linear-gradient(
+            135deg,
+            #0077ff,
+            #6c4ee6
+        );
+
+    border: 1px solid rgba(255,255,255,0.14);
+
+    color: white;
+
+    font-weight: 900;
+    font-size: 21px;
+
+    box-shadow:
+        0 10px 25px rgba(0,119,255,0.25),
+        0 0 20px rgba(108,78,230,0.12);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+        .channel:hover .channel-icon {
+    transform: scale(1.1) rotate(-5deg);
+
+    box-shadow:
+        0 12px 30px rgba(0,119,255,0.35),
+        0 0 25px rgba(108,78,230,0.22);
+}
 
         .channel h3 {
-            margin: 0 0 5px;
+    position: relative;
+    z-index: 2;
 
-            font-size: 15px;
-        }
+    margin: 0 0 6px;
+
+    font-size: 16px;
+    font-weight: 900;
+
+    color: white;
+
+    transition: color 0.3s ease;
+}
+
+.channel:hover h3 {
+    color: #ff8ac5;
+}
 
         .channel p {
-            margin: 0;
+    position: relative;
+    z-index: 2;
 
-            color: var(--muted);
+    margin: 0;
 
-            font-size: 11px;
-        }
+    color: #aaa4cc;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
 
         .channel a {
-            margin-left: auto;
+    position: relative;
+    z-index: 3;
 
-            padding: 9px 13px;
+    margin-left: auto;
 
-            border-radius: 9px;
+    flex-shrink: 0;
 
-            background: rgba(255,255,255,0.07);
+    padding: 10px 15px;
 
-            text-decoration: none;
+    border-radius: 11px;
 
-            font-size: 11px;
-            font-weight: 800;
-        }
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,0,127,0.16),
+            rgba(108,78,230,0.22)
+        );
+
+    border: 1px solid rgba(108,78,230,0.35);
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.channel a:hover {
+    transform: translateY(-2px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff007f,
+            #6c4ee6
+        );
+
+    border-color: transparent;
+
+    box-shadow:
+        0 8px 22px rgba(255,0,127,0.25);
+}
+        .channel {
+    animation: channelAppear 0.6s ease both;
+}
+
+.channel:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.channel:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.channel:nth-child(3) {
+    animation-delay: 0.25s;
+}
+
+@keyframes channelAppear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
         /* =========================
            FEEDBACK
