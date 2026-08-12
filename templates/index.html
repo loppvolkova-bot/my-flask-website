@@ -701,18 +701,40 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
         }
 
         .gradient-text {
-            background:
-                linear-gradient(
-                    90deg,
-                    #ffffff,
-                    #ff79bc,
-                    #b5a4ff
-                );
+    display: inline-block;
 
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff 0%,
+            #ff79bc 35%,
+            #b5a4ff 70%,
+            #ffffff 100%
+        );
+
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    animation: gradientMove 5s ease-in-out infinite;
+
+    text-shadow:
+        0 0 35px rgba(255, 0, 127, 0.10),
+        0 0 70px rgba(108, 78, 230, 0.08);
+}
+
+@keyframes gradientMove {
+    0%, 100% {
+        background-position: 0% center;
+    }
+
+    50% {
+        background-position: 100% center;
+    }
+}
 
         .hero p {
             color: #d0cbea;
@@ -2190,7 +2212,8 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
             }
 
             .hero h2 {
-                font-size: 40px;
+                font-size: 40px; text-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.18);
             }
         }
 
