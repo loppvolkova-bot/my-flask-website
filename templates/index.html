@@ -757,28 +757,57 @@
 }
 
         .card-icon {
-            width: 45px;
-            height: 45px;
+    width: 45px;
+    height: 45px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            border-radius: 13px;
+    border-radius: 13px;
 
-            background: rgba(108, 78, 230, 0.18);
+    background: rgba(108, 78, 230, 0.18);
 
-            font-size: 20px;
+    font-size: 20px;
 
-            margin-bottom: 17px;
-        }
+    margin-bottom: 17px;
 
-        transition: 
-    transform 0.3s ease,
-    background 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
 
-box-shadow:
-    0 8px 20px rgba(108, 78, 230, 0.12);
+    box-shadow:
+        0 8px 20px rgba(108, 78, 230, 0.12);
+}
+
+.card h3 {
+    margin: 0 0 10px;
+
+    font-size: 17px;
+}
+
+.card p {
+    margin: 0;
+
+    color: #bcb6d9;
+
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.card:hover .card-icon {
+    transform: scale(1.1) rotate(-4deg);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 0, 127, 0.25),
+            rgba(108, 78, 230, 0.35)
+        );
+
+    box-shadow:
+        0 8px 25px rgba(255, 0, 127, 0.15);
+}
 
         .card h3 {
             margin: 0 0 10px;
@@ -1447,10 +1476,6 @@ box-shadow:
             .hero h2 {
                 font-size: 40px;
             }
-
-            .hero-decoration {
-                opacity: 0.15;
-            }
         }
 
         @media (max-width: 760px) {
@@ -1518,10 +1543,6 @@ box-shadow:
 
             .hero h2 {
                 font-size: 34px;
-            }
-
-            .hero-decoration {
-                display: none;
             }
 
             .ai {
