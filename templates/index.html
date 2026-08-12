@@ -1418,46 +1418,221 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
         }
 
         /* =========================
-           STEPS
-        ========================= */
+   STEPS — HOW IT WORKS
+   ========================= */
 
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
+.steps {
+    position: relative;
 
-        .step {
-            padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 
-            border-radius: 16px;
+    gap: 18px;
 
-            background: #19133a;
-            border: 1px solid var(--border);
-        }
+    margin-top: 25px;
+}
 
-        .step-number {
-            color: var(--red);
+/* соединительная линия */
 
-            font-size: 12px;
-            font-weight: 900;
+.steps::before {
+    content: "";
 
-            margin-bottom: 12px;
-        }
+    position: absolute;
 
-        .step h3 {
-            margin: 0 0 8px;
-            font-size: 15px;
-        }
+    top: 39px;
+    left: 8%;
+    right: 8%;
 
-        .step p {
-            margin: 0;
+    height: 2px;
 
-            color: var(--muted);
+    background:
+        linear-gradient(
+            90deg,
+            #ff007f,
+            #6c4ee6,
+            #8068e8,
+            #ff007f
+        );
 
-            font-size: 12px;
-            line-height: 1.5;
-        }
+    opacity: 0.35;
+
+    z-index: 0;
+}
+
+/* карточка */
+
+.step {
+    position: relative;
+
+    padding: 25px 22px;
+
+    min-height: 190px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(42, 32, 89, 0.98),
+            rgba(27, 21, 58, 0.98)
+        );
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.15);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+
+    z-index: 1;
+}
+
+/* свечение внутри */
+
+.step::before {
+    content: "";
+
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    top: -60px;
+    right: -50px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(108, 78, 230, 0.25),
+            transparent 70%
+        );
+
+    pointer-events: none;
+
+    transition: 0.4s ease;
+}
+
+/* номер */
+
+.step-number {
+    position: relative;
+
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 20px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff007f,
+            #6c4ee6
+        );
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    box-shadow:
+        0 8px 25px rgba(255, 0, 127, 0.22);
+
+    z-index: 2;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* заголовок */
+
+.step h3 {
+    margin: 0 0 9px;
+
+    font-size: 16px;
+    font-weight: 900;
+
+    color: white;
+}
+
+/* описание */
+
+.step p {
+    margin: 0;
+
+    color: #aaa4cc;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+/* hover */
+
+.step:hover {
+    transform: translateY(-8px);
+
+    border-color: #8068e8;
+
+    box-shadow:
+        0 20px 45px rgba(67, 40, 153, 0.28),
+        0 0 30px rgba(108, 78, 230, 0.12);
+}
+
+.step:hover::before {
+    transform: scale(1.5);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 0, 127, 0.22),
+            transparent 70%
+        );
+}
+
+.step:hover .step-number {
+    transform: scale(1.1) rotate(-4deg);
+
+    box-shadow:
+        0 10px 30px rgba(255, 0, 127, 0.35);
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 1050px) {
+
+    .steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .steps::before {
+        display: none;
+    }
+}
+
+@media (max-width: 760px) {
+
+    .steps {
+        grid-template-columns: 1fr;
+    }
+
+    .step {
+        min-height: auto;
+    }
+}
 
         /* =========================
            EVENTS
