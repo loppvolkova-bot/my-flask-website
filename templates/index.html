@@ -569,70 +569,105 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
 
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
 
-    padding: 9px 15px;
+    padding: 10px 16px;
 
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 
-    border-radius: 30px;
+    border-radius: 999px;
 
     background:
         linear-gradient(
             135deg,
-            rgba(255, 0, 127, 0.14),
-            rgba(108, 78, 230, 0.18)
+            rgba(255, 0, 127, 0.16),
+            rgba(108, 78, 230, 0.22)
         );
 
-    border: 1px solid rgba(180, 150, 255, 0.28);
+    border: 1px solid rgba(180, 150, 255, 0.35);
 
-    color: #eeeaff;
+    color: #f4f0ff;
 
     font-size: 11px;
     font-weight: 900;
 
-    letter-spacing: 1.2px;
+    letter-spacing: 1.1px;
     text-transform: uppercase;
 
     box-shadow:
-        0 8px 25px rgba(108, 78, 230, 0.15),
-        inset 0 0 20px rgba(255,255,255,0.03);
+        0 8px 30px rgba(108, 78, 230, 0.18),
+        inset 0 0 18px rgba(255,255,255,0.04);
 
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
 
     transition:
         transform 0.3s ease,
         border-color 0.3s ease,
         box-shadow 0.3s ease;
 }
-        .eyebrow::before {
+
+/* Неоновая точка */
+.eyebrow::before {
     content: "";
 
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
+
+    flex-shrink: 0;
 
     border-radius: 50%;
 
     background: #ff007f;
 
     box-shadow:
-        0 0 8px #ff007f,
-        0 0 18px rgba(255, 0, 127, 0.7);
+        0 0 6px #ff007f,
+        0 0 14px #ff007f,
+        0 0 24px rgba(255, 0, 127, 0.7);
 
     animation: eyebrowPulse 2s ease-in-out infinite;
 }
 
-.eyebrow:hover {
-    transform: translateY(-2px);
+/* Блик */
+.eyebrow::after {
+    content: "";
 
-    border-color: rgba(255, 121, 188, 0.55);
+    position: absolute;
 
-    box-shadow:
-        0 10px 30px rgba(255, 0, 127, 0.18),
-        0 0 25px rgba(108, 78, 230, 0.18);
+    top: 0;
+    left: -60%;
+
+    width: 45%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.18),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    animation: eyebrowShine 4s ease-in-out infinite;
+
+    pointer-events: none;
 }
 
+.eyebrow:hover {
+    transform: translateY(-3px) scale(1.02);
+
+    border-color: rgba(255, 121, 188, 0.6);
+
+    box-shadow:
+        0 12px 35px rgba(255, 0, 127, 0.2),
+        0 0 30px rgba(108, 78, 230, 0.2),
+        inset 0 0 20px rgba(255,255,255,0.05);
+}
+
+/* Пульсация точки */
 @keyframes eyebrowPulse {
+
     0%, 100% {
         opacity: 0.65;
         transform: scale(0.85);
@@ -640,7 +675,19 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
 
     50% {
         opacity: 1;
-        transform: scale(1.15);
+        transform: scale(1.2);
+    }
+}
+
+/* Проходящий блик */
+@keyframes eyebrowShine {
+
+    0%, 55% {
+        left: -60%;
+    }
+
+    75%, 100% {
+        left: 130%;
     }
 }
 
