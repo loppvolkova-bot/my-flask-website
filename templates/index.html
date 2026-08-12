@@ -565,22 +565,84 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
         }
 
         .eyebrow {
-            display: inline-flex;
+    position: relative;
 
-            padding: 7px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 
-            border-radius: 20px;
+    padding: 9px 15px;
 
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.12);
+    margin-bottom: 20px;
 
-            color: #ddd8ff;
+    border-radius: 30px;
 
-            font-size: 11px;
-            font-weight: 800;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 0, 127, 0.14),
+            rgba(108, 78, 230, 0.18)
+        );
 
-            margin-bottom: 20px;
-        }
+    border: 1px solid rgba(180, 150, 255, 0.28);
+
+    color: #eeeaff;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+
+    box-shadow:
+        0 8px 25px rgba(108, 78, 230, 0.15),
+        inset 0 0 20px rgba(255,255,255,0.03);
+
+    backdrop-filter: blur(10px);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+        .eyebrow::before {
+    content: "";
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #ff007f;
+
+    box-shadow:
+        0 0 8px #ff007f,
+        0 0 18px rgba(255, 0, 127, 0.7);
+
+    animation: eyebrowPulse 2s ease-in-out infinite;
+}
+
+.eyebrow:hover {
+    transform: translateY(-2px);
+
+    border-color: rgba(255, 121, 188, 0.55);
+
+    box-shadow:
+        0 10px 30px rgba(255, 0, 127, 0.18),
+        0 0 25px rgba(108, 78, 230, 0.18);
+}
+
+@keyframes eyebrowPulse {
+    0%, 100% {
+        opacity: 0.65;
+        transform: scale(0.85);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
 
         .hero h2 {
             margin: 0 0 18px;
