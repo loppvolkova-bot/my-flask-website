@@ -1789,20 +1789,47 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
 
     display: flex;
     align-items: center;
-
-    gap: 12px;
+    justify-content: space-between;
 
     padding: 17px 18px;
 
     background:
         linear-gradient(
             135deg,
-            #432899,
+            #4b2aa8,
             #6c4ee6 55%,
-            #ff007f
+            #8a5cff
         );
 
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+
+    box-shadow:
+        0 8px 30px rgba(67, 40, 153, 0.25);
+
     overflow: hidden;
+}
+
+        .ai-header::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: -60px;
+    top: -110px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.18),
+            transparent 70%
+        );
+
+    pointer-events: none;
 }
 
 .ai-header::before {
