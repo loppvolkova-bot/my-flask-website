@@ -1724,9 +1724,14 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
 
     width: 380px;
 
-    background: rgba(23, 17, 50, 0.96);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(35, 26, 78, 0.97),
+            rgba(17, 12, 40, 0.98)
+        );
 
-    border: 1px solid rgba(108, 78, 230, 0.55);
+    border: 1px solid rgba(140, 115, 255, 0.55);
 
     border-radius: 24px;
 
@@ -1734,13 +1739,30 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
 
     box-shadow:
         0 25px 80px rgba(0, 0, 0, 0.55),
-        0 0 45px rgba(108, 78, 230, 0.18);
+        0 0 35px rgba(108, 78, 230, 0.22),
+        0 0 80px rgba(255, 0, 127, 0.08);
 
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(20px);
 
     z-index: 200;
 
     animation: aiAppear 0.45s ease;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.ai:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(180, 155, 255, 0.75);
+
+    box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.6),
+        0 0 45px rgba(108, 78, 230, 0.28),
+        0 0 90px rgba(255, 0, 127, 0.12);
 }
 
 @keyframes aiAppear {
