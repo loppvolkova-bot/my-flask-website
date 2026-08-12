@@ -1948,38 +1948,166 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
         ========================= */
 
         .news-card {
-            padding: 20px;
+    position: relative;
+    overflow: hidden;
 
-            border-radius: 17px;
+    padding: 24px;
 
-            background: var(--card);
+    min-height: 190px;
 
-            border: 1px solid var(--border);
-        }
+    border-radius: 20px;
+
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(108, 78, 230, 0.20),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(42, 32, 89, 0.98),
+            rgba(27, 21, 58, 0.98)
+        );
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.14);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+        .news-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    right: -70px;
+    top: -70px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 0, 127, 0.22),
+            transparent 70%
+        );
+
+    pointer-events: none;
+
+    transition: 0.4s ease;
+}
+        .news-card:hover {
+    transform: translateY(-7px);
+
+    border-color: #8068e8;
+
+    box-shadow:
+        0 20px 45px rgba(67,40,153,0.28),
+        0 0 30px rgba(108,78,230,0.12);
+}
+
+.news-card:hover::before {
+    transform: scale(1.5);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,0,127,0.32),
+            transparent 70%
+        );
+}
 
         .news-date {
-            color: var(--red);
+    position: relative;
+    z-index: 2;
 
-            font-size: 10px;
-            font-weight: 900;
+    display: inline-flex;
+    align-items: center;
 
-            text-transform: uppercase;
-        }
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255, 0, 127, 0.10);
+
+    border: 1px solid rgba(255, 0, 127, 0.20);
+
+    color: #ff72b9;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+
+    margin-bottom: 12px;
+}
 
         .news-card h3 {
-            margin: 9px 0;
+    position: relative;
+    z-index: 2;
 
-            font-size: 16px;
-        }
+    margin: 5px 0 10px;
+
+    font-size: 17px;
+    font-weight: 900;
+
+    line-height: 1.35;
+
+    color: white;
+
+    transition: color 0.3s ease;
+}
+
+.news-card:hover h3 {
+    color: #ff8ac5;
+}
 
         .news-card p {
-            margin: 0;
+    position: relative;
+    z-index: 2;
 
-            color: var(--muted);
+    margin: 0;
 
-            font-size: 12px;
-            line-height: 1.55;
-        }
+    color: #aaa4cc;
+
+    font-size: 12px;
+    line-height: 1.65;
+}
+        .news-card::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 0;
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff007f,
+            #6c4ee6
+        );
+
+    border-radius: 0 5px 0 0;
+
+    transition: width 0.4s ease;
+}
+
+.news-card:hover::after {
+    width: 100%;
+}
 
         /* =========================
            CHANNELS
