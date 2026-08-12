@@ -802,9 +802,11 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
         0 0 70px rgba(108, 78, 230, 0.35);
 
     transform: rotate(5deg);
-animation: phoneFloat 5s ease-in-out infinite;
+
+    animation: phoneFloat 5s ease-in-out infinite;
 }
-        @keyframes phoneFloat {
+
+@keyframes phoneFloat {
     0%, 100% {
         transform: rotate(5deg) translateY(0);
     }
@@ -815,6 +817,8 @@ animation: phoneFloat 5s ease-in-out infinite;
 }
 
         .hero-phone-screen {
+    position: relative;
+
     width: 100%;
     height: 100%;
 
@@ -824,17 +828,26 @@ animation: phoneFloat 5s ease-in-out infinite;
 
     background:
         radial-gradient(
-            circle at 80% 10%,
-            rgba(255, 0, 127, 0.35),
-            transparent 30%
+            circle at 85% 8%,
+            rgba(255, 0, 127, 0.42),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 10% 90%,
+            rgba(108, 78, 230, 0.35),
+            transparent 35%
         ),
         linear-gradient(
             160deg,
-            #41289a,
-            #15102f
+            #43289f,
+            #171038 65%,
+            #0e0923
         );
 
     overflow: hidden;
+
+    box-shadow:
+        inset 0 0 35px rgba(255,255,255,0.05);
 }
 
         .phone-notch {
