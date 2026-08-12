@@ -1487,7 +1487,7 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
         border-color 0.3s ease,
         box-shadow 0.3s ease;
 
-    z-index: 1;
+    z-index: 1; animation: stepAppear 0.7s ease both;
 }
 
 /* свечение внутри */
@@ -1515,6 +1515,33 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
     pointer-events: none;
 
     transition: 0.4s ease;
+}
+        @keyframes stepAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+        .step:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.step:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.step:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.step:nth-child(4) {
+    animation-delay: 0.4s;
 }
 
 /* номер */
