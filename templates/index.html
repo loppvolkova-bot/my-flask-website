@@ -80,14 +80,46 @@
 
             padding: 32px 22px;
 
-            background: rgba(25, 19, 59, 0.96);
-            border-right: 1px solid var(--border);
+            background:
+    linear-gradient(
+        180deg,
+        rgba(35, 27, 78, 0.98),
+        rgba(20, 14, 47, 0.98)
+    );
+
+border-right: 1px solid rgba(108, 78, 230, 0.30);
 
             display: flex;
             flex-direction: column;
 
             z-index: 100;
         }
+
+        .sidebar::after {
+    content: "";
+
+    position: absolute;
+
+    top: 15%;
+    right: -1px;
+
+    width: 1px;
+    height: 70%;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(255, 0, 127, 0.55),
+            rgba(108, 78, 230, 0.65),
+            transparent
+        );
+
+    box-shadow:
+        0 0 15px rgba(108, 78, 230, 0.35);
+
+    pointer-events: none;
+}
 
         .logo {
     display: flex;
@@ -108,7 +140,8 @@
 
     border-radius: 14px;
     background: transparent;
-
+    box-shadow:
+    0 0 25px rgba(108, 78, 230, 0.18);
     overflow: hidden;
 }
 
