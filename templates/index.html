@@ -169,25 +169,66 @@
         }
 
         .menu-button:hover {
-            background: #2d245e;
-            color: white;
-        }
+    background:
+        linear-gradient(
+            90deg,
+            rgba(108, 78, 230, 0.18),
+            rgba(255, 0, 127, 0.08)
+        );
+
+    color: white;
+
+    border-color: rgba(108, 78, 230, 0.25);
+
+    transform: translateX(4px);
+
+    box-shadow:
+        0 6px 20px rgba(67, 40, 153, 0.15);
+}
 
         .menu-button.active {
-            color: white;
+    position: relative;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(67, 40, 153, 0.95),
-                    rgba(108, 78, 230, 0.65)
-                );
+    color: white;
 
-            border-color: #6650c9;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(67, 40, 153, 0.95),
+            rgba(108, 78, 230, 0.65)
+        );
 
-            box-shadow:
-                0 8px 24px rgba(67, 40, 153, 0.30);
-        }
+    border-color: #8068e8;
+
+    box-shadow:
+        0 8px 24px rgba(67, 40, 153, 0.30),
+        0 0 20px rgba(108, 78, 230, 0.10);
+
+    transform: translateX(3px);
+}
+        .menu-button.active::before {
+    content: "";
+
+    position: absolute;
+
+    left: -1px;
+    top: 8px;
+    bottom: 8px;
+
+    width: 3px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ff007f,
+            #8d6cff
+        );
+
+    box-shadow:
+        0 0 12px rgba(255, 0, 127, 0.65);
+}
 
         .menu-icon {
             width: 24px;
