@@ -790,7 +790,7 @@
         0 0 35px rgba(108, 78, 230, 0.16);
 }
 
-        .card:hover::before {
+.card:hover::before {
     transform: scale(1.5);
 
     background:
@@ -800,11 +800,11 @@
             transparent 70%
         );
 }
-        .card::after {
+
+.card::after {
     content: "";
 
     position: absolute;
-
     inset: 0;
 
     border-radius: 20px;
@@ -828,11 +828,10 @@
 
 .card:hover::after {
     opacity: 1;
-
     transform: translateX(100%);
 }
 
-        .card-icon {
+.card-icon {
     width: 45px;
     height: 45px;
 
@@ -858,7 +857,6 @@
 
 .card h3 {
     margin: 0 0 10px;
-
     font-size: 17px;
 }
 
@@ -884,35 +882,6 @@
     box-shadow:
         0 8px 25px rgba(255, 0, 127, 0.15);
 }
-
-        .card h3 {
-            margin: 0 0 10px;
-
-            font-size: 17px;
-        }
-
-        .card p {
-            margin: 0;
-
-            color: #bcb6d9;
-
-            font-size: 13px;
-            line-height: 1.65;
-        }
-        .card:hover .card-icon {
-    transform: scale(1.1) rotate(-4deg);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 0, 127, 0.25),
-            rgba(108, 78, 230, 0.35)
-        );
-
-    box-shadow:
-        0 8px 25px rgba(255, 0, 127, 0.15);
-}
-
         /* =========================
            APP
         ========================= */
