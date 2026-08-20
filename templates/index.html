@@ -3191,6 +3191,33 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
 
     animation: heroGlow 6s ease-in-out infinite;
 }
+        /* --- ПОЛНОЕ СКРЫТИЕ ТЕЛЕФОНА И ВСЕХ ЕГО ИКОНОК НА МОБИЛЬНЫХ --- */
+@media (max-width: 768px) {
+    /* Скрываем сам телефон и его основные блоки */
+    .hero-phone, 
+    .hero-phone-screen, 
+    .phone-notch, 
+    .balance,
+    .app-mini-title {
+        display: none !important;
+    }
+
+    /* Находим и жестко скрываем ВСЕ иконки, картинки, svg и теги i внутри телефона */
+    .hero-phone img,
+    .hero-phone svg,
+    .hero-phone i,
+    .hero-phone [class*="icon"], /* Скроет элементы, если в названии класса есть слово icon */
+    .hero-phone-screen img,
+    .hero-phone-screen svg,
+    .hero-phone-screen i {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+}
+
 
 /* Второе мягкое свечение */
 .hero::after {
