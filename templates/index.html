@@ -3042,97 +3042,196 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
             transform: translateX(-50%) translateY(0);
         }
 
- /* =========================
-   HERO PHONE — DESKTOP
-========================= */
+        /* =========================
+           MOBILE
+        ========================= */
+
+        .mobile-menu {
+            display: none;
+        }
+
+        @media (max-width: 1050px) {
+            .sidebar {
+                width: 230px;
+            }
+
+            .main {
+                margin-left: 230px;
+                padding: 30px;
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h2 {
+                font-size: 40px; text-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.18);
+            }
+        }
+
+        @media (max-width: 760px) {
+            .sidebar {
+                position: fixed;
+
+                left: -300px;
+
+                width: 285px;
+
+                transition: 0.25s ease;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .mobile-menu {
+                display: block;
+
+                position: fixed;
+
+                left: 15px;
+                top: 15px;
+
+                width: 45px;
+                height: 45px;
+
+                border: 1px solid var(--border);
+
+                border-radius: 12px;
+
+                background: var(--card);
+
+                color: white;
+
+                z-index: 300;
+            }
+
+            .main {
+                margin-left: 0;
+
+                padding: 80px 16px 400px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .topbar h1 {
+                font-size: 22px;
+            }
+
+            .grid,
+            .grid-2,
+            .steps,
+            .app-card {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 30px 25px;
+            }
+
+            .hero h2 {
+                font-size: 34px;
+            }
+
+            .ai {
+                left: 15px;
+                right: 15px;
+                bottom: 15px;
+                width: auto;
+            }
+
+            .channel {
+                flex-wrap: wrap;
+            }
+
+            .channel a {
+                margin-left: 66px;
+            }
+        }
+    /* =========================
+   HERO — NEW EFFECTS
+   ========================= */
 
 .hero {
-    position: relative;
     isolation: isolate;
 }
 
-.hero-phone {
+/* Светящийся фон */
+.hero::before {
+    content: "";
+
     position: absolute;
-    right: 55px;
-    top: 10px;
-    width: 220px;
-    height: 400px;
-    padding: 9px;
-    border-radius: 35px;
-    background: #080613;
-    border: 4px solid #4b4075;
-    transform: rotate(5deg);
+    width: 420px;
+    height: 420px;
+
+    right: 20px;
+    top: -100px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 0, 127, 0.28),
+            rgba(108, 78, 230, 0.18) 45%,
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    pointer-events: none;
+
+    animation: heroGlow 6s ease-in-out infinite;
+}
+
+/* Второе мягкое свечение */
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    left: 35%;
+    bottom: -160px;
+
+    border-radius: 50%;
+
+    background: rgba(108, 78, 230, 0.22);
+
+    filter: blur(70px);
+
+    pointer-events: none;
+}
+
+@keyframes heroGlow {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.12);
+        opacity: 1;
+    }
+}
+
+
+/* Телефон */
+.hero-phone {
     animation:
         phoneFloat 5s ease-in-out infinite,
         phoneGlow 4s ease-in-out infinite;
-    display: block;
 }
-
-.hero-phone-screen {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    border-radius: 27px;
-    background:
-        radial-gradient(
-            circle at 85% 8%,
-            rgba(255, 0, 127, 0.42),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 10% 90%,
-            rgba(108, 78, 230, 0.35),
-            transparent 35%
-        ),
-        linear-gradient(
-            160deg,
-            #43289f,
-            #171038 65%,
-            #0e0923
-        );
-    overflow: hidden;
-    box-shadow: inset 0 0 35px rgba(255, 255, 255, 0.05);
-}
-
-.phone-notch {
-    width: 65px;
-    height: 15px;
-    margin: 0 auto 25px;
-    border-radius: 20px;
-    background: #080613;
-}
-
-.app-mini-title {
-    font-size: 14px;
-    font-weight: 900;
-    color: white;
-}
-
-.balance {
-    margin-top: 25px;
-    padding: 18px;
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.10);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.balance span {
-    color: #c8c0e8;
-    font-size: 9px;
-    font-weight: 800;
-}
-
-.balance strong {
-    display: block;
-    margin-top: 5px;
-    font-size: 28px;
-}
-
-
-/* =========================
-   PHONE ANIMATIONS
-========================= */
 
 @keyframes phoneFloat {
     0%, 100% {
@@ -3159,35 +3258,97 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
 }
 
 
-/* =========================
-   MOBILE
-   PHONE MUST BE HIDDEN
-========================= */
+/* Главная кнопка */
+.button-primary {
+    position: relative;
+    overflow: hidden;
 
-@media (max-width: 768px) {
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
 
-    .hero-phone {
-        display: none !important;
-    }
+.button-primary::before {
+    content: "";
 
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.35),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: 0.6s;
+}
+
+.button-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+
+    box-shadow:
+        0 12px 30px rgba(255, 0, 127, 0.35);
+}
+
+.button-primary:hover::before {
+    left: 130%;
 }
 
 
-/* =========================
-   TABLET
-========================= */
-
-@media (min-width: 769px) and (max-width: 1050px) {
-
-    .hero-phone {
-        right: 25px;
-        top: 20px;
-        width: 190px;
-        height: 350px;
-    }
-
+/* Вторичная кнопка */
+.button-secondary {
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
 }
 
+.button-secondary:hover {
+    transform: translateY(-3px);
+
+    background: rgba(255,255,255,0.13);
+
+    border-color: rgba(255,255,255,0.3);
+}
+
+
+/* Текст Hero */
+.hero h2 {
+    animation: heroText 0.8s ease both;
+}
+
+.hero p {
+    animation: heroText 0.8s ease 0.12s both;
+}
+
+.hero-buttons {
+    animation: heroText 0.8s ease 0.22s both;
+}
+
+@keyframes heroText {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+    </style>
+</head>
+
+<body>
 
 <!-- =========================
      SIDEBAR
