@@ -50,26 +50,18 @@
                 radial-gradient(
                     circle at 10% 90%,
                     rgba(255, 0, 127, 0.10),
-                    transparent 30%
-                ),
+                    transparent 30%),
                 var(--bg);
 
-            color: var(--text);
-        }
+            color: var(--text);}
 
         button,
         input,
-        textarea {
-            font: inherit;
-        }
+        textarea {font: inherit;}
 
-        button {
-            cursor: pointer;
-        }
+        button {cursor: pointer;}
 
-        a {
-            color: inherit;
-        }
+        a {color: inherit;}
         .sidebar {
             position: fixed;
             left: 0;
@@ -84,16 +76,13 @@
     linear-gradient(
         180deg,
         rgba(35, 27, 78, 0.98),
-        rgba(20, 14, 47, 0.98)
-    );
+        rgba(20, 14, 47, 0.98));
 
 border-right: 1px solid rgba(108, 78, 230, 0.30);
 
             display: flex;
             flex-direction: column;
-
-            z-index: 100;
-        }
+            z-index: 100;}
 
         .sidebar::after {
     content: "";
@@ -112,22 +101,19 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
             transparent,
             rgba(255, 0, 127, 0.55),
             rgba(108, 78, 230, 0.65),
-            transparent
-        );
+            transparent);
 
     box-shadow:
         0 0 15px rgba(108, 78, 230, 0.35);
 
-    pointer-events: none;
-}
+    pointer-events: none;}
 
         .logo {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 40px;
-    width: 100%;
-}
+    width: 100%;}
 
         .logo-icon {
     width: 46px;
@@ -142,28 +128,24 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
     background: transparent;
     box-shadow:
     0 0 25px rgba(108, 78, 230, 0.18);
-    overflow: hidden;
-}
+    overflow: hidden;}
 
         .logo-icon img {
     width: 46px;
     height: 46px;
 
     object-fit: contain;
-    display: block;
-}
+    display: block;}
 
         .logo-text {
     min-width: 0;
-    flex: 1;
-}
+    flex: 1;}
 
         .logo-text strong {
     display: block;
     font-size: 20px;
     font-weight: 900;
-    white-space: nowrap;
-}
+    white-space: nowrap;}
 
         .logo-text span {
     display: block;
