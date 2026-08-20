@@ -3257,45 +3257,7 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
     }
 }
 
-        @media (max-width: 758px) {
-    .hero-phone {
-        position: relative;    /* Отменяем абсолютное позиционирование */
-        right: auto;           /* Сбрасываем отступ справа */
-        top: auto;             /* Сбрасываем отступ сверху */
-        
-        width: 180px;          /* Делаем телефон чуть компактнее на мобильном */
-        height: 330px;         /* Уменьшаем высоту пропорционально */
-        
-        margin: 40px auto 0;   /* Центрируем по горизонтали и делаем отступ сверху от текста */
-        
-        transform: rotate(0deg); /* На мобильных лучше убрать наклон, чтобы текст внутри читался легче */
-        animation: phoneFloatMobile 5s ease-in-out infinite; /* Включаем мобильную анимацию без наклона */
-    }
-    
-    /* Уменьшаем шрифты внутри телефона, чтобы они не вылезали за рамки */
-    .balance strong {
-        font-size: 22px; 
-    }
-    .balance {
-        padding: 12px;
-        margin-top: 15px;
-    }
-    .phone-notch {
-        margin: 0 auto 15px;
-    }
-}
-
-/* Старая анимация для компьютеров (с наклоном 5 градусов) */
-@keyframes phoneFloat {
-    0%, 100% { transform: rotate(5deg) translateY(0); }
-    50% { transform: rotate(3deg) translateY(-10px); }
-}
-
-/* --- ДОБАВЬТЕ НОВУЮ АНИМАЦИЮ ДЛЯ МОБИЛЬНЫХ (без наклона) --- */
-@keyframes phoneFloatMobile {
-    0%, 100% { transform: rotate(0deg) translateY(0); }
-    50% { transform: rotate(0deg) translateY(-10px); }
-}
+       
 
 /* Главная кнопка */
 .button-primary {
