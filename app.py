@@ -104,6 +104,7 @@ def feedback():
 
 # ИНТЕЛЛЕКТУАЛЬНЫЙ ЭНДПОИНТ ЧАТА
 @app.route('/ai-chat', methods=['POST'])
+@app.route('/get_response', methods=['POST'])
 def ai_chat():
     data = request.get_json(silent=True) or {}
     user_message = data.get('message', '').strip()
