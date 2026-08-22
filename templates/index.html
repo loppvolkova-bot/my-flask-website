@@ -2172,15 +2172,24 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
     left: 0;
 }
         @media (max-width: 760px) {
-    /* Автоматически скрывает блок с демонстрацией телефона на смартфоне */
+    /* Скрываем сам телефон */
     .mobile-experience, 
     .hero-image, 
     .phone-image, 
     [class*="phone"], 
-    [class*="mockup"] {
+    [class*="mockup"],
+    
+    /* Скрываем плавающие иконки, кристаллы, монеты и бейджи рядом с ним */
+    .floating-icon,
+    [class*="floating"],
+    [class*="badge"],
+    [class*="particle"],
+    .crystal,
+    .coin {
         display: none !important;
     }
 }
+
 
 
         /* =========================
