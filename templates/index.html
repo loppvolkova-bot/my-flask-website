@@ -1398,14 +1398,7 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
             font-size: 11px;
             font-weight: 800;
         }
-        @media (max-width: 768px) {
-  /* Замените .phone-container на класс блока с телефоном */
-  .phone-container {
-    display: none; 
-  }
-}
-
-
+        
         /* =========================
    STEPS — HOW IT WORKS
    ========================= */
@@ -2178,6 +2171,17 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
 .news-card:hover::after {
     left: 0;
 }
+        @media (max-width: 760px) {
+    /* Автоматически скрывает блок с демонстрацией телефона на смартфоне */
+    .mobile-experience, 
+    .hero-image, 
+    .phone-image, 
+    [class*="phone"], 
+    [class*="mockup"] {
+        display: none !important;
+    }
+}
+
 
         /* =========================
            CHANNELS
