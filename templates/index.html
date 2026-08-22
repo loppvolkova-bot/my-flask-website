@@ -3225,6 +3225,34 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
 </head>
 
 <body>
+        <!-- Виджет ИИ Ассистента -->
+    <div class="ai" id="aiWidget">
+        <div class="ai-header">
+            <div class="ai-user-info">
+                <span class="ai-avatar">🤖</span>
+                <div class="ai-text">
+                    <strong>Игра Первых AI</strong>
+                    <span class="ai-status">Онлайн</span>
+                </div>
+            </div>
+            <button class="ai-close" id="closeAi">&times;</button>
+        </div>
+        
+        <div class="ai-messages" id="aiMessages">
+            <div class="message ai-message">
+                Привет! На связи ИИ-помощник приложения «Игра Первых». 🚀 Чем я могу помочь тебе перед конкурсом?
+            </div>
+        </div>
+        
+        <div class="ai-input">
+            <input type="text" id="aiInputField" placeholder="Задать вопрос ИИ..." autocomplete="off">
+            <button id="sendAiBtn">✈</button>
+        </div>
+    </div>
+    
+    <!-- Кнопка вызова виджета (если пользователь его закрыл) -->
+    <button id="openAi" style="position: fixed; right: 25px; bottom: 25px; width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, #ff007f, #6c4ee6); border: none; color: white; font-size: 24px; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(108, 78, 230, 0.4); z-index: 199; cursor: pointer;">🤖</button>
+
 
 <!-- =========================
      SIDEBAR
@@ -5003,6 +5031,70 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
             }
         );
 </script>
+    <script>
+        const aiWidget = document.getElementById('aiWidget');
+        const openAiBtn = document.getElementById('openAi');
+        const closeAiBtn = document.getElementById('closeAi');
+        const aiMessages = document.getElementById('aiMessages');
+        const aiInputField = document.getElementById('aiInputField');
+        const sendAiBtn = document.getElementById('sendAiBtn');
+
+        // Логика закрытия и открытия окна чата
+        closeAiBtn.addEventListener('click', () => {
+            aiWidget.style.display = 'none';
+            openAiBtn.style.display = 'flex';
+        });
+
+        openAiBtn.addEventListener('click', () => {
+            aiWidget.style.display = 'block';
+            openAiBtn.style.display = 'none';
+            aiMessages.scrollTop = aiMessages.scrollHeight;
+        });
+
+        // Функция отправки и обработки сообщений
+        function handleSendMessage() {
+            const text = aiInputField.value.trim();
+            if (!text) return;
+
+            // 1. Добавляем сообщение пользователя на экран
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user-message';
+            userMsg.textContent = text;
+            aiMessages.appendChild(userMsg);
+            
+            // Очищаем поле ввода и скроллим вниз
+            aiInputField.value = '';
+            aiMessages.scrollTop = aiMessages.scrollHeight;
+
+            // 2. Имитируем ответ от ИИ через небольшую задержку (800мс)
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'message ai-message';
+                
+                const lowerText = text.toLowerCase();
+                
+                // Ветвление умных ответов под конкурс Движения Первых
+                if (lowerText.includes('привет') || lowerText.includes('здравствуй')) {
+                    botMsg.textContent = "Привет! Я готов продемонстрировать жюри все фишки и механики нашей мобильной игры. Задавай любой вопрос!";
+                } else if (lowerText.includes('конкурс') || lowerText.includes('выиграть') || lowerText.includes('жюри')) {
+                    botMsg.textContent = "Наш главный козырь на конкурсе — этот интерактивный неоновый интерфейс, геймификация и ИИ-ассистент в реальном времени. Победа будет за нами! 🏆";
+                } else if (lowerText.includes('игра') || lowerText.includes('приложение')) {
+                    botMsg.textContent = "Мобильное приложение «Игра Первых» — это современная платформа с квестами, трекером достижений и личным кабинетом для активных участников проекта.";
+                } else {
+                    botMsg.textContent = "Отличная идея для конкурсного проекта! Данный модуль сейчас генерируется нейросетью и подготавливается к интеграции в следующем обновлении. 😉";
+                }
+
+                aiMessages.appendChild(botMsg);
+                aiMessages.scrollTop = aiMessages.scrollHeight;
+            }, 800);
+        }
+
+        // Обработчики событий на кнопку отправки и клавишу Enter
+        sendAiBtn.addEventListener('click', handleSendMessage);
+        aiInputField.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSendMessage();
+        });
+    </script>
 
 </body>
 </html>
