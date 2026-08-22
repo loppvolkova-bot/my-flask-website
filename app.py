@@ -104,3 +104,16 @@ def ai_chat():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+import pymorphy3
+import re
+
+morph = pymorphy3.MorphAnalyzer()
+
+def clean_and_lemmatize(text):
+    # Оставляем только буквы и пробелы, переводим в нижний регистр
+    text = re.sub(r'[^а-яа-ёa-z\s]', '', text.lower())
+    # Приводим каждое слово к начальной форме (например: "бегаю" -> "бегать")
+    words = [morph.parse(word)[0].normal_form for word in text.split()]
+    return " ".join(words)
+
