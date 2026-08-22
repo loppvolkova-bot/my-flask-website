@@ -111,4 +111,74 @@ def ai_chat():
 
 if __name__ == '__main__':
     app.run(debug=True)
+// ==========================================
+// ЛОГИКА РАБОТЫ ИИ-ВИДЖЕТА ДЛЯ КОНКУРСА
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const aiWidget = document.getElementById('aiWidget');
+    const openAiBtn = document.getElementById('openAi');
+    const closeAiBtn = document.getElementById('closeAi');
+    const aiMessages = document.getElementById('aiMessages');
+    const aiInputField = document.getElementById('aiInputField');
+    const sendAiBtn = document.getElementById('sendAiBtn');
+
+    // Проверяем, что все элементы ИИ есть на странице, чтобы не ломать другой код app.js
+    if (!aiWidget || !openAiBtn || !closeAiBtn || !aiMessages || !aiInputField || !sendAiBtn) return;
+
+    // Логика закрытия и открытия окна чата
+    closeAiBtn.addEventListener('click', () => {
+        aiWidget.style.display = 'none';
+        openAiBtn.style.display = 'flex';
+    });
+
+    openAiBtn.addEventListener('click', () => {
+        aiWidget.style.display = 'block';
+        openAiBtn.style.display = 'none';
+        aiMessages.scrollTop = aiMessages.scrollHeight;
+    });
+
+    // Функция отправки и обработки сообщений
+    function handleSendMessage() {
+        const text = aiInputField.value.trim();
+        if (!text) return;
+
+        // 1. Добавляем сообщение пользователя на экран
+        const userMsg = document.createElement('div');
+        userMsg.className = 'message user-message';
+        userMsg.textContent = text;
+        aiMessages.appendChild(userMsg);
+        
+        // Очищаем поле ввода и скроллим вниз
+        aiInputField.value = '';
+        aiMessages.scrollTop = aiMessages.scrollHeight;
+
+        // 2. Имитируем ответ от ИИ через небольшую задержку (800мс)
+        setTimeout(() => {
+            const botMsg = document.createElement('div');
+            botMsg.className = 'message ai-message';
+            
+            const lowerText = text.toLowerCase();
+            
+            // Ветвление умных ответов под конкурс Движения Первых
+            if (lowerText.includes('привет') || lowerText.includes('здравствуй')) {
+                botMsg.textContent = "Привет! Я готов продемонстрировать жюри все фишки и механики нашей мобильной игры. Задавай любой вопрос!";
+            } else if (lowerText.includes('конкурс') || lowerText.includes('выиграть') || lowerText.includes('жюри')) {
+                botMsg.textContent = "Наш главный козырь на конкурсе — этот интерактивный неоновый интерфейс, геймификация и ИИ-ассистент в реальном времени. Победа будет за нами! 🏆";
+            } else if (lowerText.includes('игра') || lowerText.includes('приложение')) {
+                botMsg.textContent = "Мобильное приложение «Игра Первых» — это современная платформа с квестами, трекером достижений и личным кабинетом для активных участников проекта.";
+            } else {
+                botMsg.textContent = "Отличная идея для конкурсного проекта! Данный модуль сейчас генерируется нейросетью и подготавливается к интеграции в следующем обновлении. 😉";
+            }
+
+            aiMessages.appendChild(botMsg);
+            aiMessages.scrollTop = aiMessages.scrollHeight;
+        }, 800);
+    }
+
+    // Обработчики событий на кнопку отправки и клавишу Enter
+    sendAiBtn.addEventListener('click', handleSendMessage);
+    aiInputField.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleSendMessage();
+    });
+});
 
