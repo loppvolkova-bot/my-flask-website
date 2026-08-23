@@ -23,7 +23,51 @@ def build_system_prompt():
 
 SYSTEM_PROMPT = build_system_prompt()
 
+from openai import OpenAI
+
+# Загружаем секрет из переменных окружения
+load_dotenv()
+YANDEX_API_KEY = os.getenv("YANDEX_API_KEY")
+if not YANDEX_API_KEY:
+    raise ValueError("API key is missing!")
+
+client = OpenAI(
+    api_key=YANDEX_API_KEY,
+    base_url="https://llm.api.cloud.yandex.net/foundation-models/v1"
+)
+
 @app.route('/ai-chat', methods=['POST'])
+def ai_chat():
+    data = request.get_json(silent=True) or {}
+    user_message = data.get('message', '').strip().lower()
+    
+    if not user_message:
+        return jsonify({"reply": "🤖 Ассистент: Напиши что-нибудь!"})
+
+    # Формируем системный промт на основе вашей базы знаний AI_KNOWLEDGE
+    system_prompt = "Ты — ИИ‑ассистент «Игры Первых». Отвечай кратко и дружелюбно.\n"
+    for item in AI_KNOWLEDGE:
+        patterns_str = ", ".join(item["patterns"])
+        reply = item["reply"].replace("\n", " ").strip()[:40]  # Берём начало ответа
+        system_prompt += f"- Если вопрос похож на '{patterns_str}', ответь примерно так: {reply}\n"
+
+    try:
+        response = client.chat.completions.create(
+            model="yandexgpt/latest",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message}
+            ],
+            temperature=0.7,
+            max_tokens=500
+        )
+        
+        answer_text = response.choices[0].message.content.strip()
+        return jsonify({"reply": answer_text})
+
+    except Exception as e:
+        print(f"Ошибка вызова API: {e}")
+        return jsonify({"reply": "🤖 Произошла ошибка связи с интеллектом."}), 500
 def ai_chat():
     data = request.get_json(silent=True) or {}
     user_message = data.get('message', '').strip()
