@@ -1,29 +1,53 @@
-import ollama
+import os
+from dotenv import load_dotenv  # Импорт библиотеки для загрузки переменных окружения
+
+# Библиотеки для работы веб-сервера
 from flask import Flask, render_template, request, jsonify
 
+# NLP-библиотека для обработки текста
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Клиент для вызова нейросети
+from openai import OpenAI
+
+
+# Инициализация Flask-приложения
 app = Flask(__name__)
 
-# ... ваш массив AI_KNOWLEDGE остается здесь для справки ...
+# РАСШИРЕННАЯ БАЗА ЗНАНИЙ ИИ ДЛЯ «ИГРЫ ПЕРВЫХ»
+# Этот массив используется как основа для построения системного промпта
 AI_KNOWLEDGE = [
-    # ... ваши данные из массива ...
+    {
+        "patterns": ["привет", "здравствуйте", "добрый день", "приветствую"],
+        "reply": "🤖 Ассистент: Привет! Рад тебя видеть. Могу рассказать про приложение, задания, Движкоины, мерч и призы."
+    },
+    {
+        "patterns": ["что такое игра первых", "о проекте", "суть игры"],
+        "reply": "🤖 Игра Первых — мобильное приложение, где участники выполняют квесты, зарабатывают игровую валюту и соревнуются за призы."
+    },
+    {
+        "patterns": ["движкоины", "как получить движкоины"],
+        "reply": "🤖 Движкоины — игровая валюта. Заработай их за выполнение заданий!"
+    },
+    # ... остальные элементы массива можно добавить здесь
 ]
 
-# Формируем системный промпт на основе вашей базы знаний
+
 def build_system_prompt():
-    knowledge_text = "\n".join([f"- {item['reply']}" for item in AI_KNOWLEDGE])
-    return f"""Ты — ИИ-ассистент интерактивного мобильного приложения «Игра Первых». Твоя задача — помогать молодежи разбираться в проекте.
-Соблюдай следующие правила:
-1. Отвечай коротко, энергично и дружелюбно. Используй эмодзи 🤖💜🪙🏆.
-2. Говори только о том, что написано ниже. Не придумывай лишнего.
-3. Если вопрос не касается проекта, вежливо верни пользователя к теме.
+    """Формирует системный промт на основе базы знаний."""
+    knowledge_text = "\n".join([item["reply"] for item in AI_KNOWLEDGE])
+    
+    return f"""
+Ты — ИИ‑ассистент мобильного приложения «Игра Первых». Отвечай коротко и дружелюбно 🤖💜.
+Используй только факты ниже. Не придумывай лишнего.
 
 Факты о проекте:
 {knowledge_text}
-"""
+""".strip()
 
-SYSTEM_PROMPT = build_system_prompt()
+SYSTEM_PROMPT = build_system_prompt()  # Создаём промпт один раз при запуске сервера
 
-from openai import OpenAI
 
 # Загружаем секрет из переменных окружения
 load_dotenv()
@@ -36,30 +60,28 @@ client = OpenAI(
     base_url="https://llm.api.cloud.yandex.net/foundation-models/v1"
 )
 
+
 @app.route('/ai-chat', methods=['POST'])
 def ai_chat():
+    """
+    Основной эндпоинт чата.
+    Принимает JSON {"message": "<текст>"} и возвращает ответ от нейросети.
+    """
     data = request.get_json(silent=True) or {}
-    user_message = data.get('message', '').strip().lower()
-    
-    if not user_message:
-        return jsonify({"reply": "🤖 Ассистент: Напиши что-нибудь!"})
+    user_message = data.get('message', '').lower().strip()
 
-    # Формируем системный промт на основе вашей базы знаний AI_KNOWLEDGE
-    system_prompt = "Ты — ИИ‑ассистент «Игры Первых». Отвечай кратко и дружелюбно.\n"
-    for item in AI_KNOWLEDGE:
-        patterns_str = ", ".join(item["patterns"])
-        reply = item["reply"].replace("\n", " ").strip()[:40]  # Берём начало ответа
-        system_prompt += f"- Если вопрос похож на '{patterns_str}', ответь примерно так: {reply}\n"
+    if not user_message:
+        return jsonify({"reply": "🤖 Напиши что-нибудь!"})
 
     try:
         response = client.chat.completions.create(
             model="yandexgpt/latest",
             messages=[
-                {"role": "system", "content": system_prompt},
+                {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
             ],
             temperature=0.7,
-            max_tokens=500
+            max_tokens=200  # Ограничим длину ответа, чтобы он был лаконичным
         )
         
         answer_text = response.choices[0].message.content.strip()
@@ -68,32 +90,19 @@ def ai_chat():
     except Exception as e:
         print(f"Ошибка вызова API: {e}")
         return jsonify({"reply": "🤖 Произошла ошибка связи с интеллектом."}), 500
-def ai_chat():
-    data = request.get_json(silent=True) or {}
-    user_message = data.get('message', '').strip()
 
-    if not user_message:
-        return jsonify({"reply": "🤖 Напиши что-нибудь, и я обязательно отвечу!"})
 
-    try:
-        # Вызов локальной модели Ollama
-        response = ollama.chat(
-            model='gemma:2b',
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_message}
-            ],
-            stream=False  # Для начала лучше использовать False, чтобы убедиться в работоспособности
-        )
-        
-        reply = response['message']['content']
-        
-        return jsonify({"reply": reply})
+# Базовые маршруты сайта (если они нужны)
+@app.route('/')
+def home():
+    return render_template('index.html')
 
-    except Exception as e:
-        # В случае падения Ollama возвращаем понятную ошибку
-        print(f"Ошибка LLM: {e}")
-        return jsonify({"reply": "🤖 Мой мозг сейчас перезагружается. Попробуй еще раз через пару секунд!"})
+@app.errorhandler(500)
+def internal_error(error):
+    """Обработчик внутренних ошибок Flask."""
+    app.logger.exception(error)
+    return jsonify({"error": "Произошла внутренняя ошибка. Попробуйте позже."}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
