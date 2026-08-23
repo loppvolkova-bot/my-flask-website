@@ -12,3 +12,6 @@ flask
 scikit-learn
 pymorphy3
 pymorphy3-dicts-ru
+Flask==2.3.*
+gunicorn==20.*
+python-dotenv # Если используете .env локально
