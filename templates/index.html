@@ -4962,29 +4962,27 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
     }
 
 
-    function sendAI() {
+    async function sendAI() {
+    const question =
+        aiInput.value.trim();
 
-        const question =
-            aiInput.value.trim();
+    if (!question) return;
 
-        if (!question) {
-            return;
-        }
+    addMessage(question, "user");
 
-        addMessage(question, "user");
+    aiInput.value = "";
 
-        aiInput.value = "";
-
-        setTimeout(() => {
-
-            const answer =
-                getAIAnswer(question);
-
-            addMessage(answer, "ai");
-
-        }, 400);
-
+    try {
+        // Отправляем запрос на наш сервер /ai-chat
+        const response = await axios.post('/ai-chat', { message: question });
+        
+        // Добавляем ответ от сервера в чат
+        addMessage(response.data.reply, "ai");
+    } catch (error) {
+        console.error('Ошибка при получении ответа:', error);
+        addMessage("Произошла ошибка связи с ИИ.", "ai");
     }
+}
 
 
     aiInput.addEventListener(
@@ -5147,6 +5145,6 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
             }
         );
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 </html>
