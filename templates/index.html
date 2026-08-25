@@ -45,8 +45,7 @@
                 radial-gradient(
                     circle at 80% 10%,
                     rgba(108, 78, 230, 0.20),
-                    transparent 35%
-                ),
+                    transparent 35%),
                 radial-gradient(
                     circle at 10% 90%,
                     rgba(255, 0, 127, 0.10),
@@ -151,14 +150,12 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
     display: block;
     color: var(--muted);
     font-size: 11px;
-    margin-top: 2px;
-}
+    margin-top: 2px;}
 
         .menu {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-        }
+            gap: 6px;}
 
         .menu-button {
             width: 100%;
@@ -180,16 +177,14 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
 
             text-align: left;
 
-            transition: 0.2s ease;
-        }
+            transition: 0.2s ease;}
 
         .menu-button:hover {
     background:
         linear-gradient(
             90deg,
             rgba(108, 78, 230, 0.18),
-            rgba(255, 0, 127, 0.08)
-        );
+            rgba(255, 0, 127, 0.08));
 
     color: white;
 
@@ -198,8 +193,7 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
     transform: translateX(4px);
 
     box-shadow:
-        0 6px 20px rgba(67, 40, 153, 0.15);
-}
+        0 6px 20px rgba(67, 40, 153, 0.15);}
 
         .menu-button.active {
     position: relative;
@@ -210,8 +204,7 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
         linear-gradient(
             135deg,
             rgba(67, 40, 153, 0.95),
-            rgba(108, 78, 230, 0.65)
-        );
+            rgba(108, 78, 230, 0.65));
 
     border-color: #8068e8;
 
@@ -219,8 +212,7 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
         0 8px 24px rgba(67, 40, 153, 0.30),
         0 0 20px rgba(108, 78, 230, 0.10);
 
-    transform: translateX(3px);
-}
+    transform: translateX(3px);}
         .menu-button.active::before {
     content: "";
 
@@ -238,65 +230,47 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
         linear-gradient(
             180deg,
             #ff007f,
-            #8d6cff
-        );
+            #8d6cff);
 
     box-shadow:
-        0 0 12px rgba(255, 0, 127, 0.65);
-}
+        0 0 12px rgba(255, 0, 127, 0.65);}
 
         .menu-icon {
             width: 24px;
             text-align: center;
-            font-size: 17px;
-        }
+            font-size: 17px;}
 
         .role-box {
             margin-top: auto;
-
             padding: 16px;
-
             background: #100b26;
             border: 1px solid var(--border);
-
-            border-radius: 16px;
-        }
+            border-radius: 16px;}
 
         .role-title {
             color: var(--muted);
             font-size: 10px;
             text-transform: uppercase;
             font-weight: 800;
-
-            margin-bottom: 10px;
-        }
+            margin-bottom: 10px;}
 
         .role-button {
             width: 100%;
             height: 38px;
-
             border-radius: 10px;
-
             background: var(--card);
             color: #d6d2ec;
-
             border: 1px solid var(--border);
-
             margin-bottom: 7px;
-
             font-size: 13px;
-            font-weight: 700;
-        }
+            font-weight: 700;}
 
-        .role-button:last-child {
-            margin-bottom: 0;
-        }
+        .role-button:last-child {margin-bottom: 0;}
 
         .role-button.active {
             background: var(--purple);
             color: white;
-            border-color: var(--purple-light);
-        }
+            border-color: var(--purple-light);}
 
         /* =========================
            MAIN
@@ -305,28 +279,21 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
         .main {
             margin-left: 285px;
             min-height: 100vh;
-
-            padding: 42px 55px 100px;
-        }
+            padding: 42px 55px 100px;}
 
         .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             padding-bottom: 25px;
             margin-bottom: 35px;
-
-            border-bottom: 1px solid var(--border);
-        }
+            border-bottom: 1px solid var(--border);}
 
         .topbar h1 {
             margin: 0;
-
             font-size: 30px;
             font-weight: 900;
-            letter-spacing: -0.5px;
-        }
+            letter-spacing: -0.5px;}
 
         .role-badge {
             padding: 9px 16px;
@@ -339,33 +306,26 @@ border-right: 1px solid rgba(108, 78, 230, 0.30);
             color: #c8c1ef;
 
             font-size: 12px;
-            font-weight: 800;
-        }
+            font-weight: 800;}
 
         /* =========================
            TABS
         ========================= */
 
-        .tab {
-            display: none;
-        }
+        .tab {display: none;}
 
         .tab.active {
             display: block;
-
-            animation: showTab 0.25s ease;
-        }
+            animation: showTab 0.25s ease;}
 
         @keyframes showTab {
             from {
                 opacity: 0;
-                transform: translateY(8px);
-            }
+                transform: translateY(8px);}
 
             to {
                 opacity: 1;
-                transform: translateY(0);
-            }
+                transform: translateY(0);}
         }
 
         /* =========================
