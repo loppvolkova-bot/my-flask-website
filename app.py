@@ -1,22 +1,10 @@
 import os
-from dotenv import load_dotenv  # Импорт библиотеки для загрузки переменных окружения
-
-# Библиотеки для работы веб-сервера
+from dotenv import load_dotenv 
 from flask import Flask, render_template, request, jsonify
-
-# NLP-библиотека для обработки текста
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
-# Клиент для вызова нейросети
 from openai import OpenAI
-
-
-# Инициализация Flask-приложения
 app = Flask(__name__)
-
-# РАСШИРЕННАЯ БАЗА ЗНАНИЙ ИИ ДЛЯ «ИГРЫ ПЕРВЫХ»
-# Этот массив используется как основа для построения системного промпта
 AI_KNOWLEDGE = [
     {
         "patterns": ["привет", "здравствуйте", "добрый день", "приветствую"],
@@ -29,38 +17,24 @@ AI_KNOWLEDGE = [
     {
         "patterns": ["движкоины", "как получить движкоины"],
         "reply": "🤖 Движкоины — игровая валюта. Заработай их за выполнение заданий!"
-    },
-    # ... остальные элементы массива можно добавить здесь
-]
-
-
+    },]
 def build_system_prompt():
     """Формирует системный промт на основе базы знаний."""
     knowledge_text = "\n".join([item["reply"] for item in AI_KNOWLEDGE])
-    
     return f"""
 Ты — ИИ‑ассистент мобильного приложения «Игра Первых». Отвечай коротко и дружелюбно 🤖💜.
 Используй только факты ниже. Не придумывай лишнего.
-
 Факты о проекте:
 {knowledge_text}
 """.strip()
-
-SYSTEM_PROMPT = build_system_prompt()  # Создаём промпт один раз при запуске сервера
-
-
-# Загружаем секрет из переменных окружения
+SYSTEM_PROMPT = build_system_prompt() 
 load_dotenv()
 YANDEX_API_KEY = os.getenv("YANDEX_API_KEY")
 if not YANDEX_API_KEY:
     raise ValueError("API key is missing!")
-
 client = OpenAI(
     api_key=YANDEX_API_KEY,
-    base_url="https://llm.api.cloud.yandex.net/foundation-models/v1"
-)
-
-
+    base_url="https://llm.api.cloud.yandex.net/foundation-models/v1")
 @app.route('/ai-chat', methods=['POST'])
 def ai_chat():
     """
@@ -78,31 +52,22 @@ def ai_chat():
             model="yandexgpt/latest",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_message}
-            ],
+                {"role": "user", "content": user_message}],
             temperature=0.7,
-            max_tokens=200  # Ограничим длину ответа, чтобы он был лаконичным
-        )
+            max_tokens=200)
         
         answer_text = response.choices[0].message.content.strip()
         return jsonify({"reply": answer_text})
-
     except Exception as e:
         print(f"Ошибка вызова API: {e}")
         return jsonify({"reply": "🤖 Произошла ошибка связи с интеллектом."}), 500
-
-
-# Базовые маршруты сайта (если они нужны)
 @app.route('/')
 def home():
     return render_template('index.html')
-
 @app.errorhandler(500)
 def internal_error(error):
     """Обработчик внутренних ошибок Flask."""
     app.logger.exception(error)
     return jsonify({"error": "Произошла внутренняя ошибка. Попробуйте позже."}), 500
-
-
 if __name__ == '__main__':
     app.run(debug=True)
