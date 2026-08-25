@@ -1,9 +1,6 @@
-# Игнорируем локальные виртуальные окружения
 .venv/
 __pycache__
 *.pyc
-.DS_Store # Для MacOS
-
-# Игнорируем секретные ключи
+.DS_Store 
 .env
 .env.example
